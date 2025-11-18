@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+# package-lock.json - Keep this for Railway deployment
+
+# Environment variables
+.env
+.env.local
+.env.production
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build
+dist/
+build/
+
+# Temporary files
+*.tmp
+.cache/
+
+# Local Netlify folder
+.netlify

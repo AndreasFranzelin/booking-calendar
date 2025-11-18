@@ -1,0 +1,11 @@
+# Imports the library
+from livereload import Server
+
+# Creates a new server instance
+server = Server()
+
+# Tells the server to watch all HTML files for changes
+server.watch('*.html')
+
+# Starts the server on port 8000
+server.serve(port=8000)

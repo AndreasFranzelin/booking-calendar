@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Andreas Franzelin - Neurowissenschaft & Mentales Wohlbefinden</title>
+    
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <style>
+        /* --- NOTFALL CSS-REGELN --- */
+        /* Diese Regeln garantieren, dass die Seite funktioniert, egal was Tailwind macht */
+
+        body { font-family: 'Inter', sans-serif; }
+        .smooth-scroll { scroll-behavior: smooth; }
+        
+        /* WICHTIG: Das behebt das Problem, dass Menüs Buttons überlagern */
+        .hidden { display: none !important; }
+        
+        /* Navigation Active State */
+        .nav-link.active { background-color: #334155; color: white; }
+
+        /* VIDEO FIX: Macht YouTube Videos sichtbar */
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Format */
+            height: 0;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            background-color: #1e293b;
+            margin-bottom: 1rem;
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* DESKTOP FIX: Erzwingt Anzeige des Menüs auf großen Bildschirmen */
+        @media (min-width: 768px) {
+            .desktop-nav-force { display: block !important; }
+            .mobile-only { display: none !important; }
+        }
+        
+        /* Modals & Reports */
+        .modal-backdrop { transition: opacity 0.3s ease-in-out; }
+        .modal-content { transition: transform 0.3s ease-in-out; }
+        .report-body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; color: #334155; font-size: 1.1rem; }
+        .report-section { background-color: white; border-radius: 0.75rem; padding: 2.5rem; margin-bottom: 1.5rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+        .tdp-logo-report { height: 100px; width: auto; max-width: 150px; } 
+        .report-icon { width: 32px; height: 32px; margin-right: 12px; vertical-align: middle; }
+
+        /* Chart Styles */
+        .chart-grid { display: grid; grid-template-columns: 2fr 3fr; gap: 1rem 2rem; align-items: center; }
+        .chart-area { position: relative; height: 38px; display: flex; align-items: center; background-color: #f8fafc; border-radius: 0.375rem; }
+        .grid-line { display: none; position: absolute; height: 100%; width: 1px; background-color: #e2e8f0; top: 0; z-index: 1; }
+        .grid-line.zero { display: block; background-color: #64748b; width: 2px; }
+        .grid-line.expert { display: block; border-left: 2px dashed #4f46e5; background-color: transparent; }
+        .lollipop-line { position: absolute; height: 3px; top: 50%; transform: translateY(-50%); z-index: 2; border-radius: 9999px; }
+        .lollipop-dot { position: absolute; width: 16px; height: 16px; border-radius: 9999px; top: 50%; transform: translate(-50%, -50%); z-index: 3; border: 3px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .metric-label-group { padding: 0.5rem 0; border-radius: 0.375rem; transition: background-color 0.2s ease; }
+        .metric-label-group:hover { background-color: #f0f2f5; }
+        .bg-better { background-color: #10b981; } .bg-worse { background-color: #ef4444; }
+        .bg-style-high { background-color: #8A2BE2; } .bg-style-low { background-color: #2ca02c; }
+
+        /* Report Typography */
+        #ai-summary-section h3 { font-size: 1.3rem; font-weight: 600; margin-top: 1.75rem; margin-bottom: 0.75rem; border-bottom-width: 1px; padding-bottom: 0.75rem; display: flex; align-items: center; }
+        #ai-summary-section p, #ai-summary-section li { line-height: 1.7; color: #475569; font-size: 1.1rem; }
+        #ai-summary-section ul { list-style-position: inside; padding-left: 0; margin-bottom: 0; margin-top: 1rem; }
+        #ai-summary-section hr { border-color: #e2e8f0; margin: 1.75rem 0; }
+    </style>
+</head>
+<body class="bg-black text-slate-300 smooth-scroll">
+
+    <div class="fixed inset-0 z-0">
+        <img src="https://i.postimg.cc/90xhRNpK/Brain-landscape7.jpg" alt="Abstract neuroscience background" class="w-full h-full object-cover opacity-80" onerror="this.style.display='none'">
+        <div class="absolute inset-0 bg-slate-900/30"></div>
+    </div>
+
+    <div class="relative z-10">
+        <div class="md:flex">
+            <header class="md:w-1/3 lg:w-1/4 md:h-screen md:sticky md:top-0 bg-black/60 backdrop-blur-sm text-white p-8 lg:p-12 flex flex-col justify-between border-r border-white/10">
+                <div>
+                    <div class="flex justify-between items-start mb-12">
+                        <div class="text-left">
+                            <img src="https://i.postimg.cc/Kz9MkQgV/Logo-01.png" alt="Dr. Andreas Franzelin" class="w-24 h-24 rounded-full mb-4 shadow-lg border-4 border-slate-700">
+                            <h1 class="text-3xl font-extrabold text-white" data-lang-key="drName">Dr. Andreas Franzelin</h1>
+                            <p class="text-slate-400 mt-1" data-lang-key="drTitle">Neurowissenschaftler & Coach</p>
+                        </div>
+                        <div class="hidden md:flex desktop-nav-force">
+                            <div class="flex border border-slate-600 rounded-lg">
+                                <button id="lang-de" class="lang-btn bg-slate-700 text-white px-3 py-1 rounded-l-md text-sm font-semibold">DE</button>
+                                <button id="lang-en" class="lang-btn text-slate-400 px-3 py-1 rounded-r-md text-sm font-semibold">EN</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <nav class="hidden md:block space-y-2 desktop-nav-force">
+                        <a href="#home" class="nav-link group flex items-center gap-3 px-4 py-3 rounded-md text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"><i data-lucide="home" class="w-5 h-5"></i> <span data-lang-key="navHome">Home</span></a>
+                        <a href="#services" class="nav-link group flex items-center gap-3 px-4 py-3 rounded-md text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"><i data-lucide="brain-circuit" class="w-5 h-5"></i> <span data-lang-key="navServices">Services</span></a>
+                        <a href="#about" class="nav-link group flex items-center gap-3 px-4 py-3 rounded-md text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"><i data-lucide="user-circle" class="w-5 h-5"></i> <span data-lang-key="navAbout">Über Mich</span></a>
+                        <a href="#youtube" class="nav-link group flex items-center gap-3 px-4 py-3 rounded-md text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"><i data-lucide="youtube" class="w-5 h-5"></i> <span>YouTube</span></a>
+                        <a href="#contact" class="nav-link group flex items-center gap-3 px-4 py-3 rounded-md text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"><i data-lucide="mail" class="w-5 h-5"></i> <span data-lang-key="navContact">Kontakt</span></a>
+                    </nav>
+                </div>
+                
+                <div class="hidden md:block text-center md:text-left desktop-nav-force">
+                    <div class="flex justify-center md:justify-start space-x-4 mb-4">
+                        <a href="https://youtube.com/@tdpostmoderne?si=HdZtzleXE3hh6MES" target="_blank" class="text-slate-400 hover:text-white transition"><i data-lucide="youtube" class="w-6 h-6"></i></a>
+                        <a href="https://www.instagram.com/tierederpostmoderne/" target="_blank" class="text-slate-400 hover:text-white transition"><i data-lucide="instagram" class="w-6 h-6"></i></a>
+                        <a href="#" class="text-slate-400 hover:text-white transition"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
+                    </div>
+                    <p class="text-xs text-slate-500">© <span id="year"></span> Dr. Andreas Franzelin.</p>
+                </div>
+                
+                <button id="mobile-menu-button" class="md:hidden absolute top-8 right-8 flex items-center text-slate-300 mobile-only"><i data-lucide="menu" class="w-6 h-6"></i></button>
+            </header>
+            
+            <div id="mobile-menu" class="hidden fixed inset-0 bg-slate-800 z-50 p-8 flex flex-col justify-between">
+                <button id="mobile-close-button" class="absolute top-8 right-8 text-slate-300"><i data-lucide="x" class="w-8 h-8"></i></button>
+                <nav class="space-y-6 text-center mt-20">
+                    <a href="#home" class="mobile-nav-link block text-3xl font-bold text-slate-300 hover:text-white" data-lang-key="navHome">Home</a>
+                    <a href="#services" class="mobile-nav-link block text-3xl font-bold text-slate-300 hover:text-white" data-lang-key="navServices">Services</a>
+                    <a href="#about" class="mobile-nav-link block text-3xl font-bold text-slate-300 hover:text-white" data-lang-key="navAbout">Über Mich</a>
+                    <a href="#youtube" class="mobile-nav-link block text-3xl font-bold text-slate-300 hover:text-white">YouTube</a>
+                    <a href="#contact" class="mobile-nav-link block text-3xl font-bold text-slate-300 hover:text-white" data-lang-key="navContact">Kontakt</a>
+                </nav>
+                <div class="md:hidden flex justify-center">
+                    <div class="flex border border-slate-600 rounded-lg">
+                        <button id="lang-de-mobile" class="lang-btn bg-slate-700 text-white px-4 py-2 rounded-l-md font-semibold">DE</button>
+                        <button id="lang-en-mobile" class="lang-btn text-slate-400 px-4 py-2 rounded-r-md font-semibold">EN</button>
+                    </div>
+                </div>
+            </div>
+            
+            <main class="md:w-2/3 lg:w-3/4">
+                
+                <section id="home" class="min-h-screen flex items-center bg-transparent">
+                    <div class="p-8 sm:p-16 lg:p-24">
+                        <div class="bg-black/60 p-8 rounded-xl shadow-lg border border-white/10">
+                            <h2 class="text-4xl md:text-6xl font-extrabold text-white mb-4" data-lang-key="heroTitle">Entfalten Sie Ihr Potenzial durch Neurowissenschaft</h2>
+                            <p class="text-lg md:text-xl text-slate-200 mb-10 max-w-3xl" data-lang-key="heroSubtitle">Nutzen Sie modernste Gehirnforschung für mentales Wohlbefinden, Spitzenleistungen und Selbsterkenntnis.</p>
+                            <a href="#contact" class="bg-white text-slate-800 font-bold py-4 px-10 rounded-full hover:bg-slate-200 transition-colors duration-300 text-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 inline-block cursor-pointer" data-lang-key="heroButton">Beratung buchen</a>
+                        </div>
+                    </div>
+                </section>
+        
+                <section id="services" class="p-8 sm:p-16 lg:px-24 lg:pt-8 lg:pb-24 bg-transparent">
+                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-16 border-l-4 border-slate-500 pl-4" data-lang-key="servicesTitle">Mein Ansatz</h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+                        <div class="bg-black/60 rounded-xl flex flex-col justify-between transform hover:-translate-y-2 transition-transform duration-300 overflow-hidden shadow-lg hover:shadow-xl border border-white/10">
+                            <div class="w-full h-48 bg-slate-800 flex items-center justify-center">
+                                <img src="https://i.postimg.cc/HjGcr2tw/Chat-GPT-Image-9-Juli-2025-15-04-08.png" alt="Mentale Gesundheit" class="h-full object-cover" onerror="this.style.display='none'">
+                                <i data-lucide="heart-pulse" class="w-16 h-16 text-slate-600 absolute opacity-50"></i>
+                            </div>
+                            <div class="p-8 flex-grow flex flex-col">
+                                <div class="flex-grow">
+                                    <h4 class="text-xl font-bold text-white mb-3" data-lang-key="service1Title">Mentale Gesundheit & Kohärenz</h4>
+                                    <p class="text-slate-300" data-lang-key="service1Desc">Sofortige Unterstützung bei hartnäckigen Herausforderungen, indem die Ursache gezielt angegangen wird.</p>
+                                </div>
+                                <div class="mt-6">
+                                    <button class="info-service-btn bg-slate-700 text-white font-semibold py-2 px-4 rounded-lg hover:bg-slate-600 transition-colors w-full cursor-pointer" data-service="service1" data-price="80" data-lang-key="showInfoButton">Info anzeigen</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-black/70 rounded-xl flex flex-col justify-between transform hover:-translate-y-2 transition-transform duration-300 overflow-hidden shadow-lg hover:shadow-xl border border-white/10">
+                            <div class="w-full h-48 bg-slate-800 flex items-center justify-center">
+                                <img src="https://i.postimg.cc/cH3yhBSk/Screenshot-2025-07-09-152633.png" alt="EEG-gestützte Einblicke" class="h-full object-cover" onerror="this.style.display='none'">
+                                <i data-lucide="brain-circuit" class="w-16 h-16 text-slate-600 absolute opacity-50"></i>
+                            </div>
+                            <div class="p-8 flex-grow flex flex-col">
+                                <div class="flex-grow">
+                                    <h4 class="text-xl font-bold text-white mb-3" data-lang-key="service2Title">EEG-gestützte Einblicke</h4>
+                                    <p class="text-slate-300" data-lang-key="service2Desc">Gewinnen Sie tiefe Einblicke in Ihr kognitives Profil. Ich analysiere Gehirnwellenmuster.</p>
+                                </div>
+                                <div class="mt-6">
+                                    <button class="info-service-btn bg-slate-700 text-white font-semibold py-2 px-4 rounded-lg hover:bg-slate-600 transition-colors w-full cursor-pointer" data-service="service2" data-price="150" data-lang-key="showInfoButton">Info anzeigen</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-black/70 rounded-xl flex flex-col justify-between transform hover:-translate-y-2 transition-transform duration-300 overflow-hidden shadow-lg hover:shadow-xl border border-white/10">
+                            <div class="w-full h-48 bg-slate-800 flex items-center justify-center">
+                                <img src="https://i.postimg.cc/Qx1gD98L/Chat-with-your-Brain.png" alt="Chat with your Brain" class="h-full object-cover" onerror="this.style.display='none'">
+                                <i data-lucide="bot" class="w-16 h-16 text-slate-600 absolute opacity-50"></i>
+                            </div>
+                            <div class="p-8 flex-grow flex flex-col">
+                                <div class="flex-grow">
+                                    <h4 class="text-xl font-bold text-white mb-3" data-lang-key="service3Title">Chat with your Brain</h4>
+                                    <p class="text-slate-300" data-lang-key="service3Desc">Nach der EEG-Messung kannst du dich in einem direkten Gespräch mit deinem eigenen Gehirn unterhalten.</p>
+                                </div>
+                                <div class="mt-6">
+                                    <button class="info-service-btn bg-slate-700 text-white font-semibold py-2 px-4 rounded-lg hover:bg-slate-600 transition-colors w-full cursor-pointer" data-service="service3" data-price="0" data-lang-key="showInfoButton">Info anzeigen</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-black/70 rounded-xl flex flex-col justify-between transform hover:-translate-y-2 transition-transform duration-300 overflow-hidden shadow-lg hover:shadow-xl border border-white/10">
+                            <div class="w-full h-48 bg-slate-800 flex items-center justify-center">
+                                <img src="https://i.postimg.cc/HLGt5w6k/Chat-GPT-Image-9-Juli-2025-15-37-26-Kopie.png" alt="Workshops für Unternehmen" class="h-full object-cover" onerror="this.style.display='none'">
+                                <i data-lucide="presentation" class="w-16 h-16 text-slate-600 absolute opacity-50"></i>
+                            </div>
+                            <div class="p-8 flex-grow flex flex-col">
+                                <div class="flex-grow">
+                                    <h4 class="text-xl font-bold text-white mb-3" data-lang-key="service4Title">Workshops für Unternehmen & Gruppen</h4>
+                                    <p class="text-slate-300" data-lang-key="service4Desc">Maßgeschneiderte Workshops für Teams zur Stressreduktion, Kreativitätssteigerung und Teamdynamik.</p>
+                                </div>
+                                <div class="mt-6">
+                                    <button class="info-service-btn bg-slate-700 text-white font-semibold py-2 px-4 rounded-lg hover:bg-slate-600 transition-colors w-full cursor-pointer" data-service="service4" data-price="variable" data-lang-key="showInfoButton">Info anzeigen</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-12 bg-black/80 p-8 rounded-lg text-center border border-white/10">
+                        <h3 class="text-2xl md:text-3xl font-bold text-white mb-8" data-lang-key="eegReportTitle">EEG Report Center</h3>
+                        <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                            <div class="bg-slate-800/50 p-6 rounded-lg border border-slate-700 flex flex-col items-center justify-center hover:bg-slate-800 transition-colors">
+                                <i data-lucide="brain-circuit" class="w-12 h-12 text-slate-400 mb-4"></i>
+                                <h4 class="text-xl font-bold text-white mb-3" data-lang-key="meditationAnalysisTitle">Meditation Analysis</h4>
+                                <p class="text-slate-300 mb-6" data-lang-key="meditationAnalysisDesc">Enter your Client ID to view your personalized meditation performance report.</p>
+                                <button id="open-report-login-modal" class="bg-white text-slate-800 font-bold py-2 px-6 rounded-full hover:bg-slate-200 transition-colors duration-300 shadow-md cursor-pointer">
+                                    View Report
+                                </button>
+                            </div>
+                            <div class="bg-slate-800/50 p-6 rounded-lg border border-slate-700 flex flex-col items-center justify-center hover:bg-slate-800 transition-colors">
+                                <i data-lucide="edit" class="w-12 h-12 text-slate-400 mb-4"></i>
+                                <h4 class="text-xl font-bold text-white mb-3" data-lang-key="feedbackTitle">Received an EEG Report?</h4>
+                                <p class="text-slate-300 mb-6" data-lang-key="feedbackDesc">Your feedback is important for continuously improving our analyses.</p>
+                                <button id="open-feedback-modal" class="bg-slate-700 text-white font-semibold py-2 px-6 rounded-lg hover:bg-slate-600 transition-colors cursor-pointer" data-lang-key="feedbackButton">Give Feedback</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <section id="about" class="p-8 sm:p-16 lg:p-24 bg-transparent">
+                    <div class="bg-black/70 backdrop-blur-sm p-12 rounded-xl border border-white/10">
+                        <div class="flex flex-col items-center gap-8">
+                            <div class="w-full max-w-lg">
+                                <img src="https://i.postimg.cc/529cv7J4/pict20250414-065021-0-1.jpg" alt="Professionelles Porträtfoto" class="rounded-xl shadow-lg w-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x500/CBD5E1/1E293B?text=Profil';">
+                            </div>
+                            <div class="w-full text-center">
+                                <h3 class="text-3xl font-bold text-white mb-4" data-lang-key="aboutTitle">Über Mich</h3>
+                                <p class="text-lg text-slate-300 mb-4 max-w-3xl mx-auto leading-relaxed" data-lang-key="aboutP1">
+                                    Als Neurowissenschaftler mit einem Doktortitel in molekularer Neurowissenschaft spezialisiere ich mich darauf, komplexe akademische Forschung in praktische Anwendungen für das geistige und körperliche Wohlbefinden zu übersetzen. Meine Arbeit widmet sich dem Verständnis der neuronalen Grundlagen von Emotionen, Persönlichkeit und Bewusstsein.
+                                </p>
+                                <button id="open-cv-modal" class="mt-6 bg-slate-700 text-white font-semibold py-2 px-6 rounded-lg hover:bg-slate-600 transition-colors cursor-pointer">
+                                    Weitere Informationen
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <section id="youtube" class="p-8 sm:p-16 lg:p-24 bg-transparent">
+                    <div class="bg-black/70 backdrop-blur-sm p-12 rounded-xl border border-white/10">
+                        <h3 class="text-3xl md:text-4xl font-bold text-white mb-16 border-l-4 border-red-600 pl-4" data-lang-key="youtubeTitle">Neuestes aus dem Labor</h3>
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div class="group">
+                                <div class="video-wrapper">
+                                    <iframe src="https://www.youtube.com/embed/88oY8RCvimI" title="The Neuroscience of Consciousness" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div>
+                                <h4 class="font-bold text-lg text-white group-hover:text-red-400 transition-colors" data-lang-key="video1Title">Die Neurowissenschaft des Bewusstseins</h4>
+                                <p class="text-slate-300 text-sm mt-2" data-lang-key="video1Desc">Ein tiefer Einblick in die Wissenschaft des Bewusstseins und unserer subjektiven Realität.</p>
+                            </div>
+                            <div class="group">
+                                <div class="video-wrapper">
+                                    <iframe src="https://www.youtube.com/embed/g0YNDg8gWvQ" title="Wie man aufhört, zu viel nachzudenken" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div>
+                                <h4 class="font-bold text-lg text-white group-hover:text-red-400 transition-colors" data-lang-key="video2Title">Wie man aufhört, zu viel nachzudenken</h4>
+                                <p class="text-slate-300 text-sm mt-2" data-lang-key="video2Desc">Entdecken Sie vier wissenschaftlich fundierte Strategien, um das Grübeln zu durchbrechen.</p>
+                            </div>
+                        </div>
+                        <div class="text-center mt-16">
+                            <a href="https://youtube.com/@tdpostmoderne?si=HdZtzleXE3hh6MES" target="_blank" rel="noopener noreferrer" class="bg-red-600 text-white font-bold py-3 px-8 rounded-full hover:bg-red-700 transition-colors duration-300 text-lg inline-flex items-center gap-2 cursor-pointer">
+                                <i data-lucide="youtube" class="w-5 h-5"></i>
+                                <span data-lang-key="youtubeButton">Besuchen Sie meinen YouTube-Kanal</span>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+                
+                <section id="contact" class="p-8 sm:p-16 lg:p-24 bg-transparent">
+                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-8 border-l-4 border-slate-500 pl-4" data-lang-key="contactTitle">Kontakt aufnehmen</h3>
+                    <div class="max-w-2xl bg-black/80 p-8 rounded-xl shadow-lg border border-white/10">
+                        <p class="text-lg text-slate-300 mb-8" data-lang-key="contactDesc">
+                            Bereit für den ersten Schritt? Füllen Sie das Formular aus, und ich melde mich innerhalb von 48 Stunden bei Ihnen.
+                        </p>
+                        <form id="contact-form" class="space-y-6" action="https://formspree.io/f/mnnzqpwp" method="POST">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-slate-300" data-lang-key="formName">Vollständiger Name</label>
+                                <input type="text" id="name" name="name" required class="mt-1 block w-full px-4 py-3 bg-slate-700 border border-slate-600 text-white rounded-md focus:ring-slate-500 focus:border-slate-500">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-slate-300" data-lang-key="formEmail">E-Mail-Adresse</label>
+                                <input type="email" id="email" name="email" required class="mt-1 block w-full px-4 py-3 bg-slate-700 border border-slate-600 text-white rounded-md focus:ring-slate-500 focus:border-slate-500">
+                            </div>
+                            <div>
+                                <label for="service" class="block text-sm font-medium text-slate-300" data-lang-key="formService">Interessengebiet</label>
+                                <select id="service-select" name="service" class="mt-1 block w-full px-4 py-3 bg-slate-700 border border-slate-600 text-white rounded-md focus:ring-slate-500 focus:border-slate-500">
+                                    </select>
+                            </div>
+                            <div>
+                                <label for="message" class="block text-sm font-medium text-slate-300" data-lang-key="formMessage">Nachricht</label>
+                                <textarea id="message" name="message" rows="4" required class="mt-1 block w-full px-4 py-3 bg-slate-700 border border-slate-600 text-white rounded-md focus:ring-slate-500 focus:border-slate-500"></textarea>
+                            </div>
+                            <div class="text-left pt-2">
+                                <button type="submit" class="bg-slate-700 text-white font-bold py-3 px-12 rounded-full hover:bg-slate-600 transition-colors duration-300 text-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 cursor-pointer" data-lang-key="formSubmit">
+                                    Nachricht senden
+                                </button>
+                            </div>
+                        </form>
+                        <div id="form-feedback" class="mt-6"></div>
+                    </div>
+                    
+                    <div class="max-w-2xl mx-auto mt-12">
+                        <h4 class="text-xl font-bold text-center text-white mb-6" data-lang-key="connectTitle">Vernetzen Sie sich mit mir</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <a href="mailto:tierederpostmoderne@gmail.com" class="bg-black/80 p-4 rounded-lg shadow-md flex items-center gap-4 hover:bg-slate-700 transition-colors border border-white/10 cursor-pointer">
+                                <i data-lucide="mail" class="w-6 h-6 text-slate-300"></i>
+                                <span class="text-white font-semibold">Email</span>
+                            </a>
+                            <a href="https://www.youtube.com/@tdpostmoderne" target="_blank" class="bg-black/80 p-4 rounded-lg shadow-md flex items-center gap-4 hover:bg-slate-700 transition-colors border border-white/10 cursor-pointer">
+                                <i data-lucide="youtube" class="w-6 h-6 text-red-600"></i>
+                                <span class="text-white font-semibold">YouTube</span>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+                
+                <footer class="md:hidden bg-transparent text-slate-300 py-12 text-center">
+                    <p class="text-xl font-bold mb-4 text-white">Dr. Andreas Franzelin</p>
+                    <p class="text-slate-400">© <span id="year-mobile"></span> Dr. Andreas Franzelin. <span data-lang-key="footerRights">Alle Rechte vorbehalten.</span></p>
+                </footer>
+            </main>
+        </div>
+    </div>
+
+    <div id="feedback-modal-backdrop" class="modal-backdrop fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4 opacity-0"></div>
+    <div id="info-modal-backdrop" class="modal-backdrop fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4 opacity-0"></div>
+    <div id="cv-modal-backdrop" class="modal-backdrop fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4 opacity-0"></div>
+    <div id="report-login-modal-backdrop" class="modal-backdrop fixed inset-0 bg-black bg-opacity-70 z-50 hidden items-center justify-center p-4 opacity-0"></div>
+
+    <div id="report-display-modal-backdrop" class="modal-backdrop fixed inset-0 bg-black/70 z-[60] hidden flex items-center justify-center p-0 opacity-0">
+        <div class="modal-content w-full h-full transform scale-95 transition duration-300">
+            <div id="full-report-wrapper" class="w-full h-full overflow-y-auto report-body">
+                
+                <div id="report-upload-screen" class="min-h-screen flex flex-col items-center justify-center p-8 bg-white/90">
+                    <div class="max-w-lg text-left">
+                        <h1 class="text-4xl font-extrabold mb-4 text-slate-800">Personal Meditation Analysis Report</h1>
+                        <p class="mt-2 mb-8 text-lg text-slate-600">Please select the <code class="bg-gray-200 px-2 py-1 rounded">_Data.json</code> file to view your report.</p>
+                        <div class="flex">
+                            <input type="file" id="report-manual-uploader" class="hidden" accept=".json">
+                            <label for="report-manual-uploader" class="px-8 py-4 text-white font-bold rounded-lg shadow-lg cursor-pointer transition transform hover:scale-105" style="background-color: #4f46e5;">Upload JSON File Manually</label>
+                        </div>
+                        <p id="report-error-message-manual" class="text-red-500 font-semibold mt-4 text-sm"></p>
+                    </div>
+                </div>
+
+                <div id="report-container-content" class="hidden max-w-7xl mx-auto grid gap-6 py-8 px-4 sm:px-6 lg:px-8">
+                    <header class="main-header">
+                        <div class="header-content max-w-7xl mx-auto py-8 px-6 sm:px-6 lg:px-8 flex justify-between items-center">
+                            <div>
+                                <h1 class="text-3xl lg:text-4xl font-extrabold text-black" id="dashboard-title">Personal Meditation Analysis Report</h1>
+                                <p class="mt-2 text-xl text-slate-600" id="dashboard-subtitle">TdP Lab in Collaboration with Puzzlin</p>
+                            </div>
+                            <div class="flex items-center space-x-4 h-full">
+                                <img src="data/TDP.png" alt="TDP Logo" class="tdp-logo-report" onerror="this.style.display='none'">
+                                <button id="download-btn" class="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 font-semibold rounded-lg shadow-md transition transform hover:scale-105">Download PNG</button>
+                                <button id="close-full-report-btn" class="text-slate-400 hover:text-slate-800 text-3xl font-bold leading-none">&times;</button>
+                            </div>
+                        </div>
+                    </header>
+            
+                    <main class="grid gap-0">
+                        <section id="ai-summary-section" class="report-section"></section>
+                        <section id="one-directional-section" class="report-section"></section>
+                        <section id="two-directional-section" class="report-section"></section>
+                    </main>
+                    
+                    <footer>
+                        <div class="max-w-4xl mx-auto text-base text-slate-500 bg-white p-6 rounded-lg shadow-md text-center">
+                            <p class="font-bold text-lg text-slate-700">Important Considerations for Interpretation</p>
+                            <p class="mt-2 leading-relaxed">
+                                Results depend heavily on session duration and recording quality. This report is for informational purposes only and is not medical advice.
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        // STABILE FIREBASE VERSION (10.12.2)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyA5eZOoTINjbpP2rPfoiqqZb1OSKXBaYcs",
+            authDomain: "eeg-based-personality-report.firebaseapp.com",
+            projectId: "eeg-based-personality-report",
+            storageBucket: "eeg-based-personality-report.appspot.com",
+            messagingSenderId: "612579535528",
+            appId: "1:612579535528:web:75c4b2e45873bea066b09d",
+            measurementId: "G-019XT4N3JY"
+        };
+
+        // Lang Data
+        const langData = {
+            de: {
+                drName: "Dr. Andreas Franzelin", drTitle: "Neurowissenschaftler, Youtuber, Mental-Health & Koherenz-Coach", navHome: "Home", navServices: "Services", navAbout: "Über Mich", navContact: "Kontakt", heroTitle: "Entfalte dein Potenzial mit Hilfe der modernen Neurowissenschaft", heroSubtitle: "Geschärft durch vergangene Erfahrungen, erschafft unser Nervensystem die Realität, die wir erleben. Die Erkenntnis, dass wir diesen Prozess aktiv gestalten können, ist der Schlüssel zu einem selbstbestimmten Leben.", heroButton: "Beratung buchen", servicesTitle: "Mein Ansatz", service1Title: "Mental-Health & Kohärenz Coaching", service1Desc: "Du suchst psychologische Unterstützung bei tagtäglichen Herausforderungen und bist auf der Suche nach nachhaltiger Veränderung?", service1Info: "Wenn du nach nachhaltiger Veränderung suchst, die über die reine Symptombehandlung hinausgeht, ist dies der richtige Ansatz. Ich kombiniere fundierte Mental-Health-Strategien mit den Prinzipien der Kohärenz-Therapie, um die notwendige mentale Unterstützung zu gewährleisten und direkt an den Ursachen in deinem Nervensystem anzusetzen. Durch gezielte, emotionsbasierte Übungen regulieren wir es neu und schaffen so die neurobiologische Basis für tiefgreifende und dauerhafte Stabilität.", service2Title: "EEG-gestützte Einblicke in deine Persönlichkeit", service2Desc: "Welche Gehirnareale sind bei dir besonders aktiv? Welcher Persönlichkeitstyp bist du?", service2Info: "Verstehe, wie du denkst und fühlst – auf einer neurowissenschaftlichen Ebene. Mithilfe eines mobilen EEG-Geräts analysieren wir deine Gehirnwellen, während du verschiedene Aufgaben löst. Daraus entsteht dein einzigartiger „neuronaler Fingerabdruck“: ein detailliertes Profil deiner kognitiven Stärken und Denkmuster, das dir wertvolle Selbsterkenntnis liefert.", service3Title: "Chatte mit deinem Gehirn", service3Desc: "Nach der EEG-Messung kannst du dich in einem direkten Gespräch mit deinem eigenen Gehirn unterhalten und gezielte Fragen stellen. (Work in Progress)", service3Info: "Führen Sie ein direktes Gespräch mit Ihrem eigenen Verstand. Durch das Hochladen Ihrer aufgezeichneten Gehirn- und Persönlichkeitsdaten aktivieren Sie eine personalisierte KI, die Ihr einzigartiges Profil analysiert. Dieses intelligente System generiert dann maßgeschneiderte Fragen, mit denen Sie bestimmte Interessensgebiete erkunden und tiefgreifende Einblicke in Ihre eigene Kognition gewinnen können.", service3PriceInfo: "Im Preis der EEG-Aufzeichnung inbegriffen", service4Title: "Workshops für Unternehmen & Gruppen", service4Desc: "Maßgeschneiderte Workshops für Teams zur Stressreduktion, Kreativitätssteigerung und Verbesserung der Teamdynamik.", service4Info: "Maßgeschneiderte Workshops für Teams zur Stressreduktion, Kreativitätssteigerung und Verbesserung der Teamkohärenz mittels Neurowissenschaft.", showInfoButton: "Info anzeigen", goToGuideButton: "Zum Guide", feedbackTitle: "Hast du deinen EEG-Report erhalten?", feedbackDesc: "Dein Feedback ist uns wichtig, um unsere Analysen kontinuierlich zu verbessern.", feedbackButton: "Feedback geben", aboutTitle: "Über Mich", aboutP1: "Als Neurowissenschaftler widme ich mich der Erforschung der neuronalen Grundlagen von Emotionen, Persönlichkeit und Bewusstsein. Dabei versuche ich, komplexe wissenschaftliche Erkenntnisse in praktische, alltagstaugliche Werkzeuge zu übersetzen. So möchte ich Menschen befähigen, ihre Beziehungen zu sich selbst und anderen bewusster zu erleben und erfüllender zu gestalten.<br><br>Als Mental-Health- und Kohärenz-Coach begleite ich dich auf dem Weg der Veränderung. Wir schaffen einen sicheren Raum, in dem du dein Nervensystem besser kennenlernen kannst. Gemeinsam beobachten wir entscheidende Lebenserfahrungen, um sie zu verarbeiten oder emotional neu zu bewerten. So stellen wir die Weichen für tiefgreifende und positive Veränderungen.", youtubeTitle: "Neuestes aus dem Lab", video1Title: "Frontale Asymmetrie: Wie das Gehirn Konflikt und Sozialverhalten beeinflusst", video1Desc: "Warum fühlt sich manche Menschen in sozialen Gruppen sofort wohl, während andere lieber alleine sind? Die Antwort könnte in der frontalen Asymmetrie liegen – die feine Aktivität‑Ungleichgewicht zwischen linker und rechter Stirnhirn‑Hälfte.", video2Title: "Predictive Coding: Wie Vorhersagen unsere sozialen Beziehungen beeinflussen", video2Desc: "Unser Gehirn sagt soziale Situationen ständig auf Basis alter Erfahrungen voraus. Basieren diese auf negativen Mustern, sind Konflikte vorprogrammiert. In dieser Folge lernen Sie, wie Sie solche unbewussten Vorhersagen erkennen und gezielt verändern können.", youtubeButton: "Besuchen Sie meinen YouTube-Kanal", contactTitle: "Kontakt aufnehmen", contactDesc: "Bereit für den ersten Schritt? Füllen Sie das Formular aus, und ich melde mich innerhalb von 48 Stunden bei dir.", connectTitle: "Vernetzen Sie sich mit mir", formName: "Vollständiger Name", formEmail: "E-Mail-Adresse", formService: "Interessengebiet", formMessage: "Nachricht", formSubmit: "Nachricht senden", footerRights: "Alle Rechte vorbehalten.", serviceOptionDefault: "Allgemeine Anfrage", infoModalTitle: "Service-Information", infoModalPriceHour: "Preis pro Stunde:", infoModalProceedButton: "Weiter zum Kontakt", feedbackModalTitle: "EEG-Report Feedback", feedbackModalDesc: "Helfen Sie uns, uns zu verbessern, indem Sie Ihre Gedanken teilen.", eegReportTitle: "EEG Report Center", meditationAnalysisTitle: "Meditationsanalyse", meditationAnalysisDesc: "Geben Sie Ihre Kunden-ID ein, um Ihren persönlichen Meditations-Leistungsbericht anzuzeigen.",
+            },
+            en: {
+                drName: "Dr. Andreas Franzelin", drTitle: "Neuroscientist, Youtuber, Mental Health and Coherence Coach", navHome: "Home", navServices: "Services", navAbout: "About Me", navContact: "Contact", heroTitle: "Unlock Your Potential Through Modern Neuroscience", heroSubtitle: "Shaped by past experiences, our nervous system creates the reality that we experience. The realization that we can actively shape this process is the key to a self-determined life.", heroButton: "Book a Consultation", servicesTitle: "My Approach", service1Title: "Mental Health & Coherence Coaching", service1Desc: "Are you looking for psychological support with day-to-day challenges and in search of lasting change?", service1Info: "If you are looking for lasting change that goes beyond mere symptom treatment, this is the right approach. I combine sound mental health strategies with the principles of coherence therapy to provide the necessary mental support and directly address the causes in your nervous system. Through targeted, emotion-based exercises, we re-regulate it and thus create the neurobiological basis for profound and lasting stability.", service2Title: "EEG-Powered Insights", service2Desc: "Which areas of your brain are particularly active? What personality type are you?", service2Info: "-Understand how you think and feel - on an objective, biological level. Using a mobile EEG device, we analyse your brain waves while you perform various tasks. This creates your unique ‘neuronal fingerprint’: a detailed profile of your cognitive strengths and thought patterns that provides you with valuable self-knowledge.", service3Title: "Chat with your Brain", service3Desc: "After the EEG measurement, you can have a direct conversation with your own brain and ask specific questions. (Work in Progress )", service3Info: "Engage in a direct conversation with your own mind. By uploading your recorded brain and personality data, you activate a personalized AI designed to analyze your unique profile. This intelligent system then generates customized questions, allowing you to explore specific areas of interest and gain profound insights into your own cognition.", service3PriceInfo: "Included in the EEG-recording price", service4Title: "Corporate & Group Workshops", service4Desc: "Custom workshops for teams focusing on stress reduction, enhancing creativity, and improving team coherence using neuroscience.", service4Info: "Custom workshops for teams focusing on stress reduction, enhancing creativity, and improving team coherence using neuroscience.", showInfoButton: "Show Info", goToGuideButton: "Go to Guide", feedbackTitle: "Received an EEG Report?", feedbackDesc: "Your feedback is important to us for continuously improving our analyses.", feedbackButton: "Give Feedback", aboutTitle: "About Me", aboutP1: "As a neuroscientist, I am dedicated to researching the neuronal foundations of emotions, personality and consciousness. In doing so, I try to translate complex scientific findings into practical tools that are suitable for everyday use. In this way, I want to empower people to experience their relationships with themselves and others more consciously and make them more fulfilling.<br><br>As a mental health and coherence coach, I accompany you on the path to change. We create a safe space in which you can get to know your nervous system better. Together we observe key life experiences in order to process or emotionally re-evaluate them. This is how we set the course for profound and positive change.", youtubeTitle: "Latest from the Lab", video1Title: "Frontal asymmetry: How the brain influences conflict and social behaviour", video1Desc: "Why do some people immediately feel comfortable in social groups, while others prefer to be alone? The answer may lie in frontal asymmetry - the subtle activity imbalance between the left and right frontal hemispheres.", video2Title: "Predictive coding: How predictions influence our social relationships", video2Desc: "Our brain constantly predicts social situations based on past experiences. If these are based on negative patterns, conflicts are inevitable. In this episode, you will learn how to recognise such unconscious predictions and change them in a targeted manner.", youtubeButton: "Visit My YouTube Channel", contactTitle: "Get In Touch", contactDesc: "Ready to take the first step? Fill out the form, and I will get back to you within 48 hours.", connectTitle: "Connect With Me", formName: "Full Name", formEmail: "Email Address", formService: "Service of Interest", formMessage: "Message", formSubmit: "Send Message", footerRights: "All rights reserved.", serviceOptionDefault: "General Inquiry", infoModalTitle: "Service Information", infoModalPriceHour: "Price per hour:", infoModalProceedButton: "Proceed to Contact", feedbackModalTitle: "EEG-Report Feedback", feedbackModalDesc: "Help us improve by sharing your thoughts.", eegReportTitle: "EEG Report Center", meditationAnalysisTitle: "Meditation Analysis", meditationAnalysisDesc: "Enter your Client ID to view your personalized meditation performance report.",
+            }
+        };
+
+        // 1. FUNKTION FÜR UI SETUP (GETRENNT VON FIREBASE)
+        // Das wird sofort ausgeführt, auch wenn Firebase blockiert ist.
+        function setupUI() {
+            
+            // Icons
+            if (window.lucide) {
+                window.lucide.createIcons();
+            }
+
+            // --- Language Switcher ---
+            const updateLanguage = (lang) => {
+                document.documentElement.lang = lang;
+                document.querySelectorAll('[data-lang-key]').forEach(el => {
+                    const key = el.dataset.langKey;
+                    if (langData[lang] && langData[lang][key]) {
+                        el.innerHTML = langData[lang][key];
+                    }
+                });
+                localStorage.setItem('preferredLanguage', lang);
+                // Update Buttons style
+                document.querySelectorAll('.lang-btn').forEach(b => {
+                    b.classList.remove('bg-slate-700', 'text-white');
+                    b.classList.add('text-slate-400');
+                });
+                document.getElementById(`lang-${lang}`)?.classList.add('bg-slate-700', 'text-white');
+                document.getElementById(`lang-${lang}-mobile`)?.classList.add('bg-slate-700', 'text-white');
+            };
+
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const lang = btn.id.includes('de') ? 'de' : 'en';
+                    updateLanguage(lang);
+                });
+            });
+
+            // --- Modal Logic ---
+            const toggleModal = (backdrop, show) => {
+                if (!backdrop) return;
+                const content = backdrop.querySelector('.modal-content') || backdrop.querySelector('#full-report-wrapper');
+                if (show) {
+                    backdrop.classList.remove('hidden');
+                    backdrop.classList.add('flex');
+                    document.body.style.overflow = 'hidden'; // Lock scroll
+                    setTimeout(() => {
+                        backdrop.classList.remove('opacity-0');
+                        content?.classList.remove('scale-95');
+                    }, 10);
+                } else {
+                    backdrop.classList.add('opacity-0');
+                    content?.classList.add('scale-95');
+                    document.body.style.overflow = ''; // Unlock scroll
+                    setTimeout(() => {
+                        backdrop.classList.add('hidden');
+                        backdrop.classList.remove('flex');
+                    }, 300);
+                }
+            };
+
+            // --- Report Logic ---
+            // 1. Open Login Modal
+            document.getElementById('open-report-login-modal').addEventListener('click', () => {
+                toggleModal(document.getElementById('report-login-modal-backdrop'), true);
+                const backdrop = document.getElementById('report-login-modal-backdrop');
+                if(!backdrop.innerHTML.trim()) {
+                   backdrop.innerHTML = `
+                    <div class="modal-content bg-white w-full max-w-md rounded-xl shadow-2xl p-8 transform scale-95">
+                         <h2 class="text-2xl font-bold text-slate-800 mb-4">Report Login</h2>
+                         <input type="text" id="report-client-id" class="w-full px-4 py-3 border border-slate-300 rounded-lg text-center text-black" placeholder="Client ID">
+                         <button id="fetch-report-btn" class="w-full mt-4 bg-slate-800 text-white font-bold py-3 rounded-lg">View Report</button>
+                         <p id="report-error-msg" class="text-red-500 mt-2 text-sm"></p>
+                    </div>`;
+                   backdrop.querySelector('#fetch-report-btn').addEventListener('click', fetchReport);
+                   backdrop.querySelector('#report-client-id').addEventListener('keyup', (e) => { if (e.key === 'Enter') fetchReport(); });
+                }
+            });
+
+            // 2. Fetch Report Mock Logic
+            const fetchReport = async () => {
+                const input = document.getElementById('report-client-id');
+                const errorMsg = document.getElementById('report-error-msg');
+                if (!input.value) { errorMsg.textContent = "Please enter ID"; return; }
+                
+                // Toggle Modals
+                toggleModal(document.getElementById('report-login-modal-backdrop'), false);
+                const reportBackdrop = document.getElementById('report-display-modal-backdrop');
+                toggleModal(reportBackdrop, true);
+            };
+
+            // 3. Close Full Report
+            document.getElementById('close-full-report-btn').addEventListener('click', () => {
+                toggleModal(document.getElementById('report-display-modal-backdrop'), false);
+            });
+
+            // 4. Manual Uploader Logic (Mock)
+            document.getElementById('report-manual-uploader').addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (ev) => {
+                        try {
+                            const data = JSON.parse(ev.target.result);
+                            document.getElementById('report-upload-screen').classList.add('hidden');
+                            document.getElementById('report-container-content').classList.remove('hidden');
+                            renderReport(data); // Render Funktion (fehlt hier der Kürze halber, da extern)
+                        } catch(err) {
+                            alert("Invalid JSON");
+                        }
+                    };
+                    reader.readAsText(file);
+                }
+            });
+            
+            // 5. Service Modals
+            document.querySelectorAll('.info-service-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const serviceKey = btn.getAttribute('data-service');
+                    const price = btn.getAttribute('data-price');
+                    const currentLang = localStorage.getItem('preferredLanguage') || 'de';
+                    const title = langData[currentLang][`${serviceKey}Title`];
+                    const desc = langData[currentLang][`${serviceKey}Info`] || langData[currentLang][`${serviceKey}Desc`];
+                    
+                    const modalContent = `
+                        <h2 class="text-2xl font-bold text-slate-800 mb-4">${title}</h2>
+                        <p class="text-slate-600 mb-6 leading-relaxed">${desc}</p>
+                        <div class="font-bold text-slate-800 mb-6">
+                             ${langData[currentLang].infoModalPriceHour} ${price === 'variable' ? 'Variable' : '€' + price}
+                        </div>
+                        <button class="bg-slate-800 text-white px-6 py-3 rounded-lg w-full hover:bg-slate-700 transition-colors close-info-modal">${langData[currentLang].infoModalProceedButton}</button>
+                    `;
+                    
+                    const modal = createModal('info-modal-backdrop', modalContent);
+                    toggleModal(modal, true);
+                    
+                    modal.querySelector('.close-info-modal').addEventListener('click', () => {
+                        toggleModal(modal, false);
+                        document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+                    });
+                    modal.addEventListener('click', (e) => {
+                         if (e.target.id === 'info-modal-backdrop') toggleModal(modal, false);
+                    });
+                });
+            });
+            
+            // Helper für Modalerstellung
+            const createModal = (backdropId, content, maxWidth = 'max-w-lg') => {
+                const backdrop = document.getElementById(backdropId);
+                if (!backdrop) return null;
+                backdrop.innerHTML = `<div class="modal-content bg-gradient-to-br from-gray-50 to-indigo-100 w-full ${maxWidth} max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl p-4 sm:p-8 transform scale-95">${content}</div>`;
+                return backdrop;
+            };
+
+            // Mobile Menu Logic
+            const mobileMenu = document.getElementById('mobile-menu');
+            document.getElementById('mobile-menu-button').addEventListener('click', () => {
+                mobileMenu.classList.remove('hidden'); 
+            });
+            document.getElementById('mobile-close-button').addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+            document.querySelectorAll('.mobile-nav-link').forEach(link => {
+                link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+            });
+            
+            // Init UI State
+            const preferredLanguage = localStorage.getItem('preferredLanguage') || 'de';
+            updateLanguage(preferredLanguage);
+            document.getElementById('year').textContent = new Date().getFullYear();
+        }
+
+        // 2. INIT LOGIC (FEHLER-RESISTENT)
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // UI ZUERST starten (damit Buttons gehen)
+            setupUI();
+
+            // DANN Firebase versuchen (im try-catch, damit nichts anderes abstürzt)
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                onAuthStateChanged(auth, async (user) => {
+                    if (!user) {
+                        try { await signInAnonymously(auth); } catch(e) { console.warn("Auth warning:", e); }
+                    }
+                });
+            } catch (e) {
+                console.error("Firebase blockiert (Adblocker aktiv). UI läuft trotzdem weiter.");
+            }
+        });
+    </script>
+</body>
+</html>

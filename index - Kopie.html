@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Andreas Franzelin - Neurowissenschaft & Mentales Wohlbefinden</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .smooth-scroll {
+            scroll-behavior: smooth;
+        }
+        .nav-link.active {
+            @apply bg-slate-700 text-white;
+        }
+        .aspect-w-16 {
+            position: relative;
+            padding-bottom: 56.25%;
+        }
+        .aspect-w-16 > * {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .modal-backdrop {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .modal-content {
+            transition: transform 0.3s ease-in-out;
+        }
+        .star-rating .star {
+            transition: transform 0.2s, color 0.2s;
+        }
+        .star-rating .star:hover {
+            transform: scale(1.1);
+        }
+        /* Styles for the Guide Modal */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .card-gradient {
+            background-color: #f8fafc; /* slate-50 */
+            border: 1px solid #e2e8f0; /* slate-200 */
+        }
+        .gemini-button {
+            transition: all 0.2s ease-in-out;
+        }
+        .gemini-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .card-enter {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .card-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-black text-slate-300 smooth-scroll">
+
+    <div class="fixed inset-0 z-0">
+        <img src="https://i.postimg.cc/90xhRNpK/Brain-landscape7.jpg" alt="Abstract neuroscience background" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/1E293B/FFFFFF?text=Hero+Image';">
+        <div class="absolute inset-0 bg-slate-900/30"></div>
+    </div>
+
+    <div class="relative z-10">
+        <div class="md:flex">
+            <header class="md:w-1/3 lg:w-1/4 md:h-screen md:sticky md:top-0 bg-black/60 backdrop-blur-sm text-white p-8 lg:p-12 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-start mb-12">
+                        <div class="text-left">
+                            <img src="https://i.postimg.cc/Kz9MkQgV/Logo-01.png" alt="Dr. Andreas Franzelin" class="w-24 h-24 rounded-full mb-4 shadow-lg border-4 border-slate-700">
+                            <h1 class="text-3xl font-extrabold text-white" data-lang-key="drName">Dr. Andreas Franzelin</h1>
+                            <p class="text-slate-400 mt-1" data-lang-key="drTitle">Neurowissenschaftler & Coach</p>
+                        </div>
+                         <div class="hidden md:block">
+                            <div class="flex border border-slate-600 rounded-lg">
+                                <button id="lang-de" class="lang-btn bg-slate-700 text-white px-3 py-1 rounded-l-md text-sm font-semibold">DE</button>
+                                <button id="lang-en" class="lang-btn text-slate-400 px-3 py-1 rounded-r-md text-sm font-semibold">EN</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <nav class="hidden md:block space-y-2">
+                        <a href="#home" class="nav-link group flex items-center gap-3 px-4 py-3 rounded-md text-slate-300 hover:bg-slate-700 hover:text-white transition-colors">
+                            <i data-lucide="home" class="w-5 h-5"></i> <span data-lang-key="navHome">Home</span>
+                        </a>
+                        <a href="#services" class="nav-link group flex items-center gap-3 px-4 py-3 rounded-md text-slate-300 hover:bg-slate-700 hover:text-white transition-colors">
+                            <i data-lucide="brain-circuit" class="w-5 h-5"></i> <span data-lang-key="navServices">Services</span>
+                        </a>
+                        <a href="#about" class="nav-link group flex items-center gap-3 px-4 py-3 rounded-md text-slate-300 hover:bg-slate-700 hover:text-white transition-colors">
+                            <i data-lucide="user-circle" class="w-5 h-5"></i> <span data-lang-key="navAbout">Über Mich</span>
+                        </a>
+                        <a href="#youtube" class="nav-link group flex items-center gap-3 px-4 py-3 rounded-md text-slate-300 hover:bg-slate-700 hover:text-white transition-colors">
+                            <i data-lucide="youtube" class="w-5 h-5"></i> <span>YouTube</span>
+                        </a>
+                         <a href="#contact" class="nav-link group flex items-center gap-3 px-4 py-3 rounded-md text-slate-300 hover:bg-slate-700 hover:text-white transition-colors">
+                            <i data-lucide="mail" class="w-5 h-5"></i> <span data-lang-key="navContact">Kontakt</span>
+                        </a>
+                    </nav>
+                </div>
+                
+                <div class="hidden md:block text-center md:text-left">
+                    <div class="flex justify-center md:justify-start space-x-4 mb-4">
+                        <a href="https://youtube.com/@tdpostmoderne?si=HdZtzleXE3hh6MES" target="_blank" class="text-slate-400 hover:text-white transition"><i data-lucide="youtube" class="w-6 h-6"></i></a>
+                        <a href="https://www.instagram.com/tierederpostmoderne/" target="_blank" class="text-slate-400 hover:text-white transition"><i data-lucide="instagram" class="w-6 h-6"></i></a>
+                        <a href="#" class="text-slate-400 hover:text-white transition"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
+                    </div>
+                    <p class="text-xs text-slate-500">© <span id="year"></span> Dr. Andreas Franzelin.</p>
+                </div>
+    
+                <button id="mobile-menu-button" class="md:hidden absolute top-8 right-8 flex items-center text-slate-300">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </header>
+    
+            <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-slate-800 z-50 p-8 flex flex-col justify-between">
+                 <button id="mobile-close-button" class="absolute top-8 right-8 text-slate-300">
+                    <i data-lucide="x" class="w-8 h-8"></i>
+                </button>
+                <nav class="space-y-6 text-center mt-20">
+                    <a href="#home" class="mobile-nav-link block text-3xl font-bold text-slate-300 hover:text-white" data-lang-key="navHome">Home</a>
+                    <a href="#services" class="mobile-nav-link block text-3xl font-bold text-slate-300 hover:text-white" data-lang-key="navServices">Services</a>
+                    <a href="#about" class="mobile-nav-link block text-3xl font-bold text-slate-300 hover:text-white" data-lang-key="navAbout">Über Mich</a>
+                    <a href="#youtube" class="mobile-nav-link block text-3xl font-bold text-slate-300 hover:text-white">YouTube</a>
+                    <a href="#contact" class="mobile-nav-link block text-3xl font-bold text-slate-300 hover:text-white" data-lang-key="navContact">Kontakt</a>
+                </nav>
+                <div class="md:hidden">
+                    <div class="flex border border-slate-600 rounded-lg">
+                        <button id="lang-de-mobile" class="lang-btn bg-slate-700 text-white px-4 py-2 rounded-l-md font-semibold">DE</button>
+                        <button id="lang-en-mobile" class="lang-btn text-slate-400 px-4 py-2 rounded-r-md font-semibold">EN</button>
+                    </div>
+                </div>
+            </div>
+    
+    
+            <main class="md:w-2/3 lg:w-3/4">
+                <section id="home" class="min-h-screen flex items-center bg-transparent">
+                    <div class="p-8 sm:p-16 lg:p-24">
+                        <div class="bg-black/60 p-8 rounded-xl shadow-lg">
+                            <h2 class="text-4xl md:text-6xl font-extrabold text-white mb-4" data-lang-key="heroTitle">Entfalten Sie Ihr Potenzial durch Neurowissenschaft</h2>
+                            <p class="text-lg md:text-xl text-slate-200 mb-10 max-w-3xl" data-lang-key="heroSubtitle">Nutzen Sie modernste Gehirnforschung für mentales Wohlbefinden, Spitzenleistungen und Selbsterkenntnis.</p>
+                            <a href="#contact" class="bg-white text-slate-800 font-bold py-4 px-10 rounded-full hover:bg-slate-200 transition-colors duration-300 text-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5" data-lang-key="heroButton">Beratung buchen</a>
+                        </div>
+                    </div>
+                </section>
+    
+                <section id="services" class="p-8 sm:p-16 lg:px-24 lg:pt-8 lg:pb-24 bg-transparent">
+                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-16" data-lang-key="servicesTitle">Mein Ansatz</h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+                        <div class="bg-black/60 rounded-xl flex flex-col justify-between transform hover:-translate-y-2 transition-transform duration-300 overflow-hidden shadow-lg hover:shadow-xl">
+                            <img src="https://i.postimg.cc/HjGcr2tw/Chat-GPT-Image-9-Juli-2025-15-04-08.png" alt="Mentale Gesundheit & Kohärenz" class="w-full h-48 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/600x400/F1F5F9/1E293B?text=Service+1';">
+                            <div class="p-8 flex-grow flex flex-col">
+                                <div class="flex-grow">
+                                    <i data-lucide="heart-pulse" class="w-12 h-12 text-slate-400 mb-4"></i>
+                                    <h4 class="text-xl font-bold text-white mb-3" data-lang-key="service1Title">Mentale Gesundheit & Kohärenz</h4>
+                                    <p class="text-slate-300" data-lang-key="service1Desc">Sofortige Unterstützung bei hartnäckigen Herausforderungen, indem die Ursache gezielt angegangen wird, um dauerhafte Veränderungen zu ermöglichen.</p>
+                                </div>
+                                <div class="mt-6">
+                                    <button class="info-service-btn bg-slate-700 text-white font-semibold py-2 px-4 rounded-lg hover:bg-slate-600 transition-colors w-full" data-service="service1" data-price="80" data-lang-key="showInfoButton">Info anzeigen</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-black/70 rounded-xl flex flex-col justify-between transform hover:-translate-y-2 transition-transform duration-300 overflow-hidden shadow-lg hover:shadow-xl">
+                            <img src="https://i.postimg.cc/cH3yhBSk/Screenshot-2025-07-09-152633.png" alt="EEG-gestützte Einblicke" class="w-full h-48 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/600x400/F1F5F9/1E293B?text=Service+2';">
+                            <div class="p-8 flex-grow flex flex-col">
+                                <div class="flex-grow">
+                                    <i data-lucide="brain-circuit" class="w-12 h-12 text-slate-400 mb-4"></i>
+                                    <h4 class="text-xl font-bold text-white mb-3" data-lang-key="service2Title">EEG-gestützte Einblicke</h4>
+                                    <p class="text-slate-300" data-lang-key="service2Desc">Gewinnen Sie tiefe Einblicke in Ihr kognitives Profil. Ich analysiere Gehirnwellenmuster, um Ihre Kernstärken und Wachstumsbereiche aufzudecken.</p>
+                                </div>
+                                <div class="mt-6">
+                                    <button class="info-service-btn bg-slate-700 text-white font-semibold py-2 px-4 rounded-lg hover:bg-slate-600 transition-colors w-full" data-service="service2" data-price="150" data-lang-key="showInfoButton">Info anzeigen</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-black/70 rounded-xl flex flex-col justify-between transform hover:-translate-y-2 transition-transform duration-300 overflow-hidden shadow-lg hover:shadow-xl">
+                             <img src="https://i.postimg.cc/Qx1gD98L/Chat-GPT-Image-9-Juli-2025-15-49-40.png" alt="Chat with your Brain" class="w-full h-48 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/600x400/F1F5F9/1E293B?text=Service+3';">
+                            <div class="p-8 flex-grow flex flex-col">
+                                <div class="flex-grow">
+                                    <i data-lucide="bot" class="w-12 h-12 text-slate-400 mb-4"></i>
+                                    <h4 class="text-xl font-bold text-white mb-3" data-lang-key="service3Title">Chat with your Brain</h4>
+                                    <p class="text-slate-300" data-lang-key="service3Desc">You can ask free questions about your braindata and personality type.</p>
+                                </div>
+                                 <div class="mt-6">
+                                    <button class="info-service-btn bg-slate-700 text-white font-semibold py-2 px-4 rounded-lg hover:bg-slate-600 transition-colors w-full" data-service="service3" data-price="0" data-lang-key="showInfoButton">Info anzeigen</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-black/70 rounded-xl flex flex-col justify-between transform hover:-translate-y-2 transition-transform duration-300 overflow-hidden shadow-lg hover:shadow-xl">
+                            <img src="https://i.postimg.cc/HLGt5w6k/Chat-GPT-Image-9-Juli-2025-15-37-26-Kopie.png" alt="Workshops für Unternehmen & Gruppen" class="w-full h-48 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/600x400/F1F5F9/1E293B?text=Service+4';">
+                            <div class="p-8 flex-grow flex flex-col">
+                                <div class="flex-grow">
+                                    <i data-lucide="presentation" class="w-12 h-12 text-slate-400 mb-4"></i>
+                                    <h4 class="text-xl font-bold text-white mb-3" data-lang-key="service4Title">Workshops für Unternehmen & Gruppen</h4>
+                                    <p class="text-slate-300" data-lang-key="service4Desc">Maßgeschneiderte Workshops für Teams zur Stressreduktion, Kreativitätssteigerung und Verbesserung der Teamkohärenz mittels Neurowissenschaft.</p>
+                                </div>
+                                 <div class="mt-6">
+                                    <button class="info-service-btn bg-slate-700 text-white font-semibold py-2 px-4 rounded-lg hover:bg-slate-600 transition-colors w-full" data-service="service4" data-price="variable" data-lang-key="showInfoButton">Info anzeigen</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="mt-12 text-center bg-black/80 p-6 rounded-lg">
+                        <h4 class="text-xl font-bold text-white mb-3" data-lang-key="feedbackTitle">Haben Sie einen EEG-Report erhalten?</h4>
+                        <p class="text-slate-300 mb-4" data-lang-key="feedbackDesc">Ihr Feedback ist uns wichtig, um unsere Analysen kontinuierlich zu verbessern.</p>
+                        <button id="open-feedback-modal" class="bg-slate-700 text-white font-semibold py-2 px-6 rounded-lg hover:bg-slate-600 transition-colors" data-lang-key="feedbackButton">Feedback geben</button>
+                    </div>
+                </section>
+    
+                <section id="about" class="p-8 sm:p-16 lg:p-24 bg-transparent">
+                    <div class="bg-black/70 backdrop-blur-sm p-12 rounded-xl">
+                        <div class="flex flex-col items-center gap-8">
+                            <div class="w-full max-w-lg">
+                                <img src="https://i.postimg.cc/529cv7J4/pict20250414-065021-0-1.jpg" alt="Professionelles Porträtfoto" class="rounded-xl shadow-lg w-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x500/CBD5E1/1E293B?text=Profil';">
+                            </div>
+                            <div class="w-full text-center">
+                                <h3 class="text-3xl font-bold text-white mb-4" data-lang-key="aboutTitle">Über Mich</h3>
+                                <p class="text-lg text-slate-300 mb-4 max-w-3xl mx-auto" data-lang-key="aboutP1">
+                                    Als Neurowissenschaftler mit einem Doktortitel in molekularer Neurowissenschaft spezialisiere ich mich darauf, komplexe akademische Forschung in praktische Anwendungen für das geistige und körperliche Wohlbefinden zu übersetzen. Meine Arbeit widmet sich dem Verständnis der neuronalen Grundlagen von Emotionen, Persönlichkeit und Bewusstsein. Durch meine Praxis, die eine fortgeschrittene Ausbildung in psychischer Gesundheit und Kohärenztherapie umfasst, biete ich evidenzbasierte Strategien, um Einzelpersonen dabei zu helfen, Bewusstsein aufzubauen und die Herausforderungen des Lebens effektiv zu meistern. Mein Ansatz ist sowohl einfühlsam als auch wissenschaftlich auf die einzigartige Neurobiologie jeder Person zugeschnitten.
+                                </p>
+                                <button id="open-cv-modal" class="mt-6 bg-slate-700 text-white font-semibold py-2 px-6 rounded-lg hover:bg-slate-600 transition-colors">
+                                    Weitere Informationen
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+    
+                <section id="youtube" class="p-8 sm:p-16 lg:p-24 bg-transparent">
+                     <div class="bg-black/70 backdrop-blur-sm p-12 rounded-xl">
+                        <h3 class="text-3xl md:text-4xl font-bold text-white mb-16" data-lang-key="youtubeTitle">Neuestes aus dem Labor</h3>
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div class="group">
+                                <div class="aspect-w-16 aspect-h-9 bg-slate-200 rounded-lg overflow-hidden mb-4">
+                                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/88oY8RCvimI" title="The Neuroscience of Consciousness - with Anil Seth" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                </div>
+                                <h4 class="font-bold text-lg text-white" data-lang-key="video1Title">Die Neurowissenschaft des Bewusstseins - mit Anil Seth</h4>
+                                <p class="text-slate-300 text-sm" data-lang-key="video1Desc">Ein tiefer Einblick in die Wissenschaft des Bewusstseins und unserer subjektiven Realität.</p>
+                            </div>
+                            <div class="group">
+                                <div class="aspect-w-16 aspect-h-9 bg-slate-200 rounded-lg overflow-hidden mb-4">
+                                   <iframe class="w-full h-full" src="https://www.youtube.com/embed/g0YNDg8gWvQ" title="Wie man aufhört, zu viel nachzudenken - 4 bewährte Techniken" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                </div>
+                                <h4 class="font-bold text-lg text-white" data-lang-key="video2Title">Wie man aufhört, zu viel nachzudenken - 4 bewährte Techniken</h4>
+                                <p class="text-slate-300 text-sm" data-lang-key="video2Desc">Entdecken Sie vier wissenschaftlich fundierte Strategien, um das Grübeln zu durchbrechen und geistige Klarheit zu finden.</p>
+                            </div>
+                        </div>
+                         <div class="text-center mt-16">
+                            <a href="https://youtube.com/@tdpostmoderne?si=HdZtzleXE3hh6MES" target="_blank" rel="noopener noreferrer" class="bg-red-600 text-white font-bold py-3 px-8 rounded-full hover:bg-red-700 transition-colors duration-300 text-lg inline-flex items-center gap-2">
+                                <i data-lucide="youtube" class="w-5 h-5"></i>
+                                <span data-lang-key="youtubeButton">Besuchen Sie meinen YouTube-Kanal</span>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+    
+                <section id="contact" class="p-8 sm:p-16 lg:p-24 bg-transparent">
+                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-8" data-lang-key="contactTitle">Kontakt aufnehmen</h3>
+                    <div class="max-w-2xl bg-black/80 p-8 rounded-xl shadow-lg">
+                        <p class="text-lg text-slate-300 mb-8" data-lang-key="contactDesc">
+                            Bereit für den ersten Schritt? Füllen Sie das Formular aus, und ich melde mich innerhalb von 48 Stunden bei Ihnen.
+                        </p>
+                        <form id="contact-form" class="space-y-6" action="https://formspree.io/f/mnnzqpwp" method="POST">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-slate-300" data-lang-key="formName">Vollständiger Name</label>
+                                <input type="text" id="name" name="name" required class="mt-1 block w-full px-4 py-3 bg-slate-700 border border-slate-600 text-white rounded-md focus:ring-slate-500 focus:border-slate-500">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-slate-300" data-lang-key="formEmail">E-Mail-Adresse</label>
+                                <input type="email" id="email" name="email" required class="mt-1 block w-full px-4 py-3 bg-slate-700 border border-slate-600 text-white rounded-md focus:ring-slate-500 focus:border-slate-500">
+                            </div>
+                            <div>
+                                <label for="service" class="block text-sm font-medium text-slate-300" data-lang-key="formService">Interessengebiet</label>
+                                <select id="service-select" name="service" class="mt-1 block w-full px-4 py-3 bg-slate-700 border border-slate-600 text-white rounded-md focus:ring-slate-500 focus:border-slate-500">
+                                    </select>
+                            </div>
+                            <div>
+                                <label for="message" class="block text-sm font-medium text-slate-300" data-lang-key="formMessage">Nachricht</label>
+                                <textarea id="message" name="message" rows="4" required class="mt-1 block w-full px-4 py-3 bg-slate-700 border border-slate-600 text-white rounded-md focus:ring-slate-500 focus:border-slate-500"></textarea>
+                            </div>
+                            <div class="text-left pt-2">
+                                <button type="submit" class="bg-slate-700 text-white font-bold py-3 px-12 rounded-full hover:bg-slate-600 transition-colors duration-300 text-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5" data-lang-key="formSubmit">
+                                    Nachricht senden
+                                </button>
+                            </div>
+                        </form>
+                        <div id="form-feedback" class="mt-6"></div>
+                    </div>
+    
+                    <div class="max-w-2xl mx-auto mt-12">
+                        <h4 class="text-xl font-bold text-center text-white mb-6" data-lang-key="connectTitle">Vernetzen Sie sich mit mir</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <a href="mailto:tierederpostmoderne@gmail.com" class="bg-black/80 p-4 rounded-lg shadow-md flex items-center gap-4 hover:bg-slate-700 transition-colors">
+                                <i data-lucide="mail" class="w-6 h-6 text-slate-300"></i>
+                                <span class="text-white font-semibold">tierederpostmoderne@gmail.com</span>
+                            </a>
+                            <a href="https://www.youtube.com/@tdpostmoderne" target="_blank" rel="noopener noreferrer" class="bg-black/80 p-4 rounded-lg shadow-md flex items-center gap-4 hover:bg-slate-700 transition-colors">
+                                <i data-lucide="youtube" class="w-6 h-6 text-red-600"></i>
+                                <span class="text-white font-semibold">YouTube</span>
+                            </a>
+                            <a href="https://www.instagram.com/tierederpostmoderne/" target="_blank" rel="noopener noreferrer" class="bg-black/80 p-4 rounded-lg shadow-md flex items-center gap-4 hover:bg-slate-700 transition-colors">
+                                <i data-lucide="instagram" class="w-6 h-6 text-pink-600"></i>
+                                <span class="text-white font-semibold">Instagram</span>
+                            </a>
+                            <a href="https://www.puzzlin.org/en/explorers/ebc008b4-87bd-414f-9c1e-280c071c22d7" target="_blank" rel="noopener noreferrer" class="bg-black/80 p-4 rounded-lg shadow-md flex items-center gap-4 hover:bg-slate-700 transition-colors">
+                                <i data-lucide="puzzle" class="w-6 h-6 text-blue-600"></i>
+                                <span class="text-white font-semibold">Puzzlin.org Profile</span>
+                            </a>
+                             <a href="https://ko-fi.com/tierederpostmoderne" target="_blank" rel="noopener noreferrer" class="bg-black/80 p-4 rounded-lg shadow-md flex items-center gap-4 hover:bg-slate-700 transition-colors">
+                                <i data-lucide="coffee" class="w-6 h-6 text-amber-600"></i>
+                                <span class="text-white font-semibold">Support on Ko-fi</span>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+                
+                <footer class="md:hidden bg-transparent text-slate-300 py-12 text-center">
+                     <p class="text-xl font-bold mb-4 text-white">Dr. Andreas Franzelin</p>
+                     <div class="flex justify-center space-x-6 mb-8">
+                         <a href="https://youtube.com/@tdpostmoderne?si=HdZtzleXE3hh6MES" target="_blank" class="text-slate-400 hover:text-white"><i data-lucide="youtube" class="w-6 h-6"></i></a>
+                         <a href="https://www.instagram.com/tierederpostmoderne/" target="_blank" class="text-slate-400 hover:text-white"><i data-lucide="instagram" class="w-6 h-6"></i></a>
+                         <a href="#" class="text-slate-400 hover:text-white"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
+                     </div>
+                     <p class="text-slate-400">© <span id="year-mobile"></span> Dr. Andreas Franzelin. <span data-lang-key="footerRights">Alle Rechte vorbehalten.</span></p>
+                </footer>
+            </main>
+        </div>
+    </div>
+
+    <div id="feedback-modal-backdrop" class="modal-backdrop fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4 opacity-0"></div>
+    <div id="booking-modal-backdrop" class="modal-backdrop fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4 opacity-0"></div>
+    <div id="info-modal-backdrop" class="modal-backdrop fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4 opacity-0"></div>
+    <div id="cv-modal-backdrop" class="modal-backdrop fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4 opacity-0"></div>
+
+    <div id="guide-modal" class="hidden fixed inset-0 bg-white z-[60] overflow-y-auto text-slate-700">
+        <button id="close-guide-modal" class="fixed top-4 right-4 bg-white rounded-full p-2 shadow-lg z-10 text-slate-800 hover:bg-slate-200">
+            <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+        <div class="container mx-auto p-4 md:p-8 max-w-5xl antialiased">
+            <header class="text-center mb-12 md:mb-20 fade-in-section">
+                <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4">A Simple Guide to Your Brain Activity</h1>
+                <p class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">This report is a personalized map of your brain. Our goal is to see how your brain works and what makes it unique.</p>
+            </header>
+    
+            <section class="mb-16 md:mb-24 fade-in-section text-base leading-relaxed">
+                <h2 class="text-3xl font-bold text-slate-800 mb-6 text-center">Introduction and Methods</h2>
+                <p class="mb-8 text-center max-w-3xl mx-auto">The data encompasses an analysis of multiple EEG frequency bands collected from up to 32 scalp regions. The client's brain activity was averaged across several distinct logical and emotional tasks.</p>
+                
+                <div class="bg-slate-50 border border-slate-200 p-8 rounded-2xl shadow-lg mb-8">
+                    <h3 class="text-2xl font-bold text-slate-800 mb-4">Tasks Overview</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead class="border-b-2 border-slate-300">
+                                <tr>
+                                    <th class="py-2 pr-4 font-semibold">Task</th>
+                                    <th class="py-2 pr-4 font-semibold">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-slate-200"><td class="py-3 pr-4 font-semibold">Meditation</td><td class="py-3 pr-4">The client meditates with eyes closed to establish a baseline resting state.</td></tr>
+                                <tr class="border-b border-slate-200"><td class="py-3 pr-4 font-semibold">Maths</td><td class="py-3 pr-4">The client solves math problems, assessing analytical reasoning and cognitive load management.</td></tr>
+                                <tr class="border-b border-slate-200"><td class="py-3 pr-4 font-semibold">Values</td><td class="py-3 pr-4">The client labels phrases with "positive or negative signs", evaluating emotional processing and decision-making.</td></tr>
+                                <tr class="border-b border-slate-200"><td class="py-3 pr-4 font-semibold">Word Pairs</td><td class="py-3 pr-4">The client forms a sentence from two given words, testing verbal creativity and associative thinking.</td></tr>
+                                <tr class="border-b border-slate-200"><td class="py-3 pr-4 font-semibold">Foot Trace & Ball Toss</td><td class="py-3 pr-4">The client writes their name with their feet and plays catch, assessing motor planning, coordination, and sensory integration.</td></tr>
+                                <tr class="border-b border-slate-200"><td class="py-3 pr-4 font-semibold">Music</td><td class="py-3 pr-4">The client listens to music to observe responses to auditory and emotional stimuli.</td></tr>
+                                <tr class="border-b border-slate-200"><td class="py-3 pr-4 font-semibold">Phone</td><td class="py-3 pr-4">The client replies to messages on their phone, simulating real-world multitasking and social-cognitive engagement.</td></tr>
+                                <tr class="border-b border-slate-200"><td class="py-3 pr-4 font-semibold">Picture</td><td class="py-3 pr-4">The client describes a picture and its emotional content, assessing visual processing, language expression, and social cognition.</td></tr>
+                                <tr class="border-b border-slate-200"><td class="py-3 pr-4 font-semibold">Geometry</td><td class="py-3 pr-4">The client solves a geometry puzzle by mentally reshaping 3D figures, testing visuospatial reasoning.</td></tr>
+                                <tr><td class="py-3 pr-4 font-semibold">Talk</td><td class="py-3 pr-4">The client speaks on a favorite topic, evaluating spontaneous language production and cognitive organization.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 border border-slate-200 p-8 rounded-2xl shadow-lg">
+                    <h3 class="text-2xl font-bold text-slate-800 mb-4">Scope and Limitations</h3>
+                    <p>EEG signals are complex and can be influenced by numerous factors (e.g., fatigue, emotional state, external distractions). While we aim to form an integrative picture of personality and cognitive style from this data, all interpretations should be considered suggestive rather than definitive. This information is not intended to replace professional psychological or medical evaluation, diagnosis, or treatment. If you have concerns about your mental health or well-being, please consult a qualified healthcare professional.</p>
+                </div>
+            </section>
+
+            <section class="mb-16 md:mb-24 fade-in-section">
+                <h2 class="text-3xl font-bold text-slate-800 mb-2 text-center">1. Your Brain's Five "Wave Types"</h2>
+                <p class="text-center text-slate-600 mb-10 max-w-2xl mx-auto">Brain regions can fire at different frequencies. We measure five key brainwave bands, from very slow to very fast, to understand the state of each region.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+                    <div class="card-gradient p-6 rounded-2xl shadow-md">
+                        <div class="h-8 flex items-center justify-center">
+                            <svg class="mx-auto text-blue-500" style="width: 100%; height: 32px;" viewBox="0 0 100 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0 20 L45 20 L50 5 L55 20 L100 20" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-lg mt-3 text-blue-800 text-center">Delta</h3>
+                        <p class="text-sm font-semibold text-blue-700 mb-1 text-center">(0.5-4 Hz)</p>
+                        <p class="text-sm text-slate-500 text-center">Very slow waves, often linked to deep, restorative sleep.</p>
+                    </div>
+                    <div class="card-gradient p-6 rounded-2xl shadow-md">
+                        <div class="h-8 flex items-center justify-center">
+                            <svg class="mx-auto text-green-500" style="width: 100%; height: 32px;" viewBox="0 0 100 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0 20 L25 20 L30 5 L35 20 L65 20 L70 5 L75 20 L100 20" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-lg mt-3 text-green-800 text-center">Theta</h3>
+                        <p class="text-sm font-semibold text-green-700 mb-1 text-center">(4-8 Hz)</p>
+                        <p class="text-sm text-slate-500 text-center">Slow waves associated with drowsiness, meditation, and memory.</p>
+                    </div>
+                    <div class="card-gradient p-6 rounded-2xl shadow-md">
+                        <div class="h-8 flex items-center justify-center">
+                            <svg class="mx-auto text-violet-500" style="width: 100%; height: 32px;" viewBox="0 0 100 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0 20 L15 20 L20 5 L25 20 L40 20 L45 5 L50 20 L65 20 L70 5 L75 20 L100 20" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-lg mt-3 text-violet-800 text-center">Alpha</h3>
+                        <p class="text-sm font-semibold text-violet-700 mb-1 text-center">(8-12 Hz)</p>
+                        <p class="text-sm text-slate-500 text-center">Intermediate waves, dominant during calm, wakeful relaxation.</p>
+                    </div>
+                    <div class="card-gradient p-6 rounded-2xl shadow-md">
+                        <div class="h-8 flex items-center justify-center">
+                            <svg class="mx-auto text-amber-500" style="width: 100%; height: 32px;" viewBox="0 0 100 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0 20 L10 20 L15 5 L20 20 L30 20 L35 5 L40 20 L50 20 L55 5 L60 20 L70 20 L75 5 L80 20 L100 20" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-lg mt-3 text-amber-800 text-center">Beta</h3>
+                        <p class="text-sm font-semibold text-amber-700 mb-1 text-center">(12-30 Hz)</p>
+                        <p class="text-sm text-slate-500 text-center">Fast waves related to active thinking and focused attention.</p>
+                    </div>
+                    <div class="card-gradient p-6 rounded-2xl shadow-md">
+                        <div class="h-8 flex items-center justify-center">
+                            <svg class="mx-auto text-rose-500" style="width: 100%; height: 32px;" viewBox="0 0 100 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0 20 L5 20 L10 5 L15 20 L25 20 L30 5 L35 20 L45 20 L50 5 L55 20 L65 20 L70 5 L75 20 L85 20 L90 5 L95 20 L100 20" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-lg mt-3 text-rose-800 text-center">Gamma</h3>
+                        <p class="text-sm font-semibold text-rose-700 mb-1 text-center">(30-100 Hz)</p>
+                        <p class="text-sm text-slate-500 text-center">Very fast waves for high-level information processing.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-16 md:mb-24 fade-in-section">
+                <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+                    <div class="w-full md:w-1/2">
+                        <h2 class="text-3xl font-bold text-slate-800 mb-4">2. Our Main Tool: The "z-score"</h2>
+                        <p class="mb-4 text-base leading-relaxed">The z-score (activity score) is a simple measure that shows how much the activity (amplitude) of a brain region differs from the average across all regions. In other words, it tells you if a particular region is unusually active or less active compared to the rest of the brain, so it helps us spot which areas stand out. We calculate the z-score for per region and for each wavetype.</p>
+                    </div>
+                    <div class="w-full md:w-1/2 bg-slate-50 border border-slate-200 p-6 rounded-2xl shadow-lg">
+                        <div class="text-center mb-4 font-semibold text-slate-700">Z-Score activity of a Region  </div>
+                        <div class="relative h-40">
+                            <div class="absolute w-full h-0.5 bg-slate-400 top-1/2 -translate-y-1/2">
+                                <span class="absolute right-0 -mt-3 text-xs text-slate-500">Avg.</span>
+                            </div>
+                            
+                            <div class="absolute bottom-0 left-[10%] w-10 bg-blue-500 rounded-t-lg" style="height: 20%;" title="Delta activity"></div>
+                            <div class="absolute bottom-0 left-[26%] w-10 bg-green-500 rounded-t-lg" style="height: 35%;" title="Theta activity"></div>
+                            <div class="absolute bottom-0 left-[42%] w-10 bg-violet-500 rounded-t-lg" style="height: 55%;" title="Alpha activity"></div>
+                            <div class="absolute bottom-0 left-[58%] w-10 bg-amber-500 rounded-t-lg" style="height: 75%;" title="Beta activity"></div>
+                            <div class="absolute bottom-0 left-[74%] w-10 bg-rose-500 rounded-t-lg" style="height: 95%;" title="Gamma activity"></div>
+                        </div>
+                         <div class="relative w-full h-6 mt-2">
+                            <div class="absolute left-[10%] w-10 text-center font-bold text-blue-800">Δ</div>
+                            <div class="absolute left-[26%] w-10 text-center font-bold text-green-800">Θ</div>
+                            <div class="absolute left-[42%] w-10 text-center font-bold text-violet-800">α</div>
+                            <div class="absolute left-[58%] w-10 text-center font-bold text-amber-800">β</div>
+                            <div class="absolute left-[74%] w-10 text-center font-bold text-rose-800">γ</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-16 md:mb-24 fade-in-section">
+                 <h2 class="text-3xl font-bold text-slate-800 mb-2 text-center">3. How You Compare: Using Normative Brain Maps</h2>
+                 <p class="text-center text-slate-600 mb-10 max-w-3xl mx-auto">To understand your unique profile, we compare your data to our internal database. This is then contextualized by referencing published normative brain maps and the broader scientific literature.</p>
+                <div class="bg-slate-50 border border-slate-200 p-4 md:p-6 rounded-2xl shadow-lg flex flex-col md:flex-row items-center justify-around gap-2">
+                    <div class="text-center p-2">
+                        <i data-lucide="brain-circuit" class="w-20 h-20 text-blue-500 mx-auto"></i>
+                        <h3 class="font-bold mt-2 text-blue-800 text-sm">Your Brain Map</h3>
+                    </div>
+                    <div class="text-2xl text-slate-300 font-light transform md:transform-none rotate-90 md:rotate-0">→</div>
+                    <div class="text-center p-2">
+                        <i data-lucide="database" class="w-20 h-20 text-slate-500 mx-auto"></i>
+                        <h3 class="font-bold mt-2 text-slate-600 text-sm">Our Database</h3>
+                    </div>
+                    <div class="text-2xl text-slate-300 font-light transform md:transform-none rotate-90 md:rotate-0">→</div>
+                    <div class="text-center p-2">
+                        <i data-lucide="brain" class="w-20 h-20 text-teal-500 mx-auto"></i>
+                        <h3 class="font-bold mt-2 text-teal-700 text-sm">Normative Maps</h3>
+                    </div>
+                    <div class="text-2xl text-slate-300 font-light transform md:transform-none rotate-90 md:rotate-0">→</div>
+                    <div class="text-center p-2">
+                        <i data-lucide="book-open-check" class="w-20 h-20 text-indigo-500 mx-auto"></i>
+                        <h3 class="font-bold mt-2 text-indigo-700 text-sm">Literature</h3>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-12 md:mb-20 fade-in-section">
+                <h2 class="text-3xl font-bold text-slate-800 mb-2 text-center">4. What It All Means: The Results</h2>
+                <p class="text-center text-slate-600 mb-10 max-w-2xl mx-auto">This comparison tells us if a brain region is "Balanced" or has "Specialized" characteristics.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-slate-50 border border-slate-200 p-8 rounded-2xl shadow-lg">
+                        <h3 class="text-2xl font-bold text-slate-800">Balanced Region</h3>
+                        <p class="mt-4 text-slate-600 leading-relaxed">This means the area is working in a way that is very similar to the average. It’s operating smoothly and effectively within the normal range, just as we'd expect.</p>
+                    </div>
+                    
+                    <div class="bg-slate-50 border border-slate-200 p-8 rounded-2xl shadow-lg">
+                        <h3 class="text-2xl font-bold text-purple-800">Specialized Region</h3>
+                        <p class="mt-4 text-slate-600 leading-relaxed">This means the area works in a way that is different from the average. This brings strenghts and challanges with it. Here are the types of specialization:</p>
+                        
+                        <div class="mt-4 space-y-3 text-sm">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 pt-1 pr-2">
+                                    <span class="inline-block w-3 h-3 rounded-full" style="background-color: LightSkyBlue;"></span>
+                                    <span class="inline-block w-3 h-3 rounded-full" style="background-color: Blue;"></span>
+                                    <span class="inline-block w-3 h-3 rounded-full" style="background-color: Navy;"></span>
+                                </div>
+                                <div><span class="font-semibold">Slowwaves I, II, III:</span> Indicate increasing levels of under-arousal or cortical slowing.</div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 pt-1 pr-2">
+                                    <span class="inline-block w-3 h-3 rounded-full" style="background-color: Orange;"></span>
+                                    <span class="inline-block w-3 h-3 rounded-full" style="background-color: Coral;"></span>
+                                    <span class="inline-block w-3 h-3 rounded-full" style="background-color: red;"></span>
+                                </div>
+                                <div><span class="font-semibold">High I, II, III:</span> Suggest increasing levels of cortical over-arousal or a "mental overdrive" state.</div>
+                            </div>
+                             <div class="flex items-start">
+                                <div class="flex-shrink-0 pt-1 pr-2">
+                                    <span class="inline-block w-3 h-3 rounded-full" style="background-color: LimeGreen;"></span>
+                                    <span class="inline-block w-3 h-3 rounded-full" style="background-color: ForestGreen;"></span>
+                                    <span class="inline-block w-3 h-3 rounded-full" style="background-color: DarkGreen;"></span>
+                                </div>
+                                <div><span class="font-semibold">Theta Dom I, II, III:</span> Signify increasing dominance of Theta waves, linked to creativity but also inattention.</div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 pt-1 pr-2">
+                                    <span class="inline-block w-3 h-3 rounded-full" style="background-color: PaleVioletRed;"></span>
+                                    <span class="inline-block w-3 h-3 rounded-full" style="background-color: MediumVioletRed;"></span>
+                                    <span class="inline-block w-3 h-3 rounded-full" style="background-color: Purple;"></span>
+                                </div>
+                                <div><span class="font-semibold">Alpha Dom I, II, III:</span> Show increasing Alpha wave dominance, essential for calm focus but excess can lead to low mood.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-12 md:mb-20 fade-in-section">
+                <h2 class="text-3xl font-bold text-slate-800 mb-2 text-center">Three Paths of Analysis</h2>
+                <p class="text-center text-slate-600 mb-10 max-w-2xl mx-auto">Your report is structured into three main parts to provide a comprehensive understanding of your brain activity.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-slate-50 border border-slate-200 p-8 rounded-2xl shadow-lg">
+                        <div class="flex items-center gap-4">
+                            <div class="bg-blue-100 p-3 rounded-full">
+                                <i data-lucide="brain-circuit" class="text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-800">I. Lobe-Based Analysis</h3>
+                            </div>
+                        </div>
+                        <p class="mt-4 text-slate-600 leading-relaxed text-sm">Details the observed brainwave patterns by lobe, outlining the scientifically backed potential advantages and disadvantages associated with each.</p>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-200 p-8 rounded-2xl shadow-lg">
+                        <div class="flex items-center gap-4">
+                            <div class="bg-green-100 p-3 rounded-full">
+                                <i data-lucide="clipboard-list" class="text-green-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-800">II. Thematic Analysis</h3>
+                            </div>
+                        </div>
+                        <p class="mt-4 text-slate-600 leading-relaxed text-sm">Synthesizes findings to offer a personality summary with insights into specific areas of cognition and behavior.</p>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-200 p-8 rounded-2xl shadow-lg">
+                        <div class="flex items-center gap-4">
+                            <div class="bg-indigo-100 p-3 rounded-full">
+                                <i data-lucide="user-check" class="text-indigo-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-800">III. MBTI Type Guessing</h3>
+                            </div>
+                        </div>
+                        <p class="mt-4 text-slate-600 leading-relaxed text-sm">We compare your Brain to our MBTI Databank to guess your type.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-12 md:mb-20 fade-in-section">
+                <h2 class="text-3xl font-bold text-slate-800 mb-2 text-center">Personality Trait Explorer</h2>
+                <p class="text-center text-slate-600 mb-10 max-w-2xl mx-auto">Explore different personality traits and their potential neuroscientific correlations.</p>
+                <div class="bg-slate-50 border border-slate-200 p-8 rounded-2xl shadow-lg">
+                    <div id="nav-buttons" class="flex flex-wrap justify-center gap-2 md:gap-3 mb-8">
+                        </div>
+                    <div id="content-area">
+                        </div>
+                </div>
+            </section>
+
+            <section class="mb-12 md:mb-20 fade-in-section">
+                <div class="bg-slate-50 border border-slate-200 p-8 rounded-2xl shadow-lg">
+                    <h2 class="text-3xl font-bold text-slate-800 mb-2 text-center">✨ Ask Gemini About Your Brain</h2>
+                    <p class="text-center text-slate-600 mb-6 max-w-2xl mx-auto">Curious what a "Specialized" region might feel like? Enter a brain region and its characteristics below and let Gemini provide a creative, metaphorical interpretation.</p>
+                    
+                    <div class="max-w-xl mx-auto">
+                        <textarea id="gemini-prompt" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" rows="4" placeholder="For example: 'My frontal lobe is specialized with high beta wave activity. What could this mean for my personality?'"></textarea>
+                        <button id="gemini-button" class="gemini-button w-full mt-4 bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 flex items-center justify-center gap-2">
+                            <i data-lucide="sparkles" style="width: 20px; height: 20px;"></i>
+                            Ask Gemini for Insight
+                        </button>
+                    </div>
+
+                    <div id="gemini-result-container" class="mt-6 max-w-xl mx-auto">
+                        <div id="gemini-loader" class="hidden loader"></div>
+                        <div id="gemini-result" class="bg-slate-100 p-6 rounded-lg text-slate-700 leading-relaxed" style="display: none;"></div>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="text-center mt-16 py-8 border-t border-slate-200 fade-in-section">
+                <p class="text-slate-500">This analysis helps create a map that honors your individuality, showing where your brain is "going with the flow" and where it has its own remarkable way of doing things.</p>
+            </footer>
+        </div>
+    </div>
+
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        
+        // --- LANGUAGE CONTENT ---
+        const langData = {
+            de: {
+                drName: "Dr. Andreas Franzelin",
+                drTitle: "Neurowissenschaftler, Youtuber, Mental-Health & Koherenz-Coach",
+                navHome: "Home",
+                navServices: "Services",
+                navAbout: "Über Mich",
+                navContact: "Kontakt",
+                heroTitle: "Entfalte dein Potenzial mit Hilfe der modernen Neurowissenschaft",
+                heroSubtitle: "Geschärft durch vergangene Erfahrungen, erschafft unser Nervensystem die Realität, die wir erleben. Die Erkenntnis, dass wir diesen Prozess aktiv gestalten können, ist der Schlüssel zu einem selbstbestimmten Leben.",
+                heroButton: "Beratung buchen",
+                servicesTitle: "Mein Ansatz",
+                service1Title: "Mental-Health & Kohärenz Coaching",
+                service1Desc: "Du suchst psychologische Unterstützung bei tagtäglichen Herausforderungen und bist auf der Suche nach nachhaltiger Veränderung?",
+                service1Info: "Wenn du nach nachhaltiger Veränderung suchst, die über die reine Symptombehandlung hinausgeht, ist dies der richtige Ansatz. Ich kombiniere fundierte Mental-Health-Strategien mit den Prinzipien der Kohärenz-Therapie, um die notwendige mentale Unterstützung zu gewährleisten und direkt an den Ursachen in deinem Nervensystem anzusetzen. Durch gezielte, emotionsbasierte Übungen regulieren wir es neu und schaffen so die neurobiologische Basis für tiefgreifende und dauerhafte Stabilität.",
+                service2Title: "EEG-gestützte Einblicke in deine Persönlichkeit",
+                service2Desc: "Welche Gehirnareale sind bei dir besonders aktiv? Welcher Persönlichkeitstyp bist du?",
+                service2Info: "Verstehe, wie du denkst und fühlst – auf einer neurowissenschaftlichen Ebene. Mithilfe eines mobilen EEG-Geräts analysieren wir deine Gehirnwellen, während du verschiedene Aufgaben löst. Daraus entsteht dein einzigartiger „neuronaler Fingerabdruck“: ein detailliertes Profil deiner kognitiven Stärken und Denkmuster, das dir wertvolle Selbsterkenntnis liefert.",
+                service3Title: "Chatte mit deinem Gehirn",
+                service3Desc: "Nach der EEG-Messung kannst du dich in einem direkten Gespräch mit deinem eigenen Gehirn unterhalten und gezielte Fragen stellen. (Work in Progress)",
+                service3Info: "Führen Sie ein direktes Gespräch mit Ihrem eigenen Verstand. Durch das Hochladen Ihrer aufgezeichneten Gehirn- und Persönlichkeitsdaten aktivieren Sie eine personalisierte KI, die Ihr einzigartiges Profil analysiert. Dieses intelligente System generiert dann maßgeschneiderte Fragen, mit denen Sie bestimmte Interessensgebiete erkunden und tiefgreifende Einblicke in Ihre eigene Kognition gewinnen können.",
+                service3PriceInfo: "Im Preis der EEG-Aufzeichnung inbegriffen",
+                service4Title: "Workshops für Unternehmen & Gruppen",
+                service4Desc: "Maßgeschneiderte Workshops für Teams zur Stressreduktion, Kreativitätssteigerung und Verbesserung der Teamdynamik.",
+                service4Info: "Maßgeschneiderte Workshops für Teams zur Stressreduktion, Kreativitätssteigerung und Verbesserung der Teamkohärenz mittels Neurowissenschaft.",
+                showInfoButton: "Info anzeigen",
+                goToGuideButton: "Zum Guide",
+                feedbackTitle: "Hast du deinen EEG-Report erhalten?",
+                feedbackDesc: "Dein Feedback ist uns wichtig, um unsere Analysen kontinuierlich zu verbessern.",
+                feedbackButton: "Feedback geben",
+                aboutTitle: "Über Mich",
+                aboutP1: "Als Neurowissenschaftler widme ich mich der Erforschung der neuronalen Grundlagen von Emotionen, Persönlichkeit und Bewusstsein. Dabei versuche ich, komplexe wissenschaftliche Erkenntnisse in praktische, alltagstaugliche Werkzeuge zu übersetzen. So möchte ich Menschen befähigen, ihre Beziehungen zu sich selbst und anderen bewusster zu erleben und erfüllender zu gestalten.<br><br>Als Mental-Health- und Kohärenz-Coach begleite ich dich auf dem Weg der Veränderung. Wir schaffen einen sicheren Raum, in dem du dein Nervensystem besser kennenlernen kannst. Gemeinsam beobachten wir entscheidende Lebenserfahrungen, um sie zu verarbeiten oder emotional neu zu bewerten. So stellen wir die Weichen für tiefgreifende und positive Veränderungen.",
+                aboutP2: "",
+                youtubeTitle: "Neuestes aus dem Lab",
+                video1Title: "Frontale Asymmetrie: Wie das Gehirn Konflikt und Sozialverhalten beeinflusst",
+                video1Desc: "Warum fühlt sich manche Menschen in sozialen Gruppen sofort wohl, während andere lieber alleine sind? Die Antwort könnte in der frontalen Asymmetrie liegen – die feine Aktivität‑Ungleichgewicht zwischen linker und rechter Stirnhirn‑Hälfte.",
+                video2Title: "Predictive Coding: Wie Vorhersagen unsere sozialen Beziehungen beeinflussen",
+                video2Desc: "Unser Gehirn sagt soziale Situationen ständig auf Basis alter Erfahrungen voraus. Basieren diese auf negativen Mustern, sind Konflikte vorprogrammiert. In dieser Folge lernen Sie, wie Sie solche unbewussten Vorhersagen erkennen und gezielt verändern können.",
+                youtubeButton: "Besuchen Sie meinen YouTube-Kanal",
+                contactTitle: "Kontakt aufnehmen",
+                contactDesc: "Bereit für den ersten Schritt? Füllen Sie das Formular aus, und ich melde mich innerhalb von 48 Stunden bei dir.",
+                connectTitle: "Vernetzen Sie sich mit mir",
+                formName: "Vollständiger Name",
+                formEmail: "E-Mail-Adresse",
+                formService: "Interessengebiet",
+                formMessage: "Nachricht",
+                formSubmit: "Nachricht senden",
+                footerRights: "Alle Rechte vorbehalten.",
+                serviceOptionDefault: "Allgemeine Anfrage",
+                infoModalTitle: "Service-Information",
+                infoModalPriceHour: "Preis pro Stunde:",
+                infoModalProceedButton: "Weiter zum Kontakt",
+                feedbackModalTitle: "EEG-Report Feedback",
+                feedbackModalDesc: "Helfen Sie uns, uns zu verbessern, indem Sie Ihre Gedanken teilen.",
+                feedbackForm: {
+                    section1Title: "Informationen zu Klient & Behandler",
+                    clientName: "Name des Klienten",
+                    clientNamePlaceholder: "Namen oder Initialen des Klienten eingeben",
+                    practitionerName: "Name des Behandlers",
+                    practitionerNamePlaceholder: "Ihren Namen eingeben",
+                    section2Title: "Teil 1: Gesamteindruck & Interesse",
+                    interest: "Auf einer Skala von 1 bis 10, wie interessant fanden Sie den Bericht insgesamt?",
+                    lobeAnalysisInterest: "Auf einer Skala von 1 bis 10, wie interessant fanden Sie die Lappen-basierte Analyse in Teil I?",
+                    personalSummaryInterest: "Auf einer Skala von 1 bis 10, wie interessant fanden Sie die persönliche Zusammenfassung in Teil II?",
+                    typeGuessingInterest: "Auf einer Skala von 1 bis 10, wie interessant fanden Sie die EEG-basierte Typen-Einschätzung in Teil III?",
+                    mostCaptivating: "Welcher spezifische Aspekt war für Sie am fesselndsten oder überraschendsten?",
+                    mostCaptivatingPlaceholder: "z.B. 'Die Lappen-basierte Analyse war faszinierend...'",
+                    likedMost: "Was hat Ihnen am Bericht insgesamt am besten gefallen?",
+                    likedMostPlaceholder: "z.B. 'Die klaren Erklärungen und visuellen Darstellungen...'",
+                    section3Title: "Teil 2: Genauigkeit & Persönliche Resonanz",
+                    overallFit: "Insgesamt, wie gut hat der Bericht Ihre Persönlichkeit beschrieben? (1 = Passt nicht, 10 = Passt perfekt)",
+                    fittingExamples: "Bitte geben Sie Beispiele für Informationen, die Sie als besonders passend empfanden.",
+                    fittingExamplesPlaceholder: "z.B. 'Die Beschreibung meines sozialen Stils war genau richtig...'",
+                    notFittingExamples: "Gab es Informationen, die überhaupt nicht zu Ihrer Persönlichkeit zu passen schienen?",
+                    notFittingExamplesPlaceholder: "z.B. 'Der Teil über Motivation passte nicht ganz...'",
+                    feltOffended: "Fühlten Sie sich durch Informationen beleidigt? Wenn ja, bitte beschreiben.",
+                    feltOffendedPlaceholder: "Ihr Feedback ist wichtig, um den Ton und die Sensibilität des Berichts zu verbessern.",
+                    topStrengths: "Was betrachten Sie als Ihre größten Stärken?",
+                    topStrengthsPlaceholder: "z.B. sehr empathisch sein, kreative Problemlösung...",
+                    biggestChallenge: "Was betrachten Sie als Ihre größte Herausforderung?",
+                    biggestChallengePlaceholder: "z.B. Schwierigkeiten beim Lesen, öffentliches Reden...",
+                    mbtiAgreement: "Der Bericht hat einen MBTI-Typ identifiziert. Stimmen Sie dieser Einschätzung zu?",
+                    mbtiOptions: [{value: 'agree', label: 'Stimme zu'}, {value: 'disagree', label: 'Stimme nicht zu'}, {value: 'unsure', label: 'Unsicher'}],
+                    actualMbtiType: "Was ist Ihr tatsächlicher MBTI-Typ?",
+                    mbtiPlaceholder: "MBTI-Typ auswählen",
+                    actualEnneagramType: "Was ist Ihr tatsächlicher Enneagramm-Typ?",
+                    enneagramPlaceholder: "Enneagramm-Typ auswählen",
+                    section4Title: "Teil 3: Klarheit, Länge und Design",
+                    length: "Fanden Sie den Bericht:",
+                    lengthOptions: [{value: 'too_long', label: 'Zu lang'}, {value: 'just_right', label: 'Genau richtig'}, {value: 'too_short', label: 'Zu kurz'}],
+                    clarityRating: "Wie bewerten Sie die Klarheit des Textes? (1 = Sehr kompliziert, 10 = Sehr einfach)",
+                    confusingTerms: "Gab es bestimmte Begriffe oder Abschnitte, die Sie verwirrend fanden?",
+                    confusingTermsPlaceholder: "z.B. 'Die Erklärung der Z-Scores war etwas technisch...'",
+                    visualsHelpfulness: "Wie hilfreich waren die Gehirnkarten-Visualisierungen?",
+                    visualsOptions: [{value: 'very', label: 'Sehr hilfreich'}, {value: 'somewhat', label: 'Etwas hilfreich'}, {value: 'not_at_all', label: 'Überhaupt nicht'}],
+                    section5Title: "Teil 4: Wahrgenommener Wert & Preisgestaltung",
+                    primaryBenefit: "Was sehen Sie als den Hauptnutzen dieses Berichts?",
+                    primaryBenefitPlaceholder: "z.B. 'Er gab mir eine neue Sprache, um mich selbst zu verstehen...'",
+                    recommendLikelihood: "Wie wahrscheinlich würden Sie diesen Bericht einem Freund empfehlen? (1 = Unwahrscheinlich, 10 = Sehr wahrscheinlich)",
+                    fairPrice: "Welchen Preis würden Sie angesichts der Detailliertheit und Personalisierung für fair halten?",
+                    priceOptions: [{value: '25-50', label: '€25-€50'}, {value: '50-75', label: '€50-€75'}, {value: '75-100', label: '€75-€100'}, {value: '100+', label: '€100+'}],
+                    section6Title: "Teil 5: Verbesserungsvorschläge",
+                    changesOrAdditions: "Was würden Sie am Bericht ändern oder hinzufügen, um ihn wertvoller zu machen?",
+                    changesOrAdditionsPlaceholder: "z.B. 'Vielleicht einen Abschnitt über Karrierevorschläge hinzufügen...'",
+                    wishedForInfo: "Gibt es Informationen, die Sie sich gewünscht hätten, die aber nicht enthalten waren?",
+                    wishedForInfoPlaceholder: "z.B. 'Ich war neugierig, wie sich Schlaf auf die Ergebnisse auswirkt...'",
+                    otherComments: "Haben Sie weitere Kommentare, Fragen oder Vorschläge?",
+                    otherCommentsPlaceholder: "Ihre abschließenden Gedanken hier...",
+                    submitButton: "Feedback absenden",
+                    submittingButton: "... Senden ...",
+                    successTitle: "Vielen Dank!",
+                    successDesc: "Ihr Feedback wurde empfangen. Ihre Einblicke sind unglaublich wertvoll.",
+                }
+            },
+            en: {
+                drName: "Dr. Andreas Franzelin",
+                drTitle: "Neuroscientist, Youtuber, Mental Health and Coherence Coach",
+                navHome: "Home",
+                navServices: "Services",
+                navAbout: "About Me",
+                navContact: "Contact",
+                heroTitle: "Unlock Your Potential Through Modern Neuroscience",
+                heroSubtitle: "Shaped by past experiences, our nervous system creates the reality that we experience. The realization that we can actively shape this process is the key to a self-determined life.",
+                heroButton: "Book a Consultation",
+                servicesTitle: "My Approach",
+                service1Title: "Mental Health & Coherence Coaching",
+                service1Desc: "Are you looking for psychological support with day-to-day challenges and in search of lasting change?",
+                service1Info: "If you are looking for lasting change that goes beyond mere symptom treatment, this is the right approach. I combine sound mental health strategies with the principles of coherence therapy to provide the necessary mental support and directly address the causes in your nervous system. Through targeted, emotion-based exercises, we re-regulate it and thus create the neurobiological basis for profound and lasting stability.",
+                service2Title: "EEG-Powered Insights",
+                service2Desc: "Which areas of your brain are particularly active? What personality type are you?",
+                service2Info: "-Understand how you think and feel - on an objective, biological level. Using a mobile EEG device, we analyse your brain waves while you perform various tasks. This creates your unique ‘neuronal fingerprint’: a detailed profile of your cognitive strengths and thought patterns that provides you with valuable self-knowledge.",
+                service3Title: "Chat with your Brain",
+                service3Desc: "After the EEG measurement, you can have a direct conversation with your own brain and ask specific questions. (Work in Progress )",
+                service3Info: "Engage in a direct conversation with your own mind. By uploading your recorded brain and personality data, you activate a personalized AI designed to analyze your unique profile. This intelligent system then generates customized questions, allowing you to explore specific areas of interest and gain profound insights into your own cognition.",
+                service3PriceInfo: "Included in the EEG-recording price",
+                service4Title: "Corporate & Group Workshops",
+                service4Desc: "Custom workshops for teams focusing on stress reduction, enhancing creativity, and improving team coherence using neuroscience.",
+                service4Info: "Custom workshops for teams focusing on stress reduction, enhancing creativity, and improving team coherence using neuroscience.",
+                showInfoButton: "Show Info",
+                goToGuideButton: "Go to Guide",
+                feedbackTitle: "Received an EEG Report?",
+                feedbackDesc: "Your feedback is important to us for continuously improving our analyses.",
+                feedbackButton: "Give Feedback",
+                aboutTitle: "About Me",
+                aboutP1: "As a neuroscientist, I am dedicated to researching the neuronal foundations of emotions, personality and consciousness. In doing so, I try to translate complex scientific findings into practical tools that are suitable for everyday use. In this way, I want to empower people to experience their relationships with themselves and others more consciously and make them more fulfilling.<br><br>As a mental health and coherence coach, I accompany you on the path to change. We create a safe space in which you can get to know your nervous system better. Together we observe key life experiences in order to process or emotionally re-evaluate them. This is how we set the course for profound and positive change.",
+                aboutP2: "",
+                youtubeTitle: "Latest from the Lab",
+                video1Title: "Frontal asymmetry: How the brain influences conflict and social behaviour",
+                video1Desc: "Why do some people immediately feel comfortable in social groups, while others prefer to be alone? The answer may lie in frontal asymmetry - the subtle activity imbalance between the left and right frontal hemispheres.",
+                video2Title: "Predictive coding: How predictions influence our social relationships",
+                video2Desc: "Our brain constantly predicts social situations based on past experiences. If these are based on negative patterns, conflicts are inevitable. In this episode, you will learn how to recognise such unconscious predictions and change them in a targeted manner.",
+                youtubeButton: "Visit My YouTube Channel",
+                contactTitle: "Get In Touch",
+                contactDesc: "Ready to take the first step? Fill out the form, and I will get back to you within 48 hours.",
+                connectTitle: "Connect With Me",
+                formName: "Full Name",
+                formEmail: "Email Address",
+                formService: "Service of Interest",
+                formMessage: "Message",
+                formSubmit: "Send Message",
+                footerRights: "All rights reserved.",
+                serviceOptionDefault: "General Inquiry",
+                infoModalTitle: "Service Information",
+                infoModalPriceHour: "Price per hour:",
+                infoModalProceedButton: "Proceed to Contact",
+                feedbackModalTitle: "EEG Report Feedback",
+                feedbackModalDesc: "Help us improve by sharing your thoughts.",
+                feedbackForm: {
+                    section1Title: "Client & Practitioner Information",
+                    clientName: "Client Name",
+                    clientNamePlaceholder: "Enter client's name or initials",
+                    practitionerName: "Practitioner Name",
+                    practitionerNamePlaceholder: "Enter your name",
+                    section2Title: "Part 1: Overall Impression & Interest",
+                    interest: "On a scale of 1 to 10, how interesting did you find the report overall?",
+                    lobeAnalysisInterest: "On a scale of 1 to 10, how interesting did you find the Part I Lobe-based analysis?",
+                    personalSummaryInterest: "On a scale of 1 to 10, how interesting did you find the Part II Personal Summary?",
+                    typeGuessingInterest: "On a scale of 1 to 10, how interesting did you find the Part III EEG-based Type guessing?",
+                    mostCaptivating: "What specific aspect did you find most captivating or surprising?",
+                    mostCaptivatingPlaceholder: "e.g., 'The lobe-based analysis was fascinating...'",
+                    likedMost: "What did you like most about the report overall?",
+                    likedMostPlaceholder: "e.g., 'The clear explanations and visuals...'",
+                    section3Title: "Part 2: Accuracy & Personal Resonance",
+                    overallFit: "Overall, how well did the report describe your personality? (1 = Doesn't fit, 10 = Fits perfectly)",
+                    fittingExamples: "Please provide examples of information that you felt was particularly fitting.",
+                    fittingExamplesPlaceholder: "e.g., 'The description of my social style was spot on...'",
+                    notFittingExamples: "Was there any information that did not seem to fit your personality at all?",
+                    notFittingExamplesPlaceholder: "e.g., 'The part about motivation didn't quite match...'",
+                    feltOffended: "Was there any information you felt offended by? If so, please describe.",
+                    feltOffendedPlaceholder: "Your feedback is important for improving the report's tone and sensitivity.",
+                    topStrengths: "What do you consider your top strengths?",
+                    topStrengthsPlaceholder: "e.g., being very empathic, creative problem-solving...",
+                    biggestChallenge: "What do you consider your biggest challenge?",
+                    biggestChallengePlaceholder: "e.g., difficulty with reading, public speaking...",
+                    mbtiAgreement: "The report identified an MBTI type. Do you agree with this assessment?",
+                    mbtiOptions: [{value: 'agree', label: 'Agree'}, {value: 'disagree', label: 'Disagree'}, {value: 'unsure', label: 'Unsure'}],
+                    actualMbtiType: "What is your actual MBTI type?",
+                    mbtiPlaceholder: "Select MBTI Type",
+                    actualEnneagramType: "What is your actual Enneagram type?",
+                    enneagramPlaceholder: "Select Enneagram Type",
+                    section4Title: "Part 3: Clarity, Length, and Design",
+                    length: "Did you find the report to be:",
+                    lengthOptions: [{value: 'too_long', label: 'Too Long'}, {value: 'just_right', label: 'Just Right'}, {value: 'too_short', label: 'Too Short'}],
+                    clarityRating: "How would you rate the clarity of the text? (1 = Very Complicated, 10 = Very Easy)",
+                    confusingTerms: "Were there any specific terms or sections you found confusing?",
+                    confusingTermsPlaceholder: "e.g., 'The explanation of Z-scores was a bit technical...'",
+                    visualsHelpfulness: "How helpful were the brain map visuals?",
+                    visualsOptions: [{value: 'very', label: 'Very Helpful'}, {value: 'somewhat', label: 'Somewhat Helpful'}, {value: 'not_at_all', label: 'Not at all'}],
+                    section5Title: "Part 4: Perceived Value & Pricing",
+                    primaryBenefit: "What do you see as the primary benefit of receiving this report?",
+                    primaryBenefitPlaceholder: "e.g., 'It gave me a new language to understand myself...'",
+                    recommendLikelihood: "How likely would you be to recommend this report to a friend? (1 = Not Likely, 10 = Very Likely)",
+                    fairPrice: "Considering the detail and personalization, what price would you feel is fair for this service?",
+                    priceOptions: [{value: '25-50', label: '$25-$50'}, {value: '50-75', label: '$50-$75'}, {value: '75-100', label: '$75-$100'}, {value: '100+', label: '$100+'}],
+                    section6Title: "Part 5: Suggestions for Improvement",
+                    changesOrAdditions: "What, if anything, would you change or add to the report to make it more valuable?",
+                    changesOrAdditionsPlaceholder: "e.g., 'Maybe add a section on career suggestions...'",
+                    wishedForInfo: "Is there any information you wished was included that wasn't?",
+                    wishedForInfoPlaceholder: "e.g., 'I was curious about how sleep affects the results...'",
+                    otherComments: "Do you have any other comments, questions, or suggestions?",
+                    otherCommentsPlaceholder: "Your final thoughts here...",
+                    submitButton: "Submit Feedback",
+                    submittingButton: "... Submitting ...",
+                    successTitle: "Thank You!",
+                    successDesc: "Your feedback has been received. Your insights are incredibly valuable.",
+                }
+            }
+        };
+
+        // --- CORE SCRIPT ---
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Firebase & App State ---
+            let db, auth, userId, isAuthReady = false;
+            const appId = typeof __app_id !== 'undefined' ? __app_id : 'personal-website-with-feedback';
+
+            /**
+             * Main function to initialize Firebase and set up the application.
+             */
+            async function initializeFirebase() {
+                console.log("App starting, initializing Firebase...");
+                let firebaseConfig;
+
+                try {
+                    if (typeof __firebase_config === 'undefined' || !__firebase_config) {
+                        console.error("Firebase config is missing.");
+                        return;
+                    }
+                    firebaseConfig = JSON.parse(__firebase_config);
+                } catch (error) {
+                    console.error("Failed to parse Firebase config:", error);
+                    return;
+                }
+                
+                try {
+                    const app = initializeApp(firebaseConfig);
+                    db = getFirestore(app);
+                    auth = getAuth(app);
+                    setLogLevel('debug');
+                    setupAuthListener();
+                } catch (e) {
+                    console.error("Error initializing Firebase:", e);
+                }
+            }
+
+            /**
+             * Sets up the listener for authentication state changes.
+             */
+            function setupAuthListener() {
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        isAuthReady = true;
+                        console.log("Firebase is ready. User is authenticated with UID:", userId);
+                    } else {
+                        await signInUser();
+                    }
+                });
+            }
+
+            /**
+             * Signs the user in, either with a custom token or anonymously.
+             */
+            async function signInUser() {
+                try {
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                } catch (error) {
+                    console.error("Firebase authentication failed:", error);
+                }
+            }
+
+            // --- Language Switcher ---
+            const updateLanguage = (lang) => {
+                document.documentElement.lang = lang;
+                document.querySelectorAll('[data-lang-key]').forEach(el => {
+                    const key = el.dataset.langKey;
+                    if (langData[lang][key]) {
+                        el.innerHTML = langData[lang][key];
+                    }
+                });
+
+                const serviceSelect = document.getElementById('service-select');
+                if (serviceSelect) {
+                    serviceSelect.innerHTML = `
+                        <option value="general">${langData[lang].serviceOptionDefault}</option>
+                        <option value="service1">${langData[lang].service1Title}</option>
+                        <option value="service2">${langData[lang].service2Title}</option>
+                        <option value="service3">${langData[lang].service3Title}</option>
+                        <option value="service4">${langData[lang].service4Title}</option>
+                    `;
+                }
+
+                localStorage.setItem('preferredLanguage', lang);
+                document.querySelectorAll('.lang-btn').forEach(btn => {
+                    btn.classList.remove('bg-slate-700', 'text-white');
+                    btn.classList.add('text-slate-400');
+                });
+                document.getElementById(`lang-${lang}`)?.classList.add('bg-slate-700', 'text-white');
+                document.getElementById(`lang-${lang}-mobile`)?.classList.add('bg-slate-700', 'text-white');
+            };
+
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const lang = btn.id.includes('de') ? 'de' : 'en';
+                    updateLanguage(lang);
+                });
+            });
+
+            // --- Modals ---
+            const createModal = (id, content, maxWidth = 'max-w-lg') => {
+                const backdrop = document.getElementById(id);
+                backdrop.innerHTML = `<div class="modal-content bg-gradient-to-br from-gray-50 to-indigo-100 w-full ${maxWidth} max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl p-4 sm:p-8 transform scale-95">${content}</div>`;
+                return backdrop;
+            };
+
+            const toggleModal = (backdrop, show) => {
+                const content = backdrop.querySelector('.modal-content');
+                if (show) {
+                    backdrop.classList.remove('hidden');
+                    backdrop.classList.add('flex');
+                    setTimeout(() => {
+                        backdrop.classList.remove('opacity-0');
+                        content.classList.remove('scale-95');
+                    }, 10);
+                } else {
+                    backdrop.classList.add('opacity-0');
+                    content.classList.add('scale-95');
+                    setTimeout(() => {
+                        backdrop.classList.add('hidden');
+                        backdrop.classList.remove('flex');
+                    }, 300);
+                }
+            };
+            
+            // --- Info Modal ---
+            document.querySelectorAll('.info-service-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const serviceId = btn.dataset.service;
+                    const price = btn.dataset.price;
+                    const lang = localStorage.getItem('preferredLanguage') || 'de';
+                    const serviceTitle = langData[lang][`${serviceId}Title`];
+                    let serviceInfo = langData[lang][`${serviceId}Info`];
+                    
+                    let modalHTML;
+
+                    if (serviceId === 'service3') {
+                        modalHTML = `
+                            <div class="flex justify-between items-center mb-6">
+                                <h2 class="text-2xl font-bold text-slate-800">${serviceTitle}</h2>
+                                <button class="close-modal-btn text-gray-400 hover:text-gray-600 text-3xl">×</button>
+                            </div>
+                            <div class="bg-white p-6 rounded-lg mb-6">
+                                <p class="text-slate-600 mb-4">${serviceInfo}</p>
+                                <p class="text-lg font-bold text-slate-900 mt-4">${langData[lang].service3PriceInfo}</p>
+                            </div>
+                            <button id="open-guide" class="w-full bg-slate-800 text-white font-bold py-3 rounded-lg hover:bg-slate-700 transition-colors">${langData[lang].goToGuideButton}</button>
+                        `;
+                    } else {
+                        modalHTML = `
+                            <div class="flex justify-between items-center mb-6">
+                                <h2 class="text-2xl font-bold text-slate-800">${langData[lang].infoModalTitle}</h2>
+                                <button class="close-modal-btn text-gray-400 hover:text-gray-600 text-3xl">×</button>
+                            </div>
+                            <div class="bg-white p-6 rounded-lg mb-6">
+                                <h3 class="text-xl font-semibold text-slate-700 mb-2">${serviceTitle}</h3>
+                                <p class="text-slate-600 mb-4">${serviceInfo}</p>
+                                <p class="text-lg font-bold text-slate-900 mt-4">${langData[lang].infoModalPriceHour} €${price}</p>
+                            </div>
+                            <button id="proceed-to-contact" class="w-full bg-slate-800 text-white font-bold py-3 rounded-lg hover:bg-slate-700 transition-colors">${langData[lang].infoModalProceedButton}</button>
+                        `;
+                    }
+                    
+                    const modal = createModal('info-modal-backdrop', modalHTML);
+                    toggleModal(modal, true);
+
+                    modal.querySelector('.close-modal-btn').addEventListener('click', () => toggleModal(modal, false));
+                    
+                    if (serviceId === 'service3') {
+                        modal.querySelector('#open-guide').addEventListener('click', () => {
+                            toggleModal(modal, false);
+                            document.getElementById('guide-modal').classList.remove('hidden');
+                            initializeGuide();
+                        });
+                    } else {
+                         modal.querySelector('#proceed-to-contact').addEventListener('click', () => {
+                            toggleModal(modal, false);
+                            document.querySelector('#contact').scrollIntoView({ behavior: 'smooth' });
+                            document.getElementById('service-select').value = serviceId;
+                        });
+                    }
+                });
+            });
+
+            // === NEW SCRIPT FOR CV MODAL ===
+            document.getElementById('open-cv-modal').addEventListener('click', () => {
+                const cvModalBackdrop = document.getElementById('cv-modal-backdrop');
+                const cvContent = `
+                    <div class="text-slate-700">
+                        <div class="flex justify-between items-start mb-6">
+                            <h2 class="text-3xl font-bold text-slate-800">Curriculum Vitae</h2>
+                            <button class="close-modal-btn text-gray-400 hover:text-gray-600 text-3xl">&times;</button>
+                        </div>
+
+                        <div class="space-y-8 text-left">
+                            <section>
+                                <h3 class="text-xl font-bold border-b-2 border-slate-300 pb-2 mb-4 text-slate-700">WORK EXPERIENCE</h3>
+                                <div class="space-y-6">
+                                    <div>
+                                        <h4 class="font-bold text-lg">Ph.D. Researcher</h4>
+                                        <p class="text-slate-600">University Medical Center Hamburg-Eppendorf | Hamburg, Germany (2019-2024)</p>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-lg">Master Researcher</h4>
+                                        <p class="text-slate-600">University Medical Center Hamburg-Eppendorf | Hamburg, Germany (2016-2018)</p>
+                                        <ul class="list-disc list-inside mt-2 space-y-1 text-slate-600">
+                                            <li>Designed and conducted pharmacological-behavioral experiments</li>
+                                            <li>Innovated novel experimental methodologies and research tools</li>
+                                            <li>Data presentation in-house and at international conferences</li>
+                                            <li>Established brain-clearing techniques for enhanced light-sheet microscopy visualization</li>
+                                            <li>International and national collaborations with research groups</li>
+                                            <li>Independent experiment design and data acquisition and analysis</li>
+                                            <li>Established an analytical pipeline for the study of behavioral neuronal activation in the hippocampus</li>
+                                            <li>Formulated custom Matlab scripts tailored to analyze large data sets</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-lg">Project Collaborator</h4>
+                                        <p class="text-slate-600">University of Bicocca | Milano, Italy (2015-2016)</p>
+                                        <ul class="list-disc list-inside mt-2 space-y-1 text-slate-600">
+                                           <li>Scientific research: Investigation of Sox2 in the visual cortex during development. Department of Developmental Neurobiology</li>
+                                        </ul>
+                                    </div>
+                                     <div>
+                                        <h4 class="font-bold text-lg">Project Collaborator</h4>
+                                        <p class="text-slate-600">University of Veterinary Medicine | Vienna, Austria (2013-2014)</p>
+                                        <ul class="list-disc list-inside mt-2 space-y-1 text-slate-600">
+                                           <li>Scientific research: Effect of phytocannabinoids on BV2 microglial cells. Department of Biomedical Sciences</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <h3 class="text-xl font-bold border-b-2 border-slate-300 pb-2 mb-4 text-slate-700">EDUCATION</h3>
+                                <ul class="list-disc list-inside space-y-2 text-slate-600">
+                                    <li><span class="font-semibold">Ph.D. in Neuroscience</span>, Universitätsklinikum Eppendorf-Hamburg (ZMNH) (2019-2024)</li>
+                                    <li><span class="font-semibold">M.Sc. in Molecular Biology</span>, University of Vienna, Austria (2015-2018)</li>
+                                    <li><span class="font-semibold">B.Sc. in Microbiology and Genetics</span>, University of Vienna, Austria (2010-2014)</li>
+                                </ul>
+                            </section>
+                            
+                            <section>
+                                <h3 class="text-xl font-bold border-b-2 border-slate-300 pb-2 mb-4 text-slate-700">MENTORING & TEACHING EXPERIENCE</h3>
+                                <ul class="list-disc list-inside space-y-2 text-slate-600">
+                                    <li>Supervisor, Master course in Neuroscience (University of Hamburg, Germany, 2022)</li>
+                                    <li>Supervisor, Bachelor course in Cell Biology, Vienna BioCenter, Austria (2015-2016)</li>
+                                    <li>Science Communicator, University of Vienna, Austria (2014)</li>
+                                </ul>
+                            </section>
+
+                            <section>
+                                <h3 class="text-xl font-bold border-b-2 border-slate-300 pb-2 mb-4 text-slate-700">SELECTED PUBLICATIONS</h3>
+                                <div class="space-y-4 text-slate-600">
+                                    <p><span class="font-semibold">Lamothe-Molina, Franzelin et al. (2022).</span> “ΔFosB Accumulation in Hippocampal Granule Cells Drives cFos Pattern Separation during Spatial Learning.” <em>Nature Communications</em>. <a href="https://doi.org/10.1038/s41467-022-33947-w" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">DOI: 10.1038/s41467-022-33947-w</a></p>
+                                    <p><span class="font-semibold">Perez-Alvarez et al. (2021).</span> “Freeze-Frame Imaging of Dendritic Calcium Signals with TubuTag.” <em>Frontiers in Molecular Neuroscience</em>.</p>
+                                </div>
+                            </section>
+
+                            <section>
+                                <h3 class="text-xl font-bold border-b-2 border-slate-300 pb-2 mb-4 text-slate-700">SELECTED PREPRINTS AND BOOKS</h3>
+                                <div class="space-y-4 text-slate-600">
+                                    <p><span class="font-semibold">Franzelin et al. (2024).</span> “Epigenetic Repression of cFos Supports Sequential Formation of Distinct Spatial Memories.” <em>BioRxiv</em>.</p>
+                                    <p><span class="font-semibold">Anisimova et al. (2023).</span> “Neuronal FOS Reports Synchronized Activity of Presynaptic Neurons.” <em>BioRxiv</em>.</p>
+                                    <p><span class="font-semibold">Chapter: Optogenetic approaches to study IEG activation</span> in <em>Transcriptional Regulation by Neuronal Activity: To the Nucleus and Back</em> (Springer Nature, S.M. Dudek, 2025)</p>
+                                </div>
+                            </section>
+
+                            <section>
+                                <h3 class="text-xl font-bold border-b-2 border-slate-300 pb-2 mb-4 text-slate-700">WORKSHOPS, TRAINING & AWARDS</h3>
+                                <ul class="list-disc list-inside space-y-2 text-slate-600">
+                                    <li>UKE Paper of the Month (2022)</li>
+                                    <li>Attended workshops on scientific presentation and writing (UKE Hamburg)</li>
+                                    <li>Attended School of Neuroscience in Venice (2018)</li>
+                                    <li>Certified in animal training: Felasa B</li>
+                                    <li>Data Scientist course (2025)</li>
+                                    <li>Mental-health Coaching (2025)</li>
+                                    <li>Coherence Therapy Practice (2025)</li>
+                                    <li>Expert on EEG Analysis and EEG training</li>
+                                </ul>
+                            </section>
+                             <section>
+                                <h3 class="text-xl font-bold border-b-2 border-slate-300 pb-2 mb-4 text-slate-700">CONFERENCE PRESENTATIONS</h3>
+                                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-slate-600">
+                                   <p>Washington, 2023</p>
+                                   <p>Göttingen, 2023</p>
+                                   <p>Lausanne, 2023</p>
+                                   <p>FENS, 2019</p>
+                                   <p>Bonn, 2018</p>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                `;
+                const modal = createModal('cv-modal-backdrop', cvContent, 'max-w-4xl');
+                toggleModal(modal, true);
+                modal.querySelector('.close-modal-btn').addEventListener('click', () => toggleModal(modal, false));
+            });
+            
+
+            // --- Contact Form Logic (UPDATED FOR FORMSPREE) ---
+            const contactForm = document.getElementById('contact-form');
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const form = e.target;
+                const data = new FormData(form);
+                const formFeedback = document.getElementById('form-feedback');
+                const lang = localStorage.getItem('preferredLanguage') || 'de';
+
+                fetch(form.action, {
+                    method: form.method,
+                    body: data,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        const successMessage = lang === 'de' 
+                            ? 'Vielen Dank! Ihre Nachricht wurde gesendet.' 
+                            : 'Thank you! Your message has been sent.';
+                        formFeedback.innerHTML = `<p class="text-green-400">${successMessage}</p>`;
+                        form.reset();
+                    } else {
+                        response.json().then(data => {
+                            if (Object.hasOwn(data, 'errors')) {
+                               const errorMessage = data["errors"].map(error => error["message"]).join(", ");
+                               formFeedback.innerHTML = `<p class="text-red-400">Error: ${errorMessage}</p>`;
+                            } else {
+                               formFeedback.innerHTML = `<p class="text-red-400">Oops! There was a problem submitting your form.</p>`;
+                            }
+                        })
+                    }
+                }).catch(error => {
+                    formFeedback.innerHTML = `<p class="text-red-400">Oops! There was a problem submitting your form.</p>`;
+                });
+
+                setTimeout(() => {
+                    formFeedback.innerHTML = '';
+                }, 5000);
+            });
+
+            // --- Feedback Modal ---
+            document.getElementById('open-feedback-modal').addEventListener('click', () => {
+                const lang = localStorage.getItem('preferredLanguage') || 'de';
+                const t = langData[lang].feedbackForm;
+                const mbtiTypes = ['ISTJ', 'ISFJ', 'INFJ', 'INTJ', 'ISTP', 'ISFP', 'INFP', 'INTP', 'ESTP', 'ESFP', 'ENFP', 'ENTP', 'ESTJ', 'ESFJ', 'ENFJ', 'ENTJ', 'Unsure'];
+                const enneagramTypes = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'Unsure'];
+
+                let formHTML = '';
+                const formSections = [
+                    { title: t.section1Title, fields: [
+                        { type: 'text', name: 'clientName', label: t.clientName, placeholder: t.clientNamePlaceholder },
+                        { type: 'text', name: 'practitionerName', label: t.practitionerName, placeholder: t.practitionerNamePlaceholder },
+                    ]},
+                    { title: t.section2Title, fields: [
+                        { type: 'rating', name: 'interest', label: t.interest },
+                        { type: 'rating', name: 'lobeAnalysisInterest', label: t.lobeAnalysisInterest },
+                        { type: 'rating', name: 'personalSummaryInterest', label: t.personalSummaryInterest },
+                        { type: 'rating', name: 'typeGuessingInterest', label: t.typeGuessingInterest },
+                        { type: 'textarea', name: 'mostCaptivating', label: t.mostCaptivating, placeholder: t.mostCaptivatingPlaceholder },
+                        { type: 'textarea', name: 'likedMost', label: t.likedMost, placeholder: t.likedMostPlaceholder },
+                    ]},
+                    { title: t.section3Title, fields: [
+                        { type: 'rating', name: 'overallFit', label: t.overallFit },
+                        { type: 'textarea', name: 'fittingExamples', label: t.fittingExamples, placeholder: t.fittingExamplesPlaceholder },
+                        { type: 'textarea', name: 'notFittingExamples', label: t.notFittingExamples, placeholder: t.notFittingExamplesPlaceholder },
+                        { type: 'textarea', name: 'feltOffended', label: t.feltOffended, placeholder: t.feltOffendedPlaceholder },
+                        { type: 'textarea', name: 'topStrengths', label: t.topStrengths, placeholder: t.topStrengthsPlaceholder },
+                        { type: 'textarea', name: 'biggestChallenge', label: t.biggestChallenge, placeholder: t.biggestChallengePlaceholder },
+                        { type: 'radio', name: 'mbtiAgreement', label: t.mbtiAgreement, options: t.mbtiOptions },
+                        { type: 'select', name: 'actualMbtiType', label: t.actualMbtiType, options: mbtiTypes, placeholder: t.mbtiPlaceholder },
+                        { type: 'select', name: 'actualEnneagramType', label: t.actualEnneagramType, options: enneagramTypes, placeholder: t.enneagramPlaceholder },
+                    ]},
+                    { title: t.section4Title, fields: [
+                        { type: 'radio', name: 'length', label: t.length, options: t.lengthOptions },
+                        { type: 'rating', name: 'clarityRating', label: t.clarityRating },
+                        { type: 'textarea', name: 'confusingTerms', label: t.confusingTerms, placeholder: t.confusingTermsPlaceholder },
+                        { type: 'radio', name: 'visualsHelpfulness', label: t.visualsHelpfulness, options: t.visualsOptions },
+                    ]},
+                    { title: t.section5Title, fields: [
+                        { type: 'textarea', name: 'primaryBenefit', label: t.primaryBenefit, placeholder: t.primaryBenefitPlaceholder },
+                        { type: 'rating', name: 'recommendLikelihood', label: t.recommendLikelihood },
+                        { type: 'radio', name: 'fairPrice', label: t.fairPrice, options: t.priceOptions },
+                    ]},
+                    { title: t.section6Title, fields: [
+                        { type: 'textarea', name: 'changesOrAdditions', label: t.changesOrAdditions, placeholder: t.changesOrAdditionsPlaceholder },
+                        { type: 'textarea', name: 'wishedForInfo', label: t.wishedForInfo, placeholder: t.wishedForInfoPlaceholder },
+                        { type: 'textarea', name: 'otherComments', label: t.otherComments, placeholder: t.otherCommentsPlaceholder },
+                    ]}
+                ];
+
+                formSections.forEach(section => {
+                    formHTML += `<div class="bg-white/80 p-6 rounded-2xl shadow-lg"><h2 class="text-2xl font-bold text-gray-800 border-b-2 border-indigo-200 pb-4 mb-6">${section.title}</h2><div class="space-y-6">`;
+                    section.fields.forEach(field => {
+                        formHTML += `<div><label class="block text-lg font-semibold text-gray-700 mb-2">${field.label}</label>`;
+                        switch (field.type) {
+                            case 'text':
+                                formHTML += `<input type="text" name="${field.name}" placeholder="${field.placeholder}" class="w-full p-3 bg-gray-50 border border-gray-300 rounded-lg">`;
+                                break;
+                            case 'textarea':
+                                formHTML += `<textarea name="${field.name}" placeholder="${field.placeholder}" class="w-full p-3 bg-gray-50 border border-gray-300 rounded-lg" rows="3"></textarea>`;
+                                break;
+                            case 'rating':
+                                formHTML += `<div class="star-rating flex flex-wrap gap-x-1" data-name="${field.name}"></div>`;
+                                break;
+                            case 'radio':
+                                formHTML += `<div class="flex flex-wrap gap-3">${field.options.map(o => `<label class="flex items-center space-x-2 bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 cursor-pointer hover:bg-indigo-50"><input type="radio" name="${field.name}" value="${o.value}" class="form-radio h-4 w-4 text-indigo-600"><span>${o.label}</span></label>`).join('')}</div>`;
+                                break;
+                            case 'select':
+                                formHTML += `<select name="${field.name}" class="w-full p-3 bg-gray-50 border border-gray-300 rounded-lg"><option value="" disabled selected>${field.placeholder}</option>${field.options.map(o => `<option value="${o}">${o}</option>`).join('')}</select>`;
+                                break;
+                        }
+                        formHTML += `</div>`;
+                    });
+                    formHTML += `</div></div>`;
+                });
+
+                const feedbackModalHTML = `
+                    <div class="flex justify-between items-center mb-6">
+                        <header class="text-left">
+                            <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight">${langData[lang].feedbackModalTitle}</h1>
+                            <p class="mt-2 text-lg text-gray-600">${langData[lang].feedbackModalDesc}</p>
+                        </header>
+                        <button class="close-modal-btn text-gray-400 hover:text-gray-600 text-3xl">×</button>
+                    </div>
+                    <div id="feedback-form-container">
+                        <form id="eeg-feedback-form" class="space-y-8">
+                            ${formHTML}
+                            <div class="mt-10 text-center">
+                                <button type="submit" id="feedback-submit-button" class="bg-indigo-600 text-white font-bold py-4 px-10 rounded-full hover:bg-indigo-700 transition-all transform hover:scale-105">${t.submitButton}</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="feedback-success" class="hidden text-center">
+                        <i data-lucide="check-circle-2" class="mx-auto h-16 w-16 text-green-500"></i>
+                        <h1 class="mt-4 text-3xl font-extrabold text-gray-800">${t.successTitle}</h1>
+                        <p class="mt-2 text-lg text-gray-600">${t.successDesc}</p>
+                    </div>
+                `;
+                const modal = createModal('feedback-modal-backdrop', feedbackModalHTML, 'max-w-4xl');
+                toggleModal(modal, true);
+                
+                modal.querySelectorAll('.star-rating').forEach(container => {
+                    for (let i = 1; i <= 10; i++) {
+                        const star = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                        star.setAttribute('class', 'star w-8 h-8 cursor-pointer text-gray-300');
+                        star.setAttribute('fill', 'currentColor');
+                        star.setAttribute('viewBox', '0 0 20 20');
+                        star.innerHTML = `<path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />`;
+                        star.dataset.value = i;
+                        container.appendChild(star);
+                    }
+                });
+                lucide.createIcons();
+
+                modal.querySelector('.close-modal-btn').addEventListener('click', () => toggleModal(modal, false));
+                
+                modal.querySelector('#eeg-feedback-form').addEventListener('click', (e) => {
+                    if (e.target.closest('.star-rating .star')) {
+                        const star = e.target.closest('.star');
+                        const ratingContainer = star.parentElement;
+                        const value = star.dataset.value;
+                        ratingContainer.dataset.rating = value;
+                        Array.from(ratingContainer.children).forEach(s => {
+                            s.classList.toggle('text-yellow-400', s.dataset.value <= value);
+                            s.classList.toggle('text-gray-300', s.dataset.value > value);
+                        });
+                    }
+                });
+
+                modal.querySelector('#eeg-feedback-form').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    if (!db || !isAuthReady) {
+                        alert("Connection not ready. Please wait and try again.");
+                        return;
+                    }
+                    const submitBtn = modal.querySelector('#feedback-submit-button');
+                    const t = langData[localStorage.getItem('preferredLanguage') || 'de'].feedbackForm;
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = t.submittingButton;
+
+                    const formData = new FormData(e.target);
+                    const feedbackData = {};
+                    for (let [key, value] of formData.entries()) {
+                        feedbackData[key] = value;
+                    }
+                    modal.querySelectorAll('.star-rating').forEach(container => {
+                        feedbackData[container.dataset.name] = parseInt(container.dataset.rating || 0, 10);
+                    });
+
+                    try {
+                        const feedbackCollectionRef = collection(db, `/artifacts/${appId}/public/data/feedback`);
+                        await addDoc(feedbackCollectionRef, {
+                            userId: userId || 'anonymous',
+                            submittedAt: new Date().toISOString(),
+                            ...feedbackData
+                        });
+                        modal.querySelector('#feedback-form-container').classList.add('hidden');
+                        modal.querySelector('#feedback-success').classList.remove('hidden');
+                    } catch (error) {
+                        console.error("Error writing to Firestore: ", error);
+                        alert("Error submitting feedback.");
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = t.submitButton;
+                    }
+                });
+            });
+
+            // --- Guide Modal Logic ---
+            document.getElementById('close-guide-modal').addEventListener('click', () => {
+                document.getElementById('guide-modal').classList.add('hidden');
+            });
+
+            function initializeGuide() {
+                const guideContainer = document.getElementById('guide-modal');
+                lucide.createIcons({
+                    context: guideContainer
+                });
+                
+                const sections = guideContainer.querySelectorAll('.fade-in-section');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-visible');
+                        }
+                    });
+                }, { threshold: 0.1 });
+                sections.forEach(section => observer.observe(section));
+
+                const personalityData = [
+                    { "title": "Extroverted", "personality_traits": ["Energized by external engagement with people and activities.", "Processes thoughts by talking; is action-oriented.", "Seeks variety and breadth of experience; drained by solitude."], "neuroscientific_correlations": ["Low alpha waves indicate a brain open to sensory input.", "High frontal lobe beta waves reflect active processing of the external world.", "Low sensory lobe theta waves suggest a mind anchored in the present."] },
+                    { "title": "Introverted", "personality_traits": ["Energized by their inner world; needs solitude to recharge.", "Processes information internally before speaking or acting.", "Favors depth in interests and relationships over breadth."], "neuroscientific_correlations": ["High alpha waves indicate a brain filtering external distractions.", "Calm frontal lobe beta waves suggest a default state of internal reflection.", "High sensory lobe theta waves reflect a mind comfortable with imagination."] },
+                    { "title": "Intuition", "personality_traits": ["Drawn to abstract concepts, patterns, and future possibilities.", "Seeks underlying meanings and experiences 'Aha!' moments.", "Forward-thinking and innovative; prefers the big picture over details."], "neuroscientific_correlations": ["High frontal lobe gamma waves signify the formation of novel ideas.", "High alpha waves allow the brain to filter sensory details for abstract thought.", "Low occipital lobe beta waves suggest less focus on literal, visual details."] },
+                    { "title": "Sensing", "personality_traits": ["Grounded in the present, trusting concrete, observable information.", "Practical and pragmatic, relying on facts and past experience.", "Detail-oriented and sequential; values hands-on application."], "neuroscientific_correlations": ["Low frontal lobe gamma waves reflect a reliance on known facts over abstract patterns.", "Low alpha waves indicate a brain receptive to real-world sensory information.", "High occipital lobe beta waves show a conscious focus on tangible details."] },
+                    { "title": "Feeling", "personality_traits": ["Makes decisions based on humanistic implications and personal values.", "Empathetic and strives for interpersonal harmony and consensus.", "Judges situations by their potential impact on people and relationships."], "neuroscientific_correlations": ["High temporal lobe gamma waves indicate sharp insight into social and emotional cues.", "High frontal lobe alpha waves reflect an inward turn to consult personal values.", "High theta waves in social cognition lobes suggest a state of empathetic simulation."] },
+                    { "title": "Thinking", "personality_traits": ["Makes decisions by stepping back for objective, logical analysis.", "Guided by principles and a desire for effective, truthful solutions.", "Critiques with detached precision to improve systems impartially."], "neuroscientific_correlations": ["Low temporal lobe gamma waves indicate a focus on literal meaning over emotional subtext.", "Low frontal lobe alpha waves reflect a brain open to external, objective data.", "High beta waves in analytical lobes show active processing of logical problems."] },
+                    { "title": "Perceiving", "personality_traits": ["Oriented toward keeping options open with flexibility and spontaneity.", "Prefers an adaptable lifestyle, energized by discovery and new information.", "Enjoys improvisation and freedom; feels constrained by rigid plans."], "neuroscientific_correlations": ["Low alpha wave activity suggests an open-mindedness to new opportunities.", "High sensory lobe gamma waves reflect a brain skilled at adapting to new experiences.", "Low frontal theta waves signify a broad, scanning attention ideal for discovery."] },
+                    { "title": "Judging", "personality_traits": ["Oriented toward bringing structure, order, and closure to their world.", "Prefers a planned, organized lifestyle, systematically working toward goals.", "Energized by progress and completion; feels stressed by ambiguity."], "neuroscientific_correlations": ["High alpha wave activity shows executive control and filtering of distractions.", "Low sensory lobe gamma waves reflect a focus on the existing plan over new data.", "High frontal theta waves indicate the deep concentration needed to complete tasks."] }
+                ];
+                
+                const traitColors = {
+                    'Extroverted': '#D97706', 'Introverted': '#0D9488', 'Intuition': '#F59E0B', 'Sensing': '#1E3A8A',
+                    'Feeling': '#06B6D4', 'Thinking': '#EF4444', 'Perceiving': '#FBBF24', 'Judging': '#6366F1',
+                };
+
+                const navButtonsContainer = guideContainer.querySelector('#nav-buttons');
+                const contentArea = guideContainer.querySelector('#content-area');
+                let activeButton = null;
+
+                function displayContent(title) {
+                    const item = personalityData.find(p => p.title === title);
+                    if (!item) return;
+                    
+                    const activeColor = traitColors[title] || '#6366F1';
+
+                    contentArea.innerHTML = '';
+                    const card = document.createElement('div');
+                    card.className = 'bg-white rounded-xl shadow-inner p-6 md:p-8 card-enter border-t-4';
+                    card.style.borderTopColor = activeColor;
+                    
+                    const personalityList = item.personality_traits.map(trait => `<li class="flex items-start space-x-3"><svg class="flex-shrink-0 h-6 w-6" style="color: ${activeColor};" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg><span class="text-slate-700">${trait}</span></li>`).join('');
+                    const neuroList = item.neuroscientific_correlations.map(corr => `<li class="flex items-start space-x-3"><svg class="flex-shrink-0 h-6 w-6 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><span class="text-slate-700">${corr}</span></li>`).join('');
+
+                    card.innerHTML = `<div class="grid grid-cols-1 md:grid-cols-2 gap-8"><div><h3 class="text-xl font-semibold mb-4" style="color: ${activeColor};">Personality Traits</h3><ul class="space-y-3">${personalityList}</ul></div><div><h3 class="text-xl font-semibold mb-4 text-slate-700">Neuroscientific Correlations</h3><ul class="space-y-3">${neuroList}</ul></div></div>`;
+                    contentArea.appendChild(card);
+                    setTimeout(() => card.classList.add('card-enter-active'), 10);
+
+                    if (activeButton) {
+                        activeButton.classList.remove('text-white');
+                        activeButton.style.backgroundColor = '';
+                        activeButton.classList.add('bg-slate-200', 'text-slate-700');
+                    }
+                    const newActiveButton = guideContainer.querySelector(`button[data-title="${title}"]`);
+                    if (newActiveButton) {
+                        newActiveButton.classList.remove('bg-slate-200', 'text-slate-700');
+                        newActiveButton.style.backgroundColor = activeColor;
+                        newActiveButton.classList.add('text-white');
+                        activeButton = newActiveButton;
+                    }
+                }
+
+                if (navButtonsContainer.children.length === 0) {
+                    personalityData.forEach(item => {
+                        const button = document.createElement('button');
+                        button.textContent = item.title;
+                        button.dataset.title = item.title;
+                        button.className = 'px-4 py-2 rounded-lg font-semibold shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105 bg-slate-200 text-slate-700';
+                        button.onclick = () => displayContent(item.title);
+                        navButtonsContainer.appendChild(button);
+                    });
+                }
+
+                if (personalityData.length > 0) {
+                    displayContent(personalityData[0].title);
+                }
+
+                const geminiButton = guideContainer.querySelector('#gemini-button');
+                const geminiPromptEl = guideContainer.querySelector('#gemini-prompt');
+                const geminiResultEl = guideContainer.querySelector('#gemini-result');
+                const geminiLoader = guideContainer.querySelector('#gemini-loader');
+
+                geminiButton.addEventListener('click', async () => {
+                    const userPrompt = geminiPromptEl.value;
+                    if (!userPrompt.trim()) {
+                        geminiResultEl.innerText = "Please enter a question or description first.";
+                        geminiResultEl.style.display = 'block';
+                        return;
+                    }
+
+                    geminiLoader.style.display = 'block';
+                    geminiResultEl.style.display = 'none';
+                    geminiButton.disabled = true;
+
+                    const fullPrompt = `You are a creative and insightful assistant interpreting brain activity data. Based on the following user-provided information about their brain scan, write a short, creative, and metaphorical story or interpretation. Focus on making it positive and empowering. Avoid making medical claims. User's input: "${userPrompt}"`;
+
+                    try {
+                        let chatHistory = [{ role: "user", parts: [{ text: fullPrompt }] }];
+                        const payload = { contents: chatHistory };
+                        const apiKey = "";
+                        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                        
+                        const response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+
+                        if (!response.ok) throw new Error(`API request failed with status ${response.status}`);
+
+                        const result = await response.json();
+                        
+                        if (result.candidates && result.candidates[0]?.content?.parts?.[0]) {
+                            const text = result.candidates[0].content.parts[0].text;
+                            geminiResultEl.innerText = text;
+                        } else {
+                            throw new Error("Invalid response structure from API.");
+                        }
+
+                    } catch (error) {
+                        console.error("Gemini API Error:", error);
+                        geminiResultEl.innerText = "Sorry, something went wrong while getting your insight. Please try again later.";
+                    } finally {
+                        geminiLoader.style.display = 'none';
+                        geminiResultEl.style.display = 'block';
+                        geminiButton.disabled = false;
+                    }
+                });
+            }
+
+            // --- Initial Page Load ---
+            initializeFirebase();
+            
+            const preferredLanguage = localStorage.getItem('preferredLanguage') || 'de';
+            updateLanguage(preferredLanguage);
+            
+            document.getElementById('year').textContent = new Date().getFullYear();
+            const yearMobile = document.getElementById('year-mobile');
+            if(yearMobile) yearMobile.textContent = new Date().getFullYear();
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>

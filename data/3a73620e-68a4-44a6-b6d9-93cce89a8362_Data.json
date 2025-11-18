@@ -1,0 +1,170 @@
+{
+    "clientName": "AK",
+    "taskName": "Meditation",
+    "groupN": 246,
+    "axisRange": [
+        -2.0,
+        2.0
+    ],
+    "aiSummaryReport": "### Overall Summary\nThis session demonstrated significant strengths in achieving deep, internal focus, effectively quieting mind-wandering, and reducing distractions from memories or future plans. There was a notable ability to direct attention intentionally. However, challenges were observed in sustaining this focus over time, maintaining physical stillness, and consciously integrating internal bodily sensations. The meditative style profile indicates a leaning towards deep concentration, characterized by an effortless 'flow state' in focus, yet with a concurrent high degree of raw physical sensory processing that appeared to require active attentional control.\n\n---\n\n### Key Strengths (Performance)\n1.  **Frontal Midline Theta Power**: Normalized Score: 2.00. This exceptionally high score indicates a very deep level of concentration and sustained internal focus during the session.\n2.  **DMN Coherence (Mind Wandering)**: Normalized Score: -1.50. This low score reflects a significantly quieter mind with substantially less internal rumination and self-talk.\n3.  **DMN Total Flow (Memory Retrieval)**: Normalized Score: -1.48. This low score suggests the mind was well-anchored in the present moment, with minimal distraction from memories or future planning.\n4.  **DAN (Voluntary Attention)**: Normalized Score: 1.26. This strong score signifies a robust ability to consciously direct and sustain focus during the meditation.\n\n---\n\n### Areas for Improvement (Performance)\n1.  **DAN (Maintenance)**: Normalized Score: -1.94. This very low score indicates difficulty in consistently maintaining the 'focus spotlight' over an extended period during the session.\n2.  **VAN (Distractibility)**: Normalized Score: 2.00. This exceptionally high score suggests the brain experienced a significant level of distraction by external or internal stimuli, indicating a reactive rather than a calm and stable mind.\n3.  **SMN (Motor Quiescence)**: Normalized Score: -2.00. This very low score reflects a significant challenge in achieving deep physical stillness, indicating the brain was not effectively 'decoupling' from motor planning.\n4.  **Interoceptive Network (Internal Signals)**: Normalized Score: -2.00. This very low score indicates a diminished conscious perception and interpretation of the body's internal states, suggesting a weak mind-body connection in terms of translating raw physical signals into conscious awareness.\n\n---\n\n### Meditative Style Profile\nThe meditative style during this session appears to favor deep, concentrative, or insight-based practices, as indicated by a slightly low **Frontal Alpha/Theta Ratio**. There was a successful suppression of external sensory input, particularly visual stimuli, suggesting a strong internal focus (**Posterior Alpha Power**). Interestingly, the session demonstrated an exceptionally low level of mental effort, characteristic of an effortless 'flow state' often seen in experienced meditators (**CEN Coherence (Mental Effort)**).\n\nDespite this perceived effortlessness, there was a very strong 'control signal' directing attention, implying an active process of managing distractions or guiding focus (**CEN Total Flow (Control Signal)**). The brain's 'detector' for catching distractions was moderately active, which is beneficial for cultivating mindfulness (**Salience Network (Mindfulness)**).\n\nA significant characteristic of this session was the very high activity in the brain's raw sensory processing centers, indicating intense processing of physical sensations such as touch, posture, or potential physical restlessness (**SMN (Sensory Processing)**). This heightened raw physical sensation processing, combined with the very low conscious interpretation of internal bodily states (**Interoceptive Network (Internal Signals)**), suggests a potential disconnect where raw physical inputs are strongly registered but not fully integrated into conscious awareness. This profile suggests a meditator capable of profound internal concentration and an effortless state of focus, but who is actively engaged in managing attention amidst a strong undercurrent of raw physical sensations, which are not being consciously interpreted as internal bodily awareness.",
+    "metrics": [
+        {
+            "pillar": "Classic Meditation Markers",
+            "name": "Frontal Alpha/Theta Ratio",
+            "desc": {
+                "high": "Relaxed Awareness",
+                "low": "Deep Concentration"
+            },
+            "type": "two_directional",
+            "direction": null,
+            "groupMean": 0.0,
+            "expertReference": null,
+            "individualValue": 0.09
+        },
+        {
+            "pillar": "Classic Meditation Markers",
+            "name": "Frontal Midline Theta Power",
+            "desc": "Higher = Deep concentration",
+            "type": "one_directional",
+            "direction": 1.0,
+            "groupMean": 0.0,
+            "expertReference": 1.0,
+            "individualValue": 2.0
+        },
+        {
+            "pillar": "Classic Meditation Markers",
+            "name": "Posterior Alpha Power",
+            "desc": {
+                "high": "Internal Focus",
+                "low": "Open Monitoring"
+            },
+            "type": "two_directional",
+            "direction": null,
+            "groupMean": 0.0,
+            "expertReference": null,
+            "individualValue": 1.138
+        },
+        {
+            "pillar": "DMN & CEN (Task Mode)",
+            "name": "DMN Coherence (Mind Wandering)",
+            "desc": "Lower = Less internal rumination.",
+            "type": "one_directional",
+            "direction": -1.0,
+            "groupMean": 0.0,
+            "expertReference": 1.0,
+            "individualValue": -1.499
+        },
+        {
+            "pillar": "DMN & CEN (Task Mode)",
+            "name": "DMN Total Flow (Memory Retrieval)",
+            "desc": "Lower = Less retrieval of memories.",
+            "type": "one_directional",
+            "direction": -1.0,
+            "groupMean": 0.0,
+            "expertReference": 1.0,
+            "individualValue": -1.481
+        },
+        {
+            "pillar": "DMN & CEN (Task Mode)",
+            "name": "CEN Coherence (Mental Effort)",
+            "desc": {
+                "high": "Effortful Focus",
+                "low": "Effortless Focus"
+            },
+            "type": "two_directional",
+            "direction": null,
+            "groupMean": 0.0,
+            "expertReference": null,
+            "individualValue": -2.0
+        },
+        {
+            "pillar": "DMN & CEN (Task Mode)",
+            "name": "CEN Total Flow (Control Signal)",
+            "desc": {
+                "high": "Active Control",
+                "low": "Relaxed Stability"
+            },
+            "type": "two_directional",
+            "direction": null,
+            "groupMean": 0.0,
+            "expertReference": null,
+            "individualValue": 1.957
+        },
+        {
+            "pillar": "Attention Regulation",
+            "name": "Salience Network (Mindfulness)",
+            "desc": {
+                "high": "Active Detector",
+                "low": "Quiet Witness"
+            },
+            "type": "two_directional",
+            "direction": null,
+            "groupMean": 0.0,
+            "expertReference": null,
+            "individualValue": 0.299
+        },
+        {
+            "pillar": "Attention Regulation",
+            "name": "DAN (Voluntary Attention)",
+            "desc": "Higher = Stronger intentional focus.",
+            "type": "one_directional",
+            "direction": 1.0,
+            "groupMean": 0.0,
+            "expertReference": 1.0,
+            "individualValue": 1.261
+        },
+        {
+            "pillar": "Attention Regulation",
+            "name": "DAN (Maintenance)",
+            "desc": "Higher = Better focus maintenance.",
+            "type": "one_directional",
+            "direction": 1.0,
+            "groupMean": 0.0,
+            "expertReference": 1.0,
+            "individualValue": -1.945
+        },
+        {
+            "pillar": "Attention Regulation",
+            "name": "VAN (Distractibility)",
+            "desc": "Lower = Less distraction by stimuli.",
+            "type": "one_directional",
+            "direction": -1.0,
+            "groupMean": 0.0,
+            "expertReference": 1.0,
+            "individualValue": 2.0
+        },
+        {
+            "pillar": "Body & Self-Awareness",
+            "name": "SMN (Motor Quiescence)",
+            "desc": "Higher = Stronger decoupling from motor planning.",
+            "type": "one_directional",
+            "direction": 1.0,
+            "groupMean": 0.0,
+            "expertReference": 1.0,
+            "individualValue": -2.0
+        },
+        {
+            "pillar": "Body & Self-Awareness",
+            "name": "SMN (Sensory Processing)",
+            "desc": {
+                "high": "Body-Focused",
+                "low": "Transcendent Focus"
+            },
+            "type": "two_directional",
+            "direction": null,
+            "groupMean": 0.0,
+            "expertReference": null,
+            "individualValue": 2.0
+        },
+        {
+            "pillar": "Body & Self-Awareness",
+            "name": "Interoceptive Network (Internal Signals)",
+            "desc": "Higher = Increased perception & interpretation.",
+            "type": "one_directional",
+            "direction": 1.0,
+            "groupMean": 0.0,
+            "expertReference": 1.0,
+            "individualValue": -2.0
+        }
+    ]
+}
