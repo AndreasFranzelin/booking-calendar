@@ -230,10 +230,6 @@ app.post('/api/create-payment-intent', async (req, res) => {
         const paymentIntent = await stripe.paymentIntents.create({
             amount: totalAmount, // Fester Preis: 80€
             currency: 'eur',
-            automatic_payment_methods: {
-                enabled: true,
-                allow_redirects: 'always' // Erlaubt PayPal Redirects
-            },
             payment_method_types: ['card', 'paypal'], // Explizit PayPal aktivieren
             metadata: {
                 service: serviceName,
