@@ -223,11 +223,12 @@ app.post('/api/create-payment-intent', async (req, res) => {
     try {
         const serviceName = req.body?.service || 'Booking';
         const totalAmount = 8000; // Fester Preis: 80€ (in Cent)
+        const pricePerHour = 80; // Preis pro Stunde in Euro
         
         console.log(`Creating payment intent: Service=${serviceName}, Total=${totalAmount/100}€`);
 
         const paymentIntent = await stripe.paymentIntents.create({
-            amount: totalAmount, // Dynamischer Preis basierend auf Service
+            amount: totalAmount, // Fester Preis: 80€
             currency: 'eur',
             automatic_payment_methods: {
                 enabled: true,
@@ -244,7 +245,15 @@ app.post('/api/create-payment-intent', async (req, res) => {
         res.json({ clientSecret: paymentIntent.client_secret });
     } catch (error) {
         console.error('Error creating payment intent:', error);
-        res.status(500).json({ error: 'Failed to create payment intent' });
+        console.error('Error details:', {
+            message: error.message,
+            type: error.type,
+            code: error.code
+        });
+        res.status(500).json({ 
+            error: 'Failed to create payment intent',
+            message: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+        });
     }
 });
 
