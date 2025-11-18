@@ -116,7 +116,13 @@ async function getBusySlots(startDate, endDate) {
         return response.data.items || [];
     } catch (error) {
         console.error('Error fetching calendar events:', error);
-        return [];
+        console.error('Error details:', {
+            message: error.message,
+            code: error.code,
+            response: error.response?.data
+        });
+        // Re-throw den Fehler, damit der API-Endpoint ihn behandeln kann
+        throw error;
     }
 }
 
@@ -150,7 +156,15 @@ app.get('/api/available-slots', async (req, res) => {
         const endDate = new Date();
         endDate.setDate(endDate.getDate() + 30); // 1 Monat voraus (30 Tage)
 
-        const busyEvents = await getBusySlots(startDate, endDate);
+        let busyEvents = [];
+        try {
+            busyEvents = await getBusySlots(startDate, endDate);
+        } catch (error) {
+            console.error('Failed to fetch busy slots:', error);
+            // Wenn Google Calendar nicht erreichbar ist, verwende leeres Array
+            // (alle Slots werden als verfügbar angezeigt)
+            busyEvents = [];
+        }
         const availableSlots = [];
 
         // Generiere alle möglichen Slots für die nächsten 30 Tage
