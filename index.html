@@ -1588,10 +1588,23 @@
                     });
 
                     if (!response.ok) {
-                        throw new Error('Zahlung konnte nicht vorbereitet werden.');
+                        // Versuche Fehlerdetails aus der Response zu holen
+                        let errorMessage = 'Zahlung konnte nicht vorbereitet werden.';
+                        try {
+                            const errorData = await response.json();
+                            errorMessage = errorData.message || errorData.error || errorMessage;
+                            console.error('Payment Intent Error:', errorData);
+                        } catch (e) {
+                            console.error('Payment Intent Error Status:', response.status, response.statusText);
+                        }
+                        throw new Error(errorMessage);
                     }
 
                     const { clientSecret } = await response.json();
+                    
+                    if (!clientSecret) {
+                        throw new Error('Kein Client Secret vom Server erhalten.');
+                    }
                     currentClientSecret = clientSecret; // Speichere für Fallback
                     const stripe = ensureStripeInstance();
                     if (!stripe) {

@@ -248,11 +248,20 @@ app.post('/api/create-payment-intent', async (req, res) => {
         console.error('Error details:', {
             message: error.message,
             type: error.type,
-            code: error.code
+            code: error.code,
+            statusCode: error.statusCode,
+            raw: error.raw
         });
-        res.status(500).json({ 
+        
+        // Detaillierte Fehlermeldung für Frontend
+        const errorMessage = error.message || 'Failed to create payment intent';
+        const statusCode = error.statusCode || 500;
+        
+        res.status(statusCode).json({ 
             error: 'Failed to create payment intent',
-            message: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+            message: errorMessage,
+            type: error.type,
+            code: error.code
         });
     }
 });
