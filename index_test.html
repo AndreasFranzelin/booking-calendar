@@ -185,7 +185,7 @@
                                     </div>
                                     <div class="mt-6 flex gap-2">
                                         <button class="info-service-btn bg-slate-700 text-white font-semibold py-2 px-4 rounded-lg hover:bg-slate-600 transition-colors flex-1" data-service="service1" data-price="80" data-lang-key="showInfoButton">Info anzeigen</button>
-                                        <button class="book-service-btn bg-emerald-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-emerald-700 transition-colors flex-1" data-service="service1" data-price="80" data-lang-key="bookNowButton">Jetzt Buchen</button>
+                                        <a href="https://cal.com/andreas-franzelin/coaching-oder-beratungsgesprach" target="_blank" class="bg-emerald-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-emerald-700 transition-colors flex-1 text-center" data-lang-key="bookNowButton">Jetzt Buchen</a>
                                     </div>
                                 </div>
                             </div>
@@ -930,11 +930,11 @@
                     const proceedButtonText = data.infoModalProceedButton;
                     const infoBackdrop = document.getElementById('info-modal-backdrop');
                     
-                    // Für service1: "Jetzt Buchen" Button, für service3: "Client ID eingeben", sonst "Weiter zum Kontakt"
+                    // Für service1: Link zu cal.com, für service3: "Client ID eingeben", sonst "Weiter zum Kontakt"
                     const isService1 = serviceId === 'service1';
                     const isService3 = serviceId === 'service3';
                     const buttonText = isService1 ? (lang === 'de' ? 'Jetzt Buchen' : 'Book Now') : (isService3 ? (lang === 'de' ? 'Client ID eingeben' : 'Enter Client ID') : proceedButtonText);
-                    const buttonAction = isService1 ? 'data-book-service="service1"' : (isService3 ? 'data-open-report-login' : `href="#contact" data-proceed-service="${serviceId}"`);
+                    const buttonAction = isService1 ? 'href="https://cal.com/andreas-franzelin/coaching-oder-beratungsgesprach" target="_blank"' : (isService3 ? 'data-open-report-login' : `href="#contact" data-proceed-service="${serviceId}"`);
 
                     const infoModalContent = `
                         <div class="text-slate-700">
@@ -948,9 +948,9 @@
                                 <p class="text-lg font-bold text-slate-900 mt-4">${priceLabel} ${priceText}</p>
                             </div>
                             ${isService1 ? 
-                                `<button ${buttonAction} class="w-full block text-center bg-emerald-600 text-white font-bold py-3 rounded-lg hover:bg-emerald-700 transition-colors">
+                                `<a ${buttonAction} class="w-full block text-center bg-emerald-600 text-white font-bold py-3 rounded-lg hover:bg-emerald-700 transition-colors">
                                     ${buttonText}
-                                </button>` :
+                                </a>` :
                                 isService3 ?
                                 `<button ${buttonAction} class="w-full block text-center bg-white text-slate-800 font-bold py-3 rounded-full hover:bg-slate-200 transition-colors duration-300 shadow-md">
                                     ${buttonText}
@@ -968,12 +968,8 @@
                     modal.querySelector('[data-close-modal]').addEventListener('click', () => toggleModal(infoBackdrop, false));
                     
                     if (isService1) {
-                        // Für service1: Öffne Booking-Modal
-                        modal.querySelector('[data-book-service]').addEventListener('click', () => {
-                            toggleModal(infoBackdrop, false);
-                            // Trigger booking modal
-                            document.querySelector('.book-service-btn[data-service="service1"]').click();
-                        });
+                        // Für service1: Link zu cal.com - keine weitere Aktion nötig
+                        // Der Link öffnet automatisch in neuem Tab
                     } else if (isService3) {
                         // Für service3: Öffne Report-Login-Modal
                         modal.querySelector('[data-open-report-login]').addEventListener('click', () => {
@@ -1460,6 +1456,13 @@
             document.querySelectorAll('.book-service-btn').forEach(btn => {
                 btn.addEventListener('click', async () => {
                     const serviceId = btn.dataset.service;
+                    
+                    // Service1 verwendet jetzt cal.com - überspringe Booking-Modal
+                    if (serviceId === 'service1') {
+                        console.log('ℹ️ Service1 verwendet cal.com - Booking-Modal wird übersprungen');
+                        return;
+                    }
+                    
                     const price = parseFloat(btn.dataset.price);
                     const lang = localStorage.getItem('preferredLanguage') || 'de';
                     const data = langData[lang];
