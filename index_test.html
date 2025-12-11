@@ -275,14 +275,14 @@
                         <div class="grid md:grid-cols-2 gap-8">
                             <div class="group">
                                 <div class="video-container mb-4">
-                                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/0d_lohmZU00" title="Die Neurowissenschaft der Anziehung: So erkennt dein Gehirn den richtigen Partner" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/bwCH55f1NOc" title="Die Neurowissenschaft der Anziehung: So erkennt dein Gehirn den richtigen Partner" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                                 </div>
                                 <h4 class="font-bold text-lg text-white" data-lang-key="video1Title">Die Neurowissenschaft der Anziehung: So erkennt dein Gehirn den richtigen Partner</h4>
                                 <p class="text-slate-300 text-sm" data-lang-key="video1Desc"></p>
                             </div>
                             <div class="group">
                                 <div class="video-container mb-4">
-                                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/HA0a_ucvwHE?rel=0" title="Neurowissenschaft einer erfolgreichen Beziehung (1/2): Der Tanz der Gehirne" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/jXwhg_uld0M" title="Neurowissenschaft einer erfolgreichen Beziehung (1/2): Der Tanz der Gehirne" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                                 </div>
                                 <h4 class="font-bold text-lg text-white" data-lang-key="video2Title">Neurowissenschaft einer erfolgreichen Beziehung (1/2): Der Tanz der Gehirne</h4>
                                 <p class="text-slate-300 text-sm" data-lang-key="video2Desc"></p>
@@ -296,7 +296,128 @@
                         </div>
                     </div>
                 </section>
-                
+
+                <section id="booking-test" class="p-8 sm:p-16 lg:p-24 bg-transparent">
+                    <div class="max-w-5xl mx-auto bg-white text-slate-900 rounded-3xl shadow-2xl overflow-hidden">
+                        <div class="px-8 pt-8 pb-4 border-b border-slate-100 bg-gradient-to-b from-white to-slate-50">
+                            <p class="text-xs uppercase tracking-[0.3em] text-indigo-500 font-semibold mb-2">Sandbox</p>
+                            <h3 class="text-3xl font-bold mb-2">Terminreservierung – Testumgebung</h3>
+                            <p class="text-slate-600 text-sm">Diese Sektion läuft komplett lokal. Keine echten Stripe-Kosten – perfekt, um Layout & Abläufe zu testen.</p>
+                        </div>
+
+                        <div class="px-8 py-6 bg-amber-50 border-y border-amber-100 space-y-2 text-sm text-amber-900">
+                            <p><strong>• Zahlung = Reservierung:</strong> Betrag wird nur blockiert.</p>
+                            <p><strong>• 12 h kostenlose Stornierung:</strong> Bis 12 h vor Start selbst freigeben.</p>
+                            <p><strong>• 50 % Ersttermin-Rabatt:</strong> Erster Eintrag per E-Mail wird erkannt.</p>
+                        </div>
+
+                        <div class="p-8 space-y-8">
+                            <div class="grid gap-8 lg:grid-cols-3">
+                                <div class="lg:col-span-2 space-y-6">
+                                    <div class="flex flex-wrap items-center justify-between gap-4">
+                                        <div>
+                                            <h4 class="text-xl font-semibold">Mental-Health & Kohärenz Coaching</h4>
+                                            <p class="text-sm text-slate-500">Dauer: 50 Minuten</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="text-xs uppercase tracking-widest text-slate-400">Preis</p>
+                                            <div class="flex items-baseline gap-2 justify-end">
+                                                <p id="offline-service-price" class="text-3xl font-bold text-slate-900">€80</p>
+                                                <span id="offline-discount-badge" class="hidden px-2 py-1 text-xs font-bold text-white bg-emerald-500 rounded-full">-50%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <h5 class="text-lg font-semibold mb-3">Wähle einen Termin</h5>
+                                        <div id="offline-calendar-slots" class="max-h-72 overflow-y-auto border border-slate-200 rounded-2xl p-4 bg-white scroll-smooth"></div>
+                                        <div id="offline-selected-slot" class="mt-3 flex items-center gap-2">
+                                            <i data-lucide="calendar" class="w-4 h-4 text-slate-400"></i>
+                                            <p class="text-sm text-slate-600">Noch kein Slot gewählt.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="grid md:grid-cols-2 gap-4">
+                                        <label class="block">
+                                            <span class="text-sm font-medium text-slate-700">Dein Name</span>
+                                            <input id="offline-name" type="text" class="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Max Mustermann">
+                                        </label>
+                                        <label class="block">
+                                            <span class="text-sm font-medium text-slate-700">Deine E-Mail</span>
+                                            <input id="offline-email" type="email" class="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="max@example.com">
+                                            <span id="offline-pricing-info" class="text-xs text-slate-500 mt-1 block"></span>
+                                        </label>
+                                    </div>
+
+                                    <div class="border border-indigo-100 rounded-2xl p-4 bg-indigo-50">
+                                        <div class="flex items-center gap-3 mb-3">
+                                            <input id="offline-terms" type="checkbox" class="h-4 w-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
+                                            <label for="offline-terms" class="text-sm text-slate-700">Ich bestätige, dass die Zahlung nur reserviert wird und mindestens 12 h vorher stornierbar ist.</label>
+                                        </div>
+                                        <div class="flex flex-wrap gap-3">
+                                            <button id="offline-btn-authorize" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95">
+                                                <i data-lucide="lock" class="w-4 h-4"></i>
+                                                <span class="btn-text">Reservierung simulieren</span>
+                                            </button>
+                                            <button id="offline-btn-release" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl border-2 border-indigo-300 text-indigo-700 font-semibold hover:bg-indigo-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:border-indigo-400">
+                                                <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                                                <span>Reservierung zurückholen</span>
+                                            </button>
+                                            <button id="offline-btn-reset" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-50 transition-all hover:border-slate-400">
+                                                <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                                                <span>Zurücksetzen</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="space-y-5">
+                                    <div class="border border-slate-200 rounded-2xl p-4 bg-slate-50">
+                                        <div class="flex items-center gap-2 mb-2">
+                                            <i data-lucide="info" class="w-4 h-4 text-slate-500"></i>
+                                            <p class="text-sm font-semibold text-slate-900">Status</p>
+                                        </div>
+                                        <p id="offline-status-label" class="text-slate-600 text-sm">Keine Reservierung aktiv.</p>
+                                        <p id="offline-countdown" class="text-xs text-slate-500 mt-2 hidden"></p>
+                                    </div>
+                                    <div class="border border-slate-200 rounded-2xl p-4 bg-slate-50">
+                                        <div class="flex items-center gap-2 mb-2">
+                                            <i data-lucide="mail" class="w-4 h-4 text-slate-500"></i>
+                                            <p class="text-sm font-semibold text-slate-900">Test-E-Mail</p>
+                                        </div>
+                                        <pre id="offline-email-preview" class="text-xs text-slate-700 whitespace-pre-wrap bg-white rounded-xl p-3 h-40 overflow-auto border border-slate-200">Noch keine Buchung vorhanden.</pre>
+                                        <div class="mt-3 space-y-2">
+                                            <div class="flex items-center gap-2">
+                                                <i data-lucide="link" class="w-3 h-3 text-slate-400"></i>
+                                                <p class="text-xs text-slate-500">Storno-Link:</p>
+                                            </div>
+                                            <a id="offline-cancel-link" href="javascript:void(0)" class="block text-xs text-indigo-600 hover:text-indigo-800 underline break-all">–</a>
+                                            <button id="offline-btn-cancel-link" class="text-xs mt-1 text-indigo-600 hover:text-indigo-800 underline flex items-center gap-1">
+                                                <i data-lucide="external-link" class="w-3 h-3"></i>
+                                                Storno-Link testen
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="border border-slate-200 rounded-2xl p-4 bg-slate-50">
+                                        <div class="flex items-center gap-2 mb-2">
+                                            <i data-lucide="users" class="w-4 h-4 text-slate-500"></i>
+                                            <p class="text-sm font-semibold text-slate-900">Lokale Kundenliste</p>
+                                        </div>
+                                        <div id="offline-client-list" class="text-xs text-slate-600 space-y-1">Noch keine Buchungen gespeichert.</div>
+                                    </div>
+                                    <div class="border border-slate-200 rounded-2xl p-4 bg-slate-50">
+                                        <div class="flex items-center gap-2 mb-2">
+                                            <i data-lucide="terminal" class="w-4 h-4 text-slate-500"></i>
+                                            <p class="text-sm font-semibold text-slate-900">Log</p>
+                                        </div>
+                                        <div id="offline-log" class="text-xs font-mono bg-slate-900 text-slate-100 rounded-xl p-3 h-40 overflow-auto scroll-smooth"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
                 <section id="contact" class="p-8 sm:p-16 lg:p-24 bg-transparent">
                     <h3 class="text-3xl md:text-4xl font-bold text-white mb-8" data-lang-key="contactTitle">Kontakt aufnehmen</h3>
                     <div class="max-w-2xl bg-black/80 p-8 rounded-xl shadow-lg">
@@ -1259,6 +1380,81 @@
             let selectedSlot = null;
             let selectedServiceTitle = '';
             let selectedServicePrice = null; // Speichere Preis für Payment Intent
+            const BASE_PRICE = 80;
+            const FIRST_DISCOUNT = 0.5;
+            
+            // Client Tracking für Ersttermin-Erkennung
+            function getClients() {
+                try {
+                    const raw = localStorage.getItem('bookingClients');
+                    return raw ? JSON.parse(raw) : [];
+                } catch {
+                    return [];
+                }
+            }
+            
+            function saveClients(clients) {
+                localStorage.setItem('bookingClients', JSON.stringify(clients));
+            }
+            
+            function isFirstBooking(email) {
+                return !getClients().some(client => client.email === email.toLowerCase());
+            }
+            
+            function registerClient(name, email) {
+                const clients = getClients();
+                const normalized = email.toLowerCase();
+                const existing = clients.find(c => c.email === normalized);
+                if (existing) {
+                    existing.bookings += 1;
+                    existing.name = name;
+                } else {
+                    clients.push({ name, email: normalized, bookings: 1 });
+                }
+                saveClients(clients);
+            }
+            
+            function updateBookingPricing() {
+                const emailInput = document.getElementById('booking-email');
+                const priceEl = document.getElementById('booking-service-price');
+                const badgeEl = document.getElementById('booking-discount-badge');
+                const infoEl = document.getElementById('booking-pricing-info');
+                const noteEl = document.getElementById('booking-first-booking-note');
+                
+                if (!emailInput || !priceEl) return;
+                
+                const email = emailInput.value.trim();
+                if (!email) {
+                    priceEl.textContent = '€80';
+                    if (badgeEl) badgeEl.classList.add('hidden');
+                    if (infoEl) infoEl.classList.add('hidden');
+                    if (noteEl) noteEl.classList.add('hidden');
+                    return;
+                }
+                
+                if (isFirstBooking(email)) {
+                    const discounted = BASE_PRICE * (1 - FIRST_DISCOUNT);
+                    priceEl.textContent = `€${discounted.toFixed(0)}`;
+                    if (badgeEl) badgeEl.classList.remove('hidden');
+                    if (infoEl) {
+                        infoEl.textContent = `Ersttermin erkannt – 50% Rabatt (${discounted.toFixed(0)}€ statt ${BASE_PRICE}€)`;
+                        infoEl.classList.remove('hidden');
+                    }
+                    // Zeige Hinweis nach E-Mail-Eingabe
+                    if (noteEl) noteEl.classList.remove('hidden');
+                } else {
+                    priceEl.textContent = '€80';
+                    if (badgeEl) badgeEl.classList.add('hidden');
+                    if (infoEl) {
+                        infoEl.textContent = 'Bestandskund*in – voller Preis';
+                        infoEl.classList.remove('hidden');
+                        infoEl.classList.remove('text-emerald-600');
+                        infoEl.classList.add('text-slate-500');
+                    }
+                    // Verstecke Hinweis bei Bestandskunden
+                    if (noteEl) noteEl.classList.add('hidden');
+                }
+            }
             
             // Booking Modal Handler
             document.querySelectorAll('.book-service-btn').forEach(btn => {
@@ -1283,15 +1479,29 @@
                                 <h2 class="text-2xl font-bold text-slate-800">${data.bookingModalTitle || 'Termin buchen'}</h2>
                                 <button data-close-booking-modal class="text-gray-400 hover:text-gray-600 text-3xl">&times;</button>
                             </div>
+                            
+                            <!-- WICHTIGE INFOS GANZ OBEN -->
+                            <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 space-y-2 mb-6">
+                                <p class="text-xs uppercase tracking-widest font-semibold text-amber-700 mb-2">Wichtige Buchungsinfos</p>
+                                <div class="flex flex-col gap-2 text-sm md:text-base">
+                                    <p class="text-amber-900"><strong>• Zahlung = Reservierung:</strong> Der Betrag wird nur reserviert, nicht sofort abgebucht.</p>
+                                    <p class="text-amber-900"><strong>• 12h kostenlose Stornierung:</strong> Bis 12 Stunden vor Terminbeginn kannst du kostenlos stornieren.</p>
+                                    <p class="text-amber-900"><strong>• 50% Rabatt auf Ersttermin:</strong> Bei Erstbuchungen gilt automatisch 50% Preisnachlass.</p>
+                                </div>
+                            </div>
+                            
                             <div class="bg-white p-6 rounded-lg mb-6">
                                 <h3 class="text-xl font-semibold text-slate-700 mb-2">${serviceTitle}</h3>
-                                <p class="text-lg font-bold text-slate-900 mt-2">Preis: €80</p>
+                                <div class="flex items-baseline gap-2">
+                                    <p class="text-lg font-bold text-slate-900 mt-2">Preis: <span id="booking-service-price">€80</span></p>
+                                    <span id="booking-discount-badge" class="hidden px-2 py-1 text-xs font-bold text-white bg-emerald-500 rounded-full">-50%</span>
+                                </div>
                                 <p class="text-sm text-slate-600 mt-1">Dauer: 50 Minuten</p>
+                                <p id="booking-pricing-info" class="text-xs text-emerald-600 font-semibold mt-2 hidden"></p>
                             </div>
-                            <div id="booking-slots-container" class="mb-6">
-                                <p class="text-center text-slate-600">${data.bookingModalLoading || 'Lade verfügbare Termine...'}</p>
-                            </div>
-                            <div id="booking-form-container" class="hidden">
+                            
+                            <!-- Name und E-Mail ZUERST -->
+                            <div id="booking-form-container" class="hidden mb-6">
                                 <div class="mb-4">
                                     <label class="block text-sm font-medium text-slate-700 mb-2">${data.bookingModalName || 'Dein Name'}</label>
                                     <input type="text" id="booking-name" required class="w-full px-4 py-2 border border-slate-300 rounded-lg">
@@ -1299,8 +1509,14 @@
                                 <div class="mb-4">
                                     <label class="block text-sm font-medium text-slate-700 mb-2">${data.bookingModalEmail || 'Deine E-Mail'}</label>
                                     <input type="email" id="booking-email" required class="w-full px-4 py-2 border border-slate-300 rounded-lg">
+                                    <p id="booking-first-booking-note" class="text-xs text-amber-700 mt-2 hidden">
+                                        <strong>• 50% Rabatt auf Ersttermin:</strong> Bei Erstbuchungen gilt automatisch 50% Preisnachlass.
+                                    </p>
                                 </div>
+                                
+                                <!-- Zahlungsoptionen -->
                                 <div class="mt-4 mb-4">
+                                    <label class="block text-sm font-medium text-slate-700 mb-2">Zahlungsmethode</label>
                                     <div id="payment-element"></div>
                                 </div>
                                 <div id="payment-message" class="text-sm text-red-500 mt-2 hidden"></div>
@@ -1314,6 +1530,11 @@
                                 >
                                     Bereite Zahlung vor...
                                 </button>
+                            </div>
+                            
+                            <!-- Terminauswahl GANZ NACH UNTEN -->
+                            <div id="booking-slots-container" class="mb-6">
+                                <p class="text-center text-slate-600">${data.bookingModalLoading || 'Lade verfügbare Termine...'}</p>
                             </div>
                             <div id="booking-success" class="hidden text-center">
                                 <i data-lucide="check-circle-2" class="mx-auto h-16 w-16 text-green-500"></i>
@@ -1342,6 +1563,12 @@
                     if (confirmBookingBtn) {
                         confirmBookingBtn.disabled = true;
                         confirmBookingBtn.addEventListener('click', handleBookingSubmit);
+                    }
+                    
+                    // Event Listener für E-Mail-Input (Ersttermin-Erkennung)
+                    const emailInput = modal.querySelector('#booking-email');
+                    if (emailInput) {
+                        emailInput.addEventListener('input', updateBookingPricing);
                     }
                     
                     resetPaymentState();
@@ -1424,9 +1651,13 @@
                                     selectedSlot = { start: btn.dataset.start, end: btn.dataset.end };
                                     selectedServiceTitle = serviceTitle;
                                     
-                                    // Zeige Formular sofort
+                                    // Zeige Formular sofort und scrolle nach oben
                                     if (bookingFormContainer) {
                                         bookingFormContainer.classList.remove('hidden');
+                                        // Scrolle zum Formular (Name/E-Mail)
+                                        setTimeout(() => {
+                                            bookingFormContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                        }, 100);
                                     }
                                     
                                     // Stelle sicher, dass paymentElementContainer verfügbar ist
@@ -1576,14 +1807,19 @@
 
                 try {
                     await loadStripeLibrary();
-                    // Hole den Preis vom Button (wurde beim Klick gespeichert)
-                    const price = parseFloat(selectedServicePrice || 80); // Fallback: 80€
+                    // Berechne Preis basierend auf Ersttermin-Erkennung
+                    const emailInput = document.getElementById('booking-email');
+                    const email = emailInput ? emailInput.value.trim().toLowerCase() : '';
+                    const isFirst = email ? isFirstBooking(email) : false;
+                    const finalPrice = isFirst ? BASE_PRICE * (1 - FIRST_DISCOUNT) : BASE_PRICE;
+                    
                     const response = await fetch(`${API_BASE_URL}/create-payment-intent`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ 
                             service: serviceTitle,
-                            price: price // Sende Preis an Backend
+                            price: finalPrice, // Sende angepassten Preis an Backend
+                            isFirstBooking: isFirst // Informiere Backend über Ersttermin
                         })
                     });
 
@@ -1864,6 +2100,10 @@
                         throw new Error(error.message);
                     }
 
+                    // Berechne Preis für Backend
+                    const isFirst = isFirstBooking(email);
+                    const finalPrice = isFirst ? BASE_PRICE * (1 - FIRST_DISCOUNT) : BASE_PRICE;
+                    
                     const bookResponse = await fetch(`${API_BASE_URL}/book-appointment`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -1873,7 +2113,9 @@
                             clientName: name,
                             clientEmail: email,
                             service: selectedServiceTitle,
-                            paymentIntentId: paymentIntent.id
+                            paymentIntentId: paymentIntent.id,
+                            isFirstBooking: isFirst,
+                            finalPrice: finalPrice
                         })
                     });
 
@@ -1881,6 +2123,9 @@
                         const errorData = await bookResponse.json().catch(() => ({}));
                         throw new Error(errorData.error || 'Fehler bei der Terminbuchung.');
                     }
+
+                    // Client registrieren für zukünftige Ersttermin-Erkennung
+                    registerClient(name, email);
 
                     if (bookingFormContainer) {
                         bookingFormContainer.classList.add('hidden');
@@ -1896,5 +2141,383 @@
         });
     </script>
     <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        (function () {
+            const storageKeys = {
+                reservation: 'offlineReservationTest',
+                clients: 'offlineReservationClients'
+            };
+            const twelveHoursMs = 12 * 60 * 60 * 1000;
+            const BASE_PRICE = 80;
+            const FIRST_DISCOUNT = 0.5;
+            const slotTimes = ['09:00', '11:00', '14:00', '16:00'];
+            const slotDurationMinutes = 50;
+
+            const els = {
+                calendar: document.getElementById('offline-calendar-slots'),
+                selectedSlot: document.getElementById('offline-selected-slot'),
+                name: document.getElementById('offline-name'),
+                email: document.getElementById('offline-email'),
+                pricingInfo: document.getElementById('offline-pricing-info'),
+                terms: document.getElementById('offline-terms'),
+                servicePrice: document.getElementById('offline-service-price'),
+                discountBadge: document.getElementById('offline-discount-badge'),
+                btnAuthorize: document.getElementById('offline-btn-authorize'),
+                btnRelease: document.getElementById('offline-btn-release'),
+                btnReset: document.getElementById('offline-btn-reset'),
+                statusLabel: document.getElementById('offline-status-label'),
+                countdown: document.getElementById('offline-countdown'),
+                emailPreview: document.getElementById('offline-email-preview'),
+                cancelLink: document.getElementById('offline-cancel-link'),
+                btnCancelViaLink: document.getElementById('offline-btn-cancel-link'),
+                clientList: document.getElementById('offline-client-list'),
+                log: document.getElementById('offline-log')
+            };
+
+            if (!els.calendar) {
+                return;
+            }
+
+            const state = {
+                slots: [],
+                selectedSlotId: null
+            };
+
+            function log(message) {
+                const timestamp = new Date().toLocaleTimeString();
+                if (els.log) {
+                    els.log.innerHTML = `[${timestamp}] ${message}<br>` + els.log.innerHTML;
+                }
+            }
+
+            function generateSlots() {
+                const slots = [];
+                const today = new Date();
+                for (let dayOffset = 0; dayOffset < 7; dayOffset++) {
+                    const date = new Date(today);
+                    date.setDate(date.getDate() + dayOffset);
+                    slotTimes.forEach(time => {
+                        const [hours, minutes] = time.split(':');
+                        const start = new Date(date);
+                        start.setHours(Number(hours), Number(minutes), 0, 0);
+                        const end = new Date(start);
+                        end.setMinutes(end.getMinutes() + slotDurationMinutes);
+                        if (start.getTime() > Date.now()) {
+                            slots.push({
+                                id: start.toISOString(),
+                                dayLabel: start.toLocaleDateString('de-DE', { weekday: 'long', day: '2-digit', month: 'long' }),
+                                timeLabel: time,
+                                startIso: start.toISOString(),
+                                endIso: end.toISOString()
+                            });
+                        }
+                    });
+                }
+                return slots;
+            }
+
+            function renderCalendar() {
+                state.slots = generateSlots();
+                const grouped = state.slots.reduce((acc, slot) => {
+                    if (!acc[slot.dayLabel]) acc[slot.dayLabel] = [];
+                    acc[slot.dayLabel].push(slot);
+                    return acc;
+                }, {});
+
+                els.calendar.innerHTML = Object.entries(grouped).map(([dayLabel, slots]) => `
+                    <div class="mb-4">
+                        <p class="font-semibold mb-2">${dayLabel}</p>
+                        <div class="flex flex-wrap gap-2">
+                            ${slots.map(slot => {
+                                const selected = state.selectedSlotId === slot.id ? 'bg-emerald-500 text-white border-emerald-500' : 'border-slate-300';
+                                return `<button data-slot-id="${slot.id}" class="slot-btn px-4 py-2 border-2 rounded-lg ${selected}">${slot.timeLabel} Uhr</button>`;
+                            }).join('')}
+                        </div>
+                    </div>
+                `).join('');
+
+                els.calendar.querySelectorAll('[data-slot-id]').forEach(button => {
+                    button.addEventListener('click', () => {
+                        state.selectedSlotId = button.dataset.slotId;
+                        renderCalendar();
+                        updateSelectedSlotInfo();
+                    });
+                });
+            }
+
+            function updateSelectedSlotInfo() {
+                if (!state.selectedSlotId) {
+                    els.selectedSlot.textContent = 'Noch kein Slot gewählt.';
+                    return;
+                }
+                const slot = state.slots.find(s => s.id === state.selectedSlotId);
+                if (!slot) return;
+                const date = new Date(slot.startIso).toLocaleString('de-DE', {
+                    weekday: 'long',
+                    day: '2-digit',
+                    month: 'long',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                els.selectedSlot.textContent = `Ausgewählt: ${date}`;
+            }
+
+            function getReservation() {
+                try {
+                    const raw = localStorage.getItem(storageKeys.reservation);
+                    return raw ? JSON.parse(raw) : null;
+                } catch {
+                    return null;
+                }
+            }
+
+            function saveReservation(reservation) {
+                localStorage.setItem(storageKeys.reservation, JSON.stringify(reservation));
+                updateStatus(reservation);
+                updateEmailPreview(reservation);
+            }
+
+            function clearReservation() {
+                localStorage.removeItem(storageKeys.reservation);
+                updateStatus(null);
+                updateEmailPreview(null);
+            }
+
+            function getClients() {
+                try {
+                    const raw = localStorage.getItem(storageKeys.clients);
+                    return raw ? JSON.parse(raw) : [];
+                } catch {
+                    return [];
+                }
+            }
+
+            function saveClients(clients) {
+                localStorage.setItem(storageKeys.clients, JSON.stringify(clients));
+            }
+
+            function updateClientList() {
+                const clients = getClients();
+                if (!clients.length) {
+                    els.clientList.textContent = 'Noch keine Buchungen gespeichert.';
+                    return;
+                }
+                els.clientList.innerHTML = clients.map(c => `<span class="block">${c.name} (${c.email}) – ${c.bookings} Buchung(en)</span>`).join('');
+            }
+
+            function isFirstBooking(email) {
+                return !getClients().some(client => client.email === email.toLowerCase());
+            }
+
+            function registerClient(name, email) {
+                const clients = getClients();
+                const normalized = email.toLowerCase();
+                const existing = clients.find(c => c.email === normalized);
+                if (existing) {
+                    existing.bookings += 1;
+                    existing.name = name;
+                } else {
+                    clients.push({ name, email: normalized, bookings: 1 });
+                }
+                saveClients(clients);
+                updateClientList();
+            }
+
+            function updatePricingInfo() {
+                const email = els.email.value.trim();
+                if (!email) {
+                    els.pricingInfo.textContent = '';
+                    els.servicePrice.textContent = '€80';
+                    if (els.discountBadge) els.discountBadge.classList.add('hidden');
+                    return;
+                }
+                if (isFirstBooking(email)) {
+                    const discounted = BASE_PRICE * (1 - FIRST_DISCOUNT);
+                    els.pricingInfo.textContent = `Ersttermin erkannt – 50 % Rabatt (${discounted.toFixed(0)} €)`;
+                    els.servicePrice.textContent = `€${discounted.toFixed(0)}`;
+                } else {
+                    els.pricingInfo.textContent = 'Bestandskund*in – voller Preis';
+                    els.servicePrice.textContent = '€80';
+                }
+            }
+
+            function updateStatus(reservation) {
+                if (!reservation) {
+                    els.statusLabel.textContent = 'Keine Reservierung aktiv.';
+                    els.btnRelease.disabled = true;
+                    return;
+                }
+                const date = new Date(reservation.datetime).toLocaleString('de-DE');
+                els.statusLabel.textContent = `Reserviert für ${date} – Betrag: ${reservation.finalPrice.toFixed(2)} € (nur blockiert)`;
+                els.btnRelease.disabled = false;
+            }
+
+            function updateEmailPreview(reservation) {
+                if (!reservation) {
+                    els.emailPreview.textContent = 'Noch keine Buchung vorhanden.';
+                    els.cancelLink.textContent = '–';
+                    return;
+                }
+                const date = new Date(reservation.datetime).toLocaleString('de-DE');
+                const text = [
+                    `Betreff: Deine Terminreservierung am ${date}`,
+                    '',
+                    `Hallo ${reservation.name},`,
+                    '',
+                    'danke für deine Buchung – ich freue mich auf unser Gespräch!',
+                    '',
+                    `Termin: ${date}`,
+                    `Dauer: ${reservation.duration} Minuten`,
+                    `Preis${reservation.isFirstBooking ? ' (mit 50 % Ersttermin-Rabatt)' : ''}: ${reservation.finalPrice.toFixed(2)} € (Reservierung, keine Abbuchung)`,
+                    '',
+                    'Wichtig:',
+                    '• Die Zahlung wird nur reserviert, nicht abgebucht.',
+                    '• Du kannst bis 12 Stunden vor Terminstart kostenlos stornieren.',
+                    '',
+                    `Storno-Link: ${reservation.cancelLink}`,
+                    '',
+                    'Liebe Grüße,',
+                    'Andreas Franzelin'
+                ].join('\n');
+                els.emailPreview.textContent = text;
+                els.cancelLink.textContent = reservation.cancelLink;
+                els.cancelLink.href = reservation.cancelLink;
+            }
+
+            function validateForm() {
+                if (!state.selectedSlotId) {
+                    alert('Bitte wähle zuerst einen Termin.');
+                    return false;
+                }
+                if (!els.name.value.trim() || !els.email.value.trim()) {
+                    alert('Bitte Name und E-Mail ausfüllen.');
+                    return false;
+                }
+                if (!els.terms.checked) {
+                    alert('Bitte bestätige die Reservierungsbedingungen.');
+                    return false;
+                }
+                return true;
+            }
+
+            function generateCancellationLink(token) {
+                // Für lokale Tests: relative URL verwenden
+                // In Produktion: return `https://andreas-franzelin.com/storno?ref=${token}`;
+                return `storno.html?ref=${token}`;
+            }
+
+            function simulateStripeAuthorization() {
+                if (!validateForm()) return;
+                const slot = state.slots.find(s => s.id === state.selectedSlotId);
+                if (!slot) {
+                    alert('Slot nicht gefunden.');
+                    return;
+                }
+                // Loading State
+                const btnText = els.btnAuthorize.querySelector('.btn-text');
+                const originalText = btnText ? btnText.textContent : 'Reservierung simulieren';
+                if (btnText) btnText.textContent = 'Wird verarbeitet...';
+                els.btnAuthorize.disabled = true;
+                log('Starte Reservierungssimulation …');
+                setTimeout(() => {
+                    const email = els.email.value.trim().toLowerCase();
+                    const firstBooking = isFirstBooking(email);
+                    const finalPrice = firstBooking ? BASE_PRICE * (1 - FIRST_DISCOUNT) : BASE_PRICE;
+                    const cancellationToken = crypto.randomUUID();
+                    const reservation = {
+                        id: 'TEST-' + crypto.randomUUID().substring(0, 8),
+                        name: els.name.value.trim(),
+                        email,
+                        datetime: slot.startIso,
+                        duration: slotDurationMinutes,
+                        createdAt: new Date().toISOString(),
+                        amount: BASE_PRICE,
+                        finalPrice,
+                        isFirstBooking: firstBooking,
+                        cancellationToken,
+                        cancelLink: generateCancellationLink(cancellationToken)
+                    };
+                    saveReservation(reservation);
+                    registerClient(reservation.name, reservation.email);
+                    log(`Reservierung #${reservation.id} erstellt.`);
+                    alert('Reservierung simuliert – Betrag wird nur reserviert.');
+                    // Reset Button
+                    const btnText = els.btnAuthorize.querySelector('.btn-text');
+                    if (btnText) btnText.textContent = originalText;
+                    els.btnAuthorize.disabled = false;
+                    // Icons neu laden
+                    if (window.lucide) lucide.createIcons();
+                }, 600);
+            }
+
+            function canCancel(reservation) {
+                const appointment = new Date(reservation.datetime);
+                return appointment - new Date() >= twelveHoursMs;
+            }
+
+            function simulateRelease(source = 'Dashboard') {
+                const reservation = getReservation();
+                if (!reservation) {
+                    alert('Keine aktive Reservierung gefunden.');
+                    return;
+                }
+                if (!canCancel(reservation)) {
+                    alert('Termin startet in weniger als 12 Stunden. Kontakt mit Support nötig.');
+                    log(`Storno per ${source} verweigert – <12h.`);
+                    return;
+                }
+                log(`Freigabe über ${source} …`);
+                setTimeout(() => {
+                    clearReservation();
+                    alert('Reservierung aufgehoben – keine Abbuchung.');
+                    log('Reservierung erfolgreich freigegeben.');
+                }, 400);
+            }
+
+            function resetForm() {
+                els.name.value = '';
+                els.email.value = '';
+                els.terms.checked = false;
+                state.selectedSlotId = null;
+                renderCalendar();
+                updateSelectedSlotInfo();
+                clearReservation();
+                els.pricingInfo.textContent = '';
+                els.servicePrice.textContent = '€80';
+                if (els.log) els.log.innerHTML = '';
+            }
+
+            function hydrate() {
+                renderCalendar();
+                updateSelectedSlotInfo();
+                updatePricingInfo();
+                updateClientList();
+                const reservation = getReservation();
+                if (reservation) {
+                    els.name.value = reservation.name;
+                    els.email.value = reservation.email;
+                    state.selectedSlotId = reservation.datetime;
+                    updateSelectedSlotInfo();
+                    updatePricingInfo();
+                }
+                updateStatus(reservation);
+                updateEmailPreview(reservation);
+                els.btnRelease.disabled = !reservation;
+            }
+
+            hydrate();
+            
+            // Initialize Lucide Icons
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+
+            els.btnAuthorize.addEventListener('click', simulateStripeAuthorization);
+            els.btnRelease.addEventListener('click', () => simulateRelease('Dashboard-Button'));
+            els.btnReset.addEventListener('click', resetForm);
+            els.btnCancelViaLink.addEventListener('click', () => simulateRelease('Storno-Link'));
+            els.email.addEventListener('input', updatePricingInfo);
+        })();
+    </script>
 </body>
 </html>

@@ -275,14 +275,14 @@
                         <div class="grid md:grid-cols-2 gap-8">
                             <div class="group">
                                 <div class="video-container mb-4">
-                                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/0d_lohmZU00" title="Die Neurowissenschaft der Anziehung: So erkennt dein Gehirn den richtigen Partner" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/bwCH55f1NOc" title="Die Neurowissenschaft der Anziehung: So erkennt dein Gehirn den richtigen Partner" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                                 </div>
                                 <h4 class="font-bold text-lg text-white" data-lang-key="video1Title">Die Neurowissenschaft der Anziehung: So erkennt dein Gehirn den richtigen Partner</h4>
                                 <p class="text-slate-300 text-sm" data-lang-key="video1Desc"></p>
                             </div>
                             <div class="group">
                                 <div class="video-container mb-4">
-                                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/HA0a_ucvwHE?rel=0" title="Neurowissenschaft einer erfolgreichen Beziehung (1/2): Der Tanz der Gehirne" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/jXwhg_uld0M" title="Neurowissenschaft einer erfolgreichen Beziehung (1/2): Der Tanz der Gehirne" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                                 </div>
                                 <h4 class="font-bold text-lg text-white" data-lang-key="video2Title">Neurowissenschaft einer erfolgreichen Beziehung (1/2): Der Tanz der Gehirne</h4>
                                 <p class="text-slate-300 text-sm" data-lang-key="video2Desc"></p>
@@ -1239,12 +1239,57 @@
                 return 'http://localhost:3000/api';
             })();
 
+            // ⚠️⚠️⚠️ KRITISCH: TEST-MODUS KONFIGURATION (MUSS VOR STRIPE_PUBLISHABLE_KEY SEIN!) ⚠️⚠️⚠️
+            // TEST_MODE: Setze auf true, um Stripe-Zahlungen zu simulieren (OHNE echte Zahlung)
+            // Wenn false: Echte Stripe-Zahlungen werden durchgeführt (PRODUCTION MODE!)
+            const TEST_MODE = false; // ✅ PRODUCTION: ECHTE STRIPE-ZAHLUNGEN!
+            
+            // TEST_MODE_USE_STRIPE_FLOW: Setze auf true, um den echten Stripe-Zahlungsflow zu testen
+            // ⚠️ WICHTIG: Verwendet Stripe Test Keys (sicher, keine echten Kosten!)
+            // Wenn true: Echte Stripe API-Calls werden gemacht (mit Test Keys)
+            // Wenn false: Stripe wird komplett simuliert (nur lokal, keine API-Calls)
+            const TEST_MODE_USE_STRIPE_FLOW = false; // ✅ PRODUCTION: Keine Test-Keys!
+            
+            // TEST_MODE_SEND_EMAILS: Setze auf true, um E-Mails und Kalender-Einträge zu testen
+            // ⚠️ WICHTIG: Nur aktivieren, wenn du das Backend lokal laufen hast!
+            const TEST_MODE_SEND_EMAILS = false; // ✅ PRODUCTION: Echte E-Mails & Calendar!
+
             const STRIPE_PUBLISHABLE_KEY = (() => {
-                // Production: Verwende Live Key
+                // ⚠️ WICHTIG: Für TEST_MODE_USE_STRIPE_FLOW müssen Test Keys verwendet werden!
+                // Test Keys beginnen mit 'pk_test_', Live Keys mit 'pk_live_'
+                
+                // TEST MODE MIT STRIPE FLOW: Verwende Test Keys (sicher, keine echten Kosten!)
+                if (TEST_MODE && TEST_MODE_USE_STRIPE_FLOW) {
+                    console.warn('⚠️⚠️⚠️ TEST_MODE_USE_STRIPE_FLOW AKTIV - TEST KEYS ERFORDERLICH! ⚠️⚠️⚠️');
+                    console.warn('⚠️ Ersetze den Live Key unten mit deinem Stripe Test Key (pk_test_...)');
+                    console.warn('⚠️ Du findest deine Test Keys in Stripe Dashboard → Developers → API Keys');
+                    
+                    // ⚠️ HIER DEINEN STRIPE TEST KEY EINTRAGEN:
+                    // Gehe zu: https://dashboard.stripe.com/test/apikeys
+                    // Kopiere deinen "Publishable key" (beginnt mit pk_test_...)
+                    const TEST_KEY = 'pk_test_51RtnW1J5Bft6WiGoGYSiRvT2HvBGwv1LUxq1eLqSDPIR7g57vdoAsAxITHc0oNnBRbde5wy8RrmhOAMdDw0XlnII00po797Ehi'; // ✅ Test Key eingetragen!
+                    
+                    if (TEST_KEY.includes('DEIN_TEST_KEY')) {
+                        console.error('❌❌❌ FEHLER: Du musst zuerst deinen Stripe Test Key eintragen! ❌❌❌');
+                        console.error('❌ Gehe zu: https://dashboard.stripe.com/test/apikeys');
+                        console.error('❌ Kopiere deinen "Publishable key" (beginnt mit pk_test_...)');
+                        console.error('❌ Ersetze TEST_KEY in index.html Zeile ~1248');
+                        alert('⚠️ FEHLER: Du musst zuerst deinen Stripe Test Key eintragen!\n\nGehe zu: https://dashboard.stripe.com/test/apikeys\nKopiere deinen "Publishable key" und ersetze TEST_KEY in index.html');
+                        throw new Error('Stripe Test Key fehlt! Bitte Test Key eintragen.');
+                    }
+                    
+                    console.log('✅ Test Key wird verwendet:', TEST_KEY.substring(0, 15) + '...');
+                    return TEST_KEY;
+                }
+                
+                // PRODUCTION: Verwende Live Key
                 if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+                    console.warn('⚠️ PRODUCTION MODE: Live Stripe Key wird verwendet!');
                     return 'pk_live_51RtnW1J5Bft6WiGo8UyfMGxh5HYsUnwlhj5QomktLNsnqlie86nTr3MK2yS0QQVgg27qnlVHzuzjmxE4q0kd6W5Y00rnJL4NoT';
                 }
-                // Development: Verwende auch Live Key (da Secret Key auch Live ist)
+                
+                // Development (ohne TEST_MODE_USE_STRIPE_FLOW): Verwende Live Key
+                console.warn('⚠️ Development: Live Stripe Key wird verwendet');
                 return 'pk_live_51RtnW1J5Bft6WiGo8UyfMGxh5HYsUnwlhj5QomktLNsnqlie86nTr3MK2yS0QQVgg27qnlVHzuzjmxE4q0kd6W5Y00rnJL4NoT';
             })();
 
@@ -1256,19 +1301,136 @@
             let paymentElementContainer = null;
             let bookingFormContainer = null;
             let currentClientSecret = null; // Speichere clientSecret für Fallback
+            let currentPaymentIntentId = null; // Speichere Payment Intent ID für Updates
             let selectedSlot = null;
             let selectedServiceTitle = '';
             let selectedServicePrice = null; // Speichere Preis für Payment Intent
+            const BASE_PRICE = 80;
+            const FIRST_DISCOUNT = 0.5;
+            
+            // Konsolen-Log zur Bestätigung (TEST_MODE Variablen sind bereits oben definiert)
+            console.log('🔒🔒🔒 TEST-MODUS PRÜFUNG 🔒🔒🔒');
+            console.log('TEST_MODE =', TEST_MODE);
+            console.log('TEST_MODE_USE_STRIPE_FLOW =', TEST_MODE_USE_STRIPE_FLOW);
+            console.log('TEST_MODE_SEND_EMAILS =', TEST_MODE_SEND_EMAILS);
+            
+            if (TEST_MODE) {
+                if (TEST_MODE_USE_STRIPE_FLOW) {
+                    console.log('🧪🧪🧪 TEST-MODUS MIT STRIPE-FLOW 🧪🧪🧪');
+                    console.log('✅ TEST-MODUS: Echte Stripe API-Calls werden verwendet (mit Test Keys)');
+                    console.log('✅ Verwendet Stripe Test Keys - KEINE ECHTEN KOSTEN!');
+                    console.log('✅ Zahlungen werden getestet, aber NICHT wirklich gebucht!');
+                    if (TEST_MODE_SEND_EMAILS) {
+                        console.log('📧 TEST-MODUS: E-Mails & Kalender-Einträge werden TROTZDEM gesendet/erstellt!');
+                        console.log('⚠️ WICHTIG: Backend muss laufen für E-Mails & Calendar!');
+                    }
+                } else {
+                    console.log('✅ TEST-MODUS AKTIV: KEINE echten Stripe-Zahlungen werden durchgeführt!');
+                    console.log('✅ Alle Stripe API-Calls werden blockiert!');
+                    console.log('✅ Alle Zahlungen sind simuliert - KEINE KOSTEN!');
+                    if (TEST_MODE_SEND_EMAILS) {
+                        console.log('📧 TEST-MODUS: E-Mails & Kalender-Einträge werden TROTZDEM gesendet/erstellt!');
+                        console.log('⚠️ WICHTIG: Backend muss laufen für E-Mails & Calendar!');
+                    } else {
+                        console.log('📧 TEST-MODUS: E-Mails & Kalender-Einträge werden NICHT gesendet/erstellt!');
+                    }
+                }
+            } else {
+                console.error('⚠️⚠️⚠️ PRODUCTION MODE: ECHTE ZAHLUNGEN WERDEN DURCHGEFÜHRT! ⚠️⚠️⚠️');
+            }
+            
+            // Client Tracking für Ersttermin-Erkennung
+            function getClients() {
+                try {
+                    const raw = localStorage.getItem('bookingClients');
+                    return raw ? JSON.parse(raw) : [];
+                } catch {
+                    return [];
+                }
+            }
+            
+            function saveClients(clients) {
+                localStorage.setItem('bookingClients', JSON.stringify(clients));
+            }
+            
+            function isFirstBooking(email) {
+                return !getClients().some(client => client.email === email.toLowerCase());
+            }
+            
+            function registerClient(name, email) {
+                const clients = getClients();
+                const normalized = email.toLowerCase();
+                const existing = clients.find(c => c.email === normalized);
+                if (existing) {
+                    existing.bookings += 1;
+                    existing.name = name;
+                } else {
+                    clients.push({ name, email: normalized, bookings: 1 });
+                }
+                saveClients(clients);
+            }
+            
+            function updateBookingPricing() {
+                const emailInput = document.getElementById('booking-email');
+                const priceEl = document.getElementById('booking-service-price');
+                const badgeEl = document.getElementById('booking-discount-badge');
+                const infoEl = document.getElementById('booking-pricing-info');
+                const noteEl = document.getElementById('booking-first-booking-note');
+                
+                if (!emailInput || !priceEl) return;
+                
+                const email = emailInput.value.trim();
+                if (!email) {
+                    priceEl.textContent = '€80';
+                    if (badgeEl) badgeEl.classList.add('hidden');
+                    if (infoEl) infoEl.classList.add('hidden');
+                    if (noteEl) noteEl.classList.add('hidden');
+                    return;
+                }
+                
+                if (isFirstBooking(email)) {
+                    const discounted = BASE_PRICE * (1 - FIRST_DISCOUNT);
+                    priceEl.textContent = `€${discounted.toFixed(0)}`;
+                    if (badgeEl) badgeEl.classList.remove('hidden');
+                    if (infoEl) {
+                        infoEl.textContent = `Ersttermin erkannt – 50% Rabatt (${discounted.toFixed(0)}€ statt ${BASE_PRICE}€)`;
+                        infoEl.classList.remove('hidden');
+                    }
+                    // Zeige Hinweis nach E-Mail-Eingabe
+                    if (noteEl) noteEl.classList.remove('hidden');
+                } else {
+                    priceEl.textContent = '€80';
+                    if (badgeEl) badgeEl.classList.add('hidden');
+                    if (infoEl) {
+                        infoEl.textContent = 'Bestandskund*in – voller Preis';
+                        infoEl.classList.remove('hidden');
+                        infoEl.classList.remove('text-emerald-600');
+                        infoEl.classList.add('text-slate-500');
+                    }
+                    // Verstecke Hinweis bei Bestandskunden
+                    if (noteEl) noteEl.classList.add('hidden');
+                }
+            }
             
             // Booking Modal Handler
-            document.querySelectorAll('.book-service-btn').forEach(btn => {
+            console.log('🔍 Initialisiere Booking Modal Handler...');
+            const bookButtons = document.querySelectorAll('.book-service-btn');
+            console.log('🔍 Gefundene "Jetzt Buchen" Buttons:', bookButtons.length);
+            
+            bookButtons.forEach((btn, index) => {
+                console.log(`🔍 Registriere Event Listener für Button ${index + 1}:`, btn);
                 btn.addEventListener('click', async () => {
+                    console.log('✅ "Jetzt Buchen" Button wurde geklickt!');
                     const serviceId = btn.dataset.service;
                     const price = parseFloat(btn.dataset.price);
                     const lang = localStorage.getItem('preferredLanguage') || 'de';
                     const data = langData[lang];
                     const serviceTitle = data[`${serviceId}Title`];
-                    selectedServicePrice = price; // Speichere Preis für Payment Intent
+                    // WICHTIG: Verwende immer BASE_PRICE (80€), nicht den Button-Preis
+                    // Der Rabatt wird später basierend auf Ersttermin berechnet
+                    selectedServicePrice = BASE_PRICE; // Immer 80€ als Basis
+
+                    console.log('📋 Service Details:', { serviceId, price, serviceTitle });
 
                     if (price === 0 || price === 'variable') {
                         alert(lang === 'de' ? 'Bitte kontaktieren Sie mich für diesen Service.' : 'Please contact me for this service.');
@@ -1276,22 +1438,38 @@
                     }
 
                     // Show booking modal
+                    console.log('🔍 Suche nach booking-modal-backdrop...');
                     const bookingBackdrop = document.getElementById('booking-modal-backdrop');
+                    console.log('🔍 booking-modal-backdrop gefunden:', !!bookingBackdrop);
                     const bookingModalHTML = `
                         <div class="text-slate-700">
                             <div class="flex justify-between items-center mb-6">
                                 <h2 class="text-2xl font-bold text-slate-800">${data.bookingModalTitle || 'Termin buchen'}</h2>
                                 <button data-close-booking-modal class="text-gray-400 hover:text-gray-600 text-3xl">&times;</button>
                             </div>
+                            
+                            <!-- WICHTIGE INFOS GANZ OBEN -->
+                            <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 space-y-2 mb-6">
+                                <p class="text-xs uppercase tracking-widest font-semibold text-amber-700 mb-2">Wichtige Buchungsinfos</p>
+                                <div class="flex flex-col gap-2 text-sm md:text-base">
+                                    <p class="text-amber-900"><strong>• Zahlung = Reservierung:</strong> Der Betrag wird nur reserviert, nicht sofort abgebucht.</p>
+                                    <p class="text-amber-900"><strong>• 12h kostenlose Stornierung:</strong> Bis 12 Stunden vor Terminbeginn kannst du kostenlos stornieren.</p>
+                                    <p class="text-amber-900"><strong>• 50% Rabatt auf Ersttermin:</strong> Bei Erstbuchungen gilt automatisch 50% Preisnachlass.</p>
+                                </div>
+                            </div>
+                            
                             <div class="bg-white p-6 rounded-lg mb-6">
                                 <h3 class="text-xl font-semibold text-slate-700 mb-2">${serviceTitle}</h3>
-                                <p class="text-lg font-bold text-slate-900 mt-2">Preis: €80</p>
+                                <div class="flex items-baseline gap-2">
+                                    <p class="text-lg font-bold text-slate-900 mt-2">Preis: <span id="booking-service-price">€80</span></p>
+                                    <span id="booking-discount-badge" class="hidden px-2 py-1 text-xs font-bold text-white bg-emerald-500 rounded-full">-50%</span>
+                                </div>
                                 <p class="text-sm text-slate-600 mt-1">Dauer: 50 Minuten</p>
+                                <p id="booking-pricing-info" class="text-xs text-emerald-600 font-semibold mt-2 hidden"></p>
                             </div>
-                            <div id="booking-slots-container" class="mb-6">
-                                <p class="text-center text-slate-600">${data.bookingModalLoading || 'Lade verfügbare Termine...'}</p>
-                            </div>
-                            <div id="booking-form-container" class="hidden">
+                            
+                            <!-- Name und E-Mail ZUERST -->
+                            <div id="booking-form-container" class="hidden mb-6">
                                 <div class="mb-4">
                                     <label class="block text-sm font-medium text-slate-700 mb-2">${data.bookingModalName || 'Dein Name'}</label>
                                     <input type="text" id="booking-name" required class="w-full px-4 py-2 border border-slate-300 rounded-lg">
@@ -1299,8 +1477,14 @@
                                 <div class="mb-4">
                                     <label class="block text-sm font-medium text-slate-700 mb-2">${data.bookingModalEmail || 'Deine E-Mail'}</label>
                                     <input type="email" id="booking-email" required class="w-full px-4 py-2 border border-slate-300 rounded-lg">
+                                    <p id="booking-first-booking-note" class="text-xs text-amber-700 mt-2 hidden">
+                                        <strong>• 50% Rabatt auf Ersttermin:</strong> Bei Erstbuchungen gilt automatisch 50% Preisnachlass.
+                                    </p>
                                 </div>
+                                
+                                <!-- Zahlungsoptionen -->
                                 <div class="mt-4 mb-4">
+                                    <label class="block text-sm font-medium text-slate-700 mb-2">Zahlungsmethode</label>
                                     <div id="payment-element"></div>
                                 </div>
                                 <div id="payment-message" class="text-sm text-red-500 mt-2 hidden"></div>
@@ -1314,6 +1498,11 @@
                                 >
                                     Bereite Zahlung vor...
                                 </button>
+                            </div>
+                            
+                            <!-- Terminauswahl GANZ NACH UNTEN -->
+                            <div id="booking-slots-container" class="mb-6">
+                                <p class="text-center text-slate-600">${data.bookingModalLoading || 'Lade verfügbare Termine...'}</p>
                             </div>
                             <div id="booking-success" class="hidden text-center">
                                 <i data-lucide="check-circle-2" class="mx-auto h-16 w-16 text-green-500"></i>
@@ -1342,6 +1531,93 @@
                     if (confirmBookingBtn) {
                         confirmBookingBtn.disabled = true;
                         confirmBookingBtn.addEventListener('click', handleBookingSubmit);
+                    }
+                    
+                    // Event Listener für E-Mail-Input (Ersttermin-Erkennung)
+                    const emailInput = modal.querySelector('#booking-email');
+                    if (emailInput) {
+                        emailInput.addEventListener('input', () => {
+                            updateBookingPricing();
+                            
+                            // WICHTIG: Wenn Slot bereits ausgewählt wurde, aktualisiere Payment Intent
+                            if (selectedSlot && emailInput.value.trim()) {
+                                const email = emailInput.value.trim().toLowerCase();
+                                if (email.length > 3) { // Warte bis E-Mail plausibel ist
+                                    const isFirst = isFirstBooking(email);
+                                    const newPrice = isFirst ? BASE_PRICE * (1 - FIRST_DISCOUNT) : BASE_PRICE;
+                                    
+                        // KRITISCH: TEST-MODUS CHECK - Überspringe ALLE echten Stripe API-Calls (außer wenn TEST_MODE_USE_STRIPE_FLOW aktiv)
+                        if (TEST_MODE && !TEST_MODE_USE_STRIPE_FLOW) {
+                            console.log('🧪 TEST-MODUS: Überspringe Payment Intent-Update (KEINE ECHTEN API-CALLS!)');
+                            return; // WICHTIG: BEENDE HIER - KEINE ECHTEN STRIPE API-CALLS!
+                        }
+                        
+                        // TEST-MODUS MIT STRIPE-FLOW: Erlaube echte API-Calls
+                        if (TEST_MODE && TEST_MODE_USE_STRIPE_FLOW) {
+                            console.log('🧪 TEST-MODUS MIT STRIPE-FLOW: Aktualisiere Payment Intent (echte API-Calls mit Test Keys)');
+                        }
+                                    
+                                    // Wenn Payment Intent bereits existiert, AKTUALISIERE ihn (besonders wichtig für Amazon Pay)
+                                    if (currentPaymentIntentId) {
+                                        console.log('🔄 E-Mail geändert, aktualisiere Payment Intent Preis:', {
+                                            paymentIntentId: currentPaymentIntentId,
+                                            oldPrice: 'unknown',
+                                            newPrice: newPrice
+                                        });
+                                        
+                                        // Aktualisiere Payment Intent Betrag
+                                        fetch(`${API_BASE_URL}/update-payment-intent`, {
+                                            method: 'POST',
+                                            headers: { 'Content-Type': 'application/json' },
+                                            body: JSON.stringify({
+                                                paymentIntentId: currentPaymentIntentId,
+                                                price: newPrice
+                                            })
+                                        })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            if (data.success && data.clientSecret) {
+                                                console.log('✅ Payment Intent aktualisiert:', {
+                                                    newAmount: data.amountInEuro,
+                                                    clientSecret: data.clientSecret.substring(0, 20) + '...'
+                                                });
+                                                // Aktualisiere clientSecret und remount Payment Element
+                                                currentClientSecret = data.clientSecret;
+                                                
+                                                // Entferne altes Payment Element
+                                                if (paymentElementInstance) {
+                                                    paymentElementInstance.unmount();
+                                                    paymentElementInstance = null;
+                                                }
+                                                stripeElementsInstance = null;
+                                                
+                                                // Erstelle neues Payment Element mit aktualisiertem clientSecret
+                                                setTimeout(() => {
+                                                    initializePayment(selectedServiceTitle).catch(err => {
+                                                        console.error('Fehler beim Neuerstellen des Payment Elements:', err);
+                                                    });
+                                                }, 300);
+                                            }
+                                        })
+                                        .catch(err => {
+                                            console.error('Fehler beim Aktualisieren des Payment Intents:', err);
+                                            // Fallback: Erstelle neuen Payment Intent
+                                            initializePayment(selectedServiceTitle).catch(e => {
+                                                console.error('Fehler beim Erstellen des Payment Intents:', e);
+                                            });
+                                        });
+                                    } else {
+                                        // Kein Payment Intent vorhanden, erstelle neuen
+                                        console.log('🆕 Erstelle neuen Payment Intent mit korrektem Preis...');
+                                        setTimeout(() => {
+                                            initializePayment(selectedServiceTitle).catch(err => {
+                                                console.error('Fehler beim Erstellen des Payment Intents:', err);
+                                            });
+                                        }, 300);
+                                    }
+                                }
+                            }
+                        });
                     }
                     
                     resetPaymentState();
@@ -1424,9 +1700,13 @@
                                     selectedSlot = { start: btn.dataset.start, end: btn.dataset.end };
                                     selectedServiceTitle = serviceTitle;
                                     
-                                    // Zeige Formular sofort
+                                    // Zeige Formular sofort und scrolle nach oben
                                     if (bookingFormContainer) {
                                         bookingFormContainer.classList.remove('hidden');
+                                        // Scrolle zum Formular (Name/E-Mail)
+                                        setTimeout(() => {
+                                            bookingFormContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                        }, 100);
                                     }
                                     
                                     // Stelle sicher, dass paymentElementContainer verfügbar ist
@@ -1437,12 +1717,36 @@
                                         return;
                                     }
                                     
-                                    // Initialisiere Payment SOFORT (kein Timeout)
-                                    console.log('🚀 Slot ausgewählt, starte Payment-Initialisierung...');
-                                    initializePayment(serviceTitle).catch(err => {
-                                        console.error('❌ Fehler beim Initialisieren:', err);
-                                        setPaymentMessage('Fehler beim Laden des Zahlungsfeldes: ' + err.message);
-                                    });
+                // ⚠️ TEST-MODUS: Überspringe Payment-Initialisierung wenn TEST_MODE aktiv (aber nicht wenn TEST_MODE_USE_STRIPE_FLOW aktiv)
+                if (TEST_MODE === true && !TEST_MODE_USE_STRIPE_FLOW) {
+                    console.log('🧪🧪🧪 TEST-MODUS: Überspringe Payment-Initialisierung - KEINE API-CALLS! 🧪🧪🧪');
+                    console.log('🧪 TEST_MODE =', TEST_MODE);
+                    console.log('🧪 TEST_MODE_USE_STRIPE_FLOW =', TEST_MODE_USE_STRIPE_FLOW);
+                    setPaymentMessage('🧪 TEST-MODUS: Zahlung wird simuliert - keine echten API-Calls', 'info');
+                    if (confirmBookingBtn) {
+                        confirmBookingBtn.disabled = false;
+                        confirmBookingBtn.textContent = confirmBookingBtn.dataset.defaultLabel || 'Termin bestätigen und bezahlen';
+                    }
+                    return; // Beende hier - keine Payment-Initialisierung
+                }
+                
+                // TEST-MODUS MIT STRIPE-FLOW ODER PRODUCTION: Initialisiere Payment
+                if (TEST_MODE && TEST_MODE_USE_STRIPE_FLOW) {
+                    console.log('🧪🧪🧪 TEST-MODUS MIT STRIPE-FLOW: Payment-Initialisierung wird durchgeführt 🧪🧪🧪');
+                    console.log('🧪 Echte Stripe API-Calls werden gemacht (mit Test Keys - KEINE ECHTEN KOSTEN!)');
+                    initializePayment(serviceTitle).catch(err => {
+                        console.error('❌ Fehler beim Initialisieren:', err);
+                        setPaymentMessage('Fehler beim Laden des Zahlungsfeldes: ' + err.message);
+                    });
+                } else if (!TEST_MODE) {
+                    // PRODUCTION: Initialisiere Payment nur wenn TEST_MODE nicht aktiv
+                    console.log('🚀 Slot ausgewählt, starte Payment-Initialisierung...');
+                    console.warn('⚠️ PRODUCTION MODE: Mache echte Stripe API-Calls!');
+                    initializePayment(serviceTitle).catch(err => {
+                        console.error('❌ Fehler beim Initialisieren:', err);
+                        setPaymentMessage('Fehler beim Laden des Zahlungsfeldes: ' + err.message);
+                    });
+                }
                                 });
                             });
                         }
@@ -1558,6 +1862,25 @@
             }
 
             async function initializePayment(serviceTitle) {
+            // ⚠️⚠️⚠️ KRITISCH: TEST-MODUS CHECK - MUSS ZUERST KOMMEN - BEVOR ALLES ANDERE! ⚠️⚠️⚠️
+            if (TEST_MODE && !TEST_MODE_USE_STRIPE_FLOW) {
+                console.log('🧪🧪🧪 TEST-MODUS: initializePayment() wird blockiert - KEINE ECHTEN API-CALLS! 🧪🧪🧪');
+                setPaymentMessage('🧪 TEST-MODUS: Zahlung wird simuliert - keine echten API-Calls', 'info');
+                setConfirmButtonState('ready'); // Button aktivieren für Test
+                return; // WICHTIG: BEENDE HIER - KEINE ECHTEN STRIPE API-CALLS!
+            }
+            
+            // ⚠️ TEST-MODUS MIT STRIPE-FLOW: Logge dass echte Stripe API-Calls gemacht werden
+            if (TEST_MODE && TEST_MODE_USE_STRIPE_FLOW) {
+                console.log('🧪🧪🧪 TEST-MODUS MIT STRIPE-FLOW: initializePayment() wird aufgerufen 🧪🧪🧪');
+                console.log('🧪 Echte Stripe API-Calls werden gemacht (mit Test Keys - KEINE ECHTEN KOSTEN!)');
+                console.log('✅ Test Keys werden verwendet - sicher zum Testen!');
+            } else if (!TEST_MODE) {
+                // ⚠️ WARNUNG: Nur wenn WIRKLICH PRODUCTION MODE!
+                console.error('⚠️⚠️⚠️ PRODUCTION MODE: initializePayment() macht ECHTE Stripe API-Calls! ⚠️⚠️⚠️');
+                console.error('⚠️⚠️⚠️ ECHTE ZAHLUNGEN WERDEN DURCHGEFÜHRT! ⚠️⚠️⚠️');
+            }
+                
                 // Stelle sicher, dass Container verfügbar ist
                 if (!paymentElementContainer) {
                     paymentElementContainer = document.getElementById('payment-element');
@@ -1576,14 +1899,33 @@
 
                 try {
                     await loadStripeLibrary();
-                    // Hole den Preis vom Button (wurde beim Klick gespeichert)
-                    const price = parseFloat(selectedServicePrice || 80); // Fallback: 80€
+                    // Berechne Preis basierend auf Ersttermin-Erkennung
+                    const emailInput = document.getElementById('booking-email');
+                    const email = emailInput ? emailInput.value.trim().toLowerCase() : '';
+                    const isFirst = email ? isFirstBooking(email) : false;
+                    const finalPrice = isFirst ? BASE_PRICE * (1 - FIRST_DISCOUNT) : BASE_PRICE;
+                    
+                    console.log('💰 Preis-Berechnung:', {
+                        email: email || '(noch nicht eingegeben)',
+                        isFirstBooking: isFirst,
+                        basePrice: BASE_PRICE,
+                        finalPrice: finalPrice,
+                        discount: isFirst ? '50%' : '0%'
+                    });
+                    
+                    // Logge nur Warnung wenn WIRKLICH Production Mode
+                    if (TEST_MODE && TEST_MODE_USE_STRIPE_FLOW) {
+                        console.log('🧪 TEST-MODUS: API-Call zu /api/create-payment-intent (mit Test Keys - sicher!)');
+                    } else if (!TEST_MODE) {
+                        console.error('⚠️⚠️⚠️ PRODUCTION: Mache jetzt ECHTEN API-Call zu /api/create-payment-intent! ⚠️⚠️⚠️');
+                    }
                     const response = await fetch(`${API_BASE_URL}/create-payment-intent`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ 
                             service: serviceTitle,
-                            price: price // Sende Preis an Backend
+                            price: finalPrice, // Sende angepassten Preis an Backend (80€ oder 40€)
+                            isFirstBooking: isFirst // Informiere Backend über Ersttermin
                         })
                     });
 
@@ -1600,12 +1942,21 @@
                         throw new Error(errorMessage);
                     }
 
-                    const { clientSecret } = await response.json();
+                    const responseData = await response.json();
+                    const { clientSecret, paymentIntentId, amount, amountInEuro } = responseData;
                     
                     if (!clientSecret) {
                         throw new Error('Kein Client Secret vom Server erhalten.');
                     }
                     currentClientSecret = clientSecret; // Speichere für Fallback
+                    if (paymentIntentId) {
+                        currentPaymentIntentId = paymentIntentId;
+                    }
+                    console.log('✅ Payment Intent erstellt:', {
+                        id: paymentIntentId,
+                        amount: amountInEuro || (amount / 100),
+                        requestedPrice: finalPrice
+                    });
                     const stripe = ensureStripeInstance();
                     if (!stripe) {
                         throw new Error('Stripe ist nicht verfügbar.');
@@ -1621,10 +1972,10 @@
                         paymentElementInstance.unmount();
                         paymentElementInstance = null;
                     }
-                    // Payment Element mit PayPal-Unterstützung
+                    // Payment Element - Lade alle verfügbaren Zahlungsmethoden automatisch
+                    // Stripe zeigt automatisch alle Methoden, die im Payment Intent aktiviert sind
                     paymentElementInstance = stripeElementsInstance.create('payment', {
-                        paymentMethodTypes: ['card', 'paypal'],
-                        layout: 'tabs' // Zeigt Card und PayPal als Tabs
+                        layout: 'tabs' // Zeigt Card und andere Methoden als Tabs
                     });
                     
                     // Stelle sicher, dass Container sichtbar ist
@@ -1747,6 +2098,128 @@
             async function handleBookingSubmit(e) {
                 e.preventDefault();
                 
+                // ⚠️⚠️⚠️ KRITISCH: TEST-MODUS CHECK MUSS ZUERST KOMMEN - BEVOR ALLES ANDERE! ⚠️⚠️⚠️
+                if (TEST_MODE && !TEST_MODE_USE_STRIPE_FLOW) {
+                    console.log('🧪🧪🧪 TEST-MODUS AKTIV - KEINE ECHTEN ZAHLUNGEN! 🧪🧪🧪');
+                    
+                    if (!selectedSlot) {
+                        setPaymentMessage('Bitte wähle zuerst einen Termin.');
+                        return;
+                    }
+                    
+                    const name = document.getElementById('booking-name')?.value.trim();
+                    const email = document.getElementById('booking-email')?.value.trim();
+                    if (!name || !email) {
+                        setPaymentMessage('Bitte Name und E-Mail ausfüllen.');
+                        return;
+                    }
+                    
+                    const isFirst = isFirstBooking(email);
+                    const finalPrice = isFirst ? BASE_PRICE * (1 - FIRST_DISCOUNT) : BASE_PRICE;
+                    
+                    setPaymentMessage('🧪 TEST-MODUS: Zahlung wird simuliert... (KEINE ECHTE ZAHLUNG!)', 'info');
+                    setConfirmButtonState('processing');
+                    
+                    // Simuliere Payment Intent (NUR SIMULATION!)
+                    const mockPaymentIntent = {
+                        id: 'pi_test_' + Date.now(),
+                        status: 'requires_capture',
+                        amount: Math.round(finalPrice * 100)
+                    };
+                    
+                    console.log('🧪 Mock Payment Intent erstellt (SIMULATION):', mockPaymentIntent);
+                    
+                    // Simuliere Verzögerung
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+                    
+                    // Client registrieren
+                    registerClient(name, email);
+                    
+                    // ⚠️ OPTIONAL: Im TEST_MODE trotzdem E-Mails & Calendar testen?
+                    if (TEST_MODE_SEND_EMAILS) {
+                        console.log('📧 TEST-MODUS: Sende E-Mail & erstelle Kalender-Eintrag...');
+                        setPaymentMessage('📧 TEST-MODUS: Sende E-Mail & erstelle Kalender-Eintrag...', 'info');
+                        
+                        // Simuliere Payment Intent für Backend (Backend wird im TEST_MODE anders behandeln)
+                        const mockPaymentIntentId = 'pi_test_' + Date.now();
+                        
+                        try {
+                            // Backend-Call für E-Mail & Calendar (aber ohne echte Zahlung!)
+                            const bookResponse = await fetch(`${API_BASE_URL}/book-appointment`, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                    startTime: selectedSlot.start,
+                                    endTime: selectedSlot.end,
+                                    clientName: name,
+                                    clientEmail: email,
+                                    service: selectedServiceTitle,
+                                    paymentIntentId: mockPaymentIntentId, // Mock Payment Intent
+                                    isFirstBooking: isFirst,
+                                    finalPrice: finalPrice,
+                                    testMode: true // ⚠️ Informiere Backend, dass es TEST_MODE ist!
+                                })
+                            });
+                            
+                            if (!bookResponse.ok) {
+                                const errorData = await bookResponse.json().catch(() => ({}));
+                                console.warn('⚠️ Backend-Fehler (E-Mail/Calendar):', errorData);
+                                // Trotzdem Erfolg anzeigen, da Zahlung simuliert wurde
+                            } else {
+                                const responseData = await bookResponse.json();
+                                console.log('✅ TEST-MODUS: E-Mail & Kalender-Eintrag erstellt!', responseData);
+                            }
+                        } catch (error) {
+                            console.warn('⚠️ Backend nicht erreichbar (E-Mail/Calendar):', error.message);
+                            // Trotzdem Erfolg anzeigen, da Zahlung simuliert wurde
+                        }
+                    }
+                    
+                    // Erfolg anzeigen
+                    if (bookingFormContainer) {
+                        bookingFormContainer.classList.add('hidden');
+                    }
+                    document.getElementById('booking-success')?.classList.remove('hidden');
+                    if (TEST_MODE_SEND_EMAILS) {
+                        setPaymentMessage('✅ TEST-MODUS: Buchung simuliert! E-Mail & Kalender-Eintrag wurden erstellt. (KEINE ECHTE ZAHLUNG!)', 'success');
+                    } else {
+                        setPaymentMessage('✅ TEST-MODUS: Buchung erfolgreich simuliert! (KEINE ECHTE ZAHLUNG - KEINE E-MAILS - KEINE KOSTEN!)', 'success');
+                    }
+                    setConfirmButtonState('ready');
+                    return; // WICHTIG: BEENDE HIER - KEINE ECHTEN STRIPE API-CALLS!
+                }
+                
+                // ⚠️ TEST-MODUS MIT STRIPE-FLOW: Erlaube echten Stripe-Flow (mit Test Keys)
+                if (TEST_MODE && TEST_MODE_USE_STRIPE_FLOW) {
+                    console.log('🧪🧪🧪 TEST-MODUS MIT STRIPE-FLOW: Echte Stripe-Zahlung wird durchgeführt (Test Keys!) 🧪🧪🧪');
+                    
+                    // ⚠️ KRITISCH: Prüfe ob Test Key verwendet wird!
+                    if (STRIPE_PUBLISHABLE_KEY && STRIPE_PUBLISHABLE_KEY.startsWith('pk_live_')) {
+                        console.error('❌❌❌ FEHLER: Du verwendest Live Keys im TEST_MODE_USE_STRIPE_FLOW! ❌❌❌');
+                        console.error('❌ Das ist GEFÄHRLICH - echte Zahlungen könnten durchgeführt werden!');
+                        console.error('❌ Du musst Stripe Test Keys verwenden (pk_test_...)');
+                        console.error('❌ Gehe zu: https://dashboard.stripe.com/test/apikeys');
+                        console.error('❌ Kopiere deinen "Publishable key" und ersetze TEST_KEY in index.html Zeile ~1255');
+                        setPaymentMessage('❌ FEHLER: Du verwendest Live Keys im Test-Modus! Bitte Test Keys verwenden!', 'error');
+                        setConfirmButtonState('ready');
+                        return; // BEENDE HIER - KEINE ECHTEN ZAHLUNGEN MIT LIVE KEYS!
+                    }
+                    
+                    if (STRIPE_PUBLISHABLE_KEY && STRIPE_PUBLISHABLE_KEY.startsWith('pk_test_')) {
+                        console.log('✅ Test Key erkannt - sicher zum Testen!');
+                        console.log('✅ KEINE ECHTEN KOSTEN - Test Keys werden verwendet!');
+                    } else {
+                        console.warn('⚠️ Unbekannter Key-Format:', STRIPE_PUBLISHABLE_KEY?.substring(0, 15) || 'UNDEFINED');
+                    }
+                    
+                    // Weiter zum normalen Stripe-Flow unten...
+                }
+                
+                // ⚠️ PRODUCTION MODE - ECHTE ZAHLUNGEN WERDEN DURCHGEFÜHRT!
+                if (!TEST_MODE) {
+                    console.error('⚠️⚠️⚠️ PRODUCTION MODE - ECHTE ZAHLUNGEN WERDEN DURCHGEFÜHRT! ⚠️⚠️⚠️');
+                }
+                
                 // Prüfe ob Button disabled ist (sollte nicht passieren, aber sicherheitshalber)
                 if (confirmBookingBtn && confirmBookingBtn.disabled) {
                     console.warn('Button ist disabled, Submit abgebrochen');
@@ -1767,14 +2240,12 @@
                     return;
                 }
                 
-                // Prüfe ob Payment Element wirklich gemountet ist
                 const quickCheck = document.getElementById('payment-element');
                 if (!quickCheck || (!quickCheck.querySelector('iframe') && quickCheck.children.length === 0)) {
                     setPaymentMessage('Zahlungsfeld nicht geladen. Bitte warte, bis das Feld erscheint.');
                     console.error('❌ Payment Element nicht gemountet beim Submit!');
                     return;
                 }
-                
 
                 const name = document.getElementById('booking-name').value.trim();
                 const email = document.getElementById('booking-email').value.trim();
@@ -1782,11 +2253,16 @@
                     setPaymentMessage('Bitte Name und E-Mail ausfüllen.');
                     return;
                 }
+                
+                // Berechne Preis (wird später verwendet)
+                const isFirst = isFirstBooking(email);
+                const finalPrice = isFirst ? BASE_PRICE * (1 - FIRST_DISCOUNT) : BASE_PRICE;
 
                 setPaymentMessage('');
                 setConfirmButtonState('processing');
 
                 try {
+                    // PRODUCTION MODE - Echte Stripe-Zahlung
                     await loadStripeLibrary();
                     const stripe = ensureStripeInstance();
                     if (!stripe) {
@@ -1857,9 +2333,39 @@
                     
                     console.log('Rufe confirmPayment auf...');
                     // Jetzt sollte das Element bereit sein - verwende confirmPayment mit elements
+                    // return_url wird für bestimmte Payment-Methoden (Amazon Pay, Revolut Pay) benötigt
+                    // Erstelle eine gültige URL (auch für lokale Tests)
+                    let returnUrl;
+                    try {
+                        // Versuche eine vollständige URL zu erstellen
+                        if (window.location.protocol === 'file:') {
+                            // Für lokale Dateien: verwende localhost als Fallback
+                            returnUrl = 'http://localhost:8080' + window.location.pathname;
+                        } else if (window.location.origin) {
+                            // Für normale URLs: konstruiere vollständige URL
+                            returnUrl = window.location.origin + window.location.pathname + window.location.search;
+                        } else {
+                            // Fallback: verwende die aktuelle Seite ohne Hash
+                            returnUrl = window.location.href.split('#')[0];
+                        }
+                        
+                        // Stelle sicher, dass es eine gültige HTTP/HTTPS URL ist
+                        if (!returnUrl.startsWith('http://') && !returnUrl.startsWith('https://')) {
+                            // Letzter Fallback: verwende localhost
+                            returnUrl = 'http://localhost:8080/';
+                        }
+                    } catch (e) {
+                        // Wenn alles fehlschlägt, verwende localhost
+                        console.warn('Fehler beim Erstellen der return_url:', e);
+                        returnUrl = 'http://localhost:8080/';
+                    }
+                    
+                    console.log('Verwende return_url:', returnUrl);
+                    
                     const result = await stripe.confirmPayment({
                         elements: stripeElementsInstance,
                         confirmParams: {
+                            return_url: returnUrl,
                             payment_method_data: {
                                 billing_details: {
                                     name,
@@ -1877,6 +2383,18 @@
                         throw new Error(error.message);
                     }
 
+                    // Berechne Preis für Backend
+                    const isFirst = isFirstBooking(email);
+                    const finalPrice = isFirst ? BASE_PRICE * (1 - FIRST_DISCOUNT) : BASE_PRICE;
+                    
+                    console.log('📋 Buchungsdaten:', {
+                        email,
+                        isFirstBooking: isFirst,
+                        finalPrice: finalPrice,
+                        paymentIntentId: paymentIntent.id
+                    });
+                    
+                    // ⚠️ WICHTIG: Informiere Backend ob TEST_MODE aktiv ist!
                     const bookResponse = await fetch(`${API_BASE_URL}/book-appointment`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -1886,23 +2404,40 @@
                             clientName: name,
                             clientEmail: email,
                             service: selectedServiceTitle,
-                            paymentIntentId: paymentIntent.id
+                            paymentIntentId: paymentIntent.id,
+                            isFirstBooking: isFirst,
+                            finalPrice: finalPrice, // WICHTIG: 80€ oder 40€, NICHT 150€!
+                            testMode: TEST_MODE && TEST_MODE_USE_STRIPE_FLOW // ⚠️ Informiere Backend, dass es TEST_MODE ist!
                         })
                     });
 
                     if (!bookResponse.ok) {
                         const errorData = await bookResponse.json().catch(() => ({}));
-                        throw new Error(errorData.error || 'Fehler bei der Terminbuchung.');
+                        console.error('❌ Fehler beim Buchen des Termins:', errorData);
+                        throw new Error(errorData.error || `Backend-Fehler: ${bookResponse.status} ${bookResponse.statusText}`);
                     }
+
+                    const bookingResult = await bookResponse.json();
+                    console.log('✅ Termin erfolgreich gebucht:', bookingResult);
+
+                    // Client registrieren für zukünftige Ersttermin-Erkennung
+                    registerClient(name, email);
 
                     if (bookingFormContainer) {
                         bookingFormContainer.classList.add('hidden');
                     }
                     document.getElementById('booking-success')?.classList.remove('hidden');
-                    setPaymentMessage('Zahlung erfolgreich. Termin wird bestätigt.', 'success');
+                    
+                    if (TEST_MODE && TEST_MODE_USE_STRIPE_FLOW) {
+                        setPaymentMessage('✅ TEST-MODUS: Zahlung erfolgreich! E-Mail & Kalender-Eintrag wurden erstellt. (Test Keys - KEINE ECHTEN KOSTEN!)', 'success');
+                    } else {
+                        setPaymentMessage('✅ Zahlung erfolgreich. Termin wird bestätigt.', 'success');
+                    }
                 } catch (error) {
-                    console.error('Booking error:', error);
-                    setPaymentMessage(error.message || 'Fehler bei der Buchung.');
+                    console.error('❌ Buchungsfehler:', error);
+                    console.error('❌ Error Stack:', error.stack);
+                    const errorMessage = error.message || 'Fehler bei der Buchung. Bitte versuche es erneut.';
+                    setPaymentMessage(errorMessage);
                     setConfirmButtonState('ready');
                 }
             }
